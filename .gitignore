@@ -1,0 +1,25 @@
+# SoundFonts & DLLs (Sound engine binarios)
+*.sf2
+*.dll
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# IDE & OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local DB & Progress
+*.db

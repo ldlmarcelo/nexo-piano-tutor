@@ -5,7 +5,7 @@ Muestra el pentagrama (Clave de Sol / Fa), las notas esperadas y el cursor de av
 
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsTextItem, QGraphicsLineItem
 from PySide6.QtCore import Qt, QRectF
-from PySide6.QtGui import QColor, QFont, QPen, QBrush
+from PySide6.QtGui import QColor, QFont, QPen, QBrush, QPainter
 
 from core.lesson import Lesson, TargetNote
 
@@ -26,7 +26,7 @@ class SheetView(QGraphicsView):
         self.setObjectName("sheetView")
         self._scene = QGraphicsScene(self)
         self.setScene(self._scene)
-        self.setRenderHint(Qt.RenderHint.Antialiasing)
+        self.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         self._lesson: Lesson = None
         self._current_step: int = 0

@@ -21,6 +21,12 @@ class EvaluationResult:
     feedback_color: str  # Hex o QColor string (ej. "#00e676", "#ffb300", "#e74c3c")
 
 
+def midi_to_note_name(note: int) -> str:
+    names = ["Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+    octave = (note // 12) - 1
+    return f"{names[note % 12]}{octave}"
+
+
 class RealtimeEvaluator:
     """Evaluador de precisión tonal, rítmica y dinámica."""
 
@@ -59,22 +65,30 @@ class RealtimeEvaluator:
                 velocity=velocity,
                 expected_finger=0,
                 time_delta_ms=0.0,
-                feedback_text="Lección completada",
+                feedback_text="Lección completada 🎉",
                 feedback_color="#8892b0"
             )
 
-        is_correct = (played_note == target.midi_note)
+        is_exact_correct = (played_note == target.midi_note)
+        is_same_pitch = (played_note % 12 == target.midi_note % 12)
 
-        if is_correct:
+        if is_exact_correct:
             self.current_step += 1
-            feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''})"
+            feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)})"
             color = "#00e676"  # Verde brillante
+        elif is_same_pitch:
+            played_name = midi_to_note_name(played_note)
+            target_name = midi_to_note_name(target.midi_note)
+            feedback = f"¡Es un {target.lyric or ''}! Pero en octava distinta (Tocaste {played_name}, se busca {target_name}). Presioná Octave +/- en tu teclado."
+            color = "#ffb300"  # Naranja de advertencia pedagógica
         else:
-            feedback = f"Nota incorrecta. Se esperaba Dedo {target.finger} ({target.lyric or ''})"
+            played_name = midi_to_note_name(played_note)
+            target_name = midi_to_note_name(target.midi_note)
+            feedback = f"Tocaste {played_name} (MIDI {played_note}). Se esperaba Dedo {target.finger} ({target.lyric or ''} / {target_name})"
             color = "#e74c3c"  # Rojo
 
         return EvaluationResult(
-            is_correct_note=is_correct,
+            is_correct_note=is_exact_correct,
             expected_note=target.midi_note,
             played_note=played_note,
             velocity=velocity,
@@ -87,3 +101,4 @@ class RealtimeEvaluator:
     def reset(self):
         """Reinicia el paso actual al inicio de la lección."""
         self.current_step = 0
+

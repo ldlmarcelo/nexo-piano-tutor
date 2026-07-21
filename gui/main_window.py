@@ -162,16 +162,18 @@ class MainWindow(QMainWindow):
         self.midi_input.device_disconnected.connect(self._on_midi_device_disconnected)
 
         # Auto-conectar al inicio
-        if self.midi_input.auto_connect():
+        success, msg = self.midi_input.auto_connect()
+        if success:
             dev_name = self.midi_input.connected_device_name
             self._on_midi_device_connected(dev_name)
         else:
             self._on_midi_device_disconnected()
 
     def _on_midi_device_connected(self, device_name: str):
-        self.midi_badge.setText(f"🎹 {device_name}")
+        display_name = device_name if device_name else "Teclado MIDI"
+        self.midi_badge.setText(f"🎹 {display_name}")
         self.midi_badge.setStyleSheet("color: #00e676; font-size: 11px; font-weight: bold; background-color: #064e3b; padding: 4px 8px; border-radius: 4px;")
-        self.statusBar().showMessage(f"Teclado MIDI conectado: {device_name} | Audio: {self.sound_engine.active_driver}")
+        self.statusBar().showMessage(f"Teclado MIDI conectado: {display_name} | Audio: {self.sound_engine.active_driver}")
 
     def _on_midi_device_disconnected(self):
         self.midi_badge.setText("⌨️ Teclado Virtual Activo (Sin MIDI Físico)")

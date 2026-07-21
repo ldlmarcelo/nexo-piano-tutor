@@ -15,6 +15,7 @@ from PySide6.QtCore import Qt
 
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
+from core.midi_input import MidiInputHandler
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard
 
@@ -42,8 +43,9 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(600, 720)
         self.resize(700, 780)
 
-        # Evaluador y Motor Audio
+        # Evaluador, Entrada MIDI física y Motor Audio
         self.evaluator = RealtimeEvaluator()
+        self.midi_input = MidiInputHandler(self)
         self.engine = MidiEngine(self) if HAS_SYNTH else None
 
         self._build_ui()
@@ -61,17 +63,21 @@ class MainWindow(QMainWindow):
         layout.setSpacing(10)
         layout.setContentsMargins(16, 14, 16, 14)
 
-        # Cabezal: Título + Lección
+        # Cabezal: Título + Lección + Insignia MIDI
         head_row = QHBoxLayout()
         title = QLabel("🎼 NEXO Piano Tutor")
         title.setObjectName("titleLabel")
         subtitle = QLabel("Método Clásico Progresivo")
         subtitle.setObjectName("subtitleLabel")
-        subtitle.setAlignment(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
+        subtitle.setAlignment(Qt.AlignmentFlag.AlignBottom)
+
+        self.midi_badge = QLabel("🔌 Escaneando MIDI...")
+        self.midi_badge.setStyleSheet("color: #94a3b8; font-size: 11px; font-weight: bold; background-color: #1e293b; padding: 4px 8px; border-radius: 4px;")
 
         head_row.addWidget(title)
         head_row.addWidget(subtitle)
         head_row.addStretch()
+        head_row.addWidget(self.midi_badge)
 
         layout.addLayout(head_row)
 
@@ -158,8 +164,29 @@ class MainWindow(QMainWindow):
         self.reset_btn.clicked.connect(self._on_reset_clicked)
         self.piano_keyboard.note_pressed.connect(self._on_note_played)
 
+        # Captura de Teclado Físico (Samson Carbon 49)
+        self.midi_input.note_played.connect(self._on_note_played)
+        self.midi_input.device_connected.connect(self._on_midi_device_connected)
+        self.midi_input.device_disconnected.connect(self._on_midi_device_disconnected)
+
+        # Auto-conectar al inicio
+        if self.midi_input.auto_connect():
+            dev_name = self.midi_input.connected_device_name
+            self._on_midi_device_connected(dev_name)
+        else:
+            self._on_midi_device_disconnected()
+
         if self.engine:
             self.engine.note_played.connect(self._on_note_played)
+
+    def _on_midi_device_connected(self, device_name: str):
+        self.midi_badge.setText(f"🎹 {device_name}")
+        self.midi_badge.setStyleSheet("color: #00e676; font-size: 11px; font-weight: bold; background-color: #064e3b; padding: 4px 8px; border-radius: 4px;")
+        self.statusBar().showMessage(f"Teclado MIDI conectado: {device_name}")
+
+    def _on_midi_device_disconnected(self):
+        self.midi_badge.setText("⌨️ Teclado Virtual Activo (Sin MIDI Físico)")
+        self.midi_badge.setStyleSheet("color: #38bdf8; font-size: 11px; font-weight: bold; background-color: #0c4a6e; padding: 4px 8px; border-radius: 4px;")
 
     def _load_available_lessons(self):
         self.lesson_combo.clear()
@@ -242,7 +269,9 @@ class MainWindow(QMainWindow):
             self.finger_val.setText("—")
 
     def closeEvent(self, event):
+        self.midi_input.disconnect()
         if self.engine:
             self.engine.cleanup()
         super().closeEvent(event)
+
 

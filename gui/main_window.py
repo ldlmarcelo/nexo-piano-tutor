@@ -1,7 +1,8 @@
 """
 Ventana Principal de NEXO Piano Tutor.
-Integra el selector de lecciones, el renderizador de partitura interactivo (SheetView),
-el evaluador en tiempo real (<15ms) y los indicadores de digitación/feedback.
+Integra la Pantalla de Autenticación / Selección de Estudiante (LoginWidget),
+el Selector de Lecciones, el Renderizador de Partitura Interactivo (SheetView),
+el Evaluador en Tiempo Real (<15ms) y la Persistencia por Usuario (UserManager).
 """
 
 import os
@@ -9,7 +10,7 @@ import json
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QGroupBox, QComboBox, QLabel, QPushButton, QFrame,
-    QStatusBar
+    QStackedWidget, QStatusBar
 )
 from PySide6.QtCore import Qt
 
@@ -17,8 +18,10 @@ from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
 from core.sound_engine import SoundEngine
+from core.user_manager import UserManager, User
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard
+from gui.login_widget import LoginWidget
 
 CARPETA_SCRIPT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LESSONS_DIR = os.path.join(CARPETA_SCRIPT, "lessons")
@@ -30,10 +33,11 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("🎼 NEXO Piano Tutor — Formación Clásica")
-        self.setMinimumSize(600, 720)
-        self.resize(700, 780)
+        self.setMinimumSize(640, 740)
+        self.resize(720, 800)
 
-        # Evaluador, Entrada MIDI física y Motor Audio Soberano
+        # Gestor de Usuarios, Evaluador, Entrada MIDI física y Motor Audio
+        self.user_manager = UserManager()
         self.evaluator = RealtimeEvaluator()
         self.midi_input = MidiInputHandler(self)
         self.sound_engine = SoundEngine()
@@ -42,40 +46,58 @@ class MainWindow(QMainWindow):
         self._connect_signals()
         self._load_available_lessons()
 
+        # Verificar si hay usuario activo previamente autenticado
+        active_user = self.user_manager.get_active_user()
+        if active_user:
+            self._on_user_authenticated(active_user)
+        else:
+            self.stacked_widget.setCurrentIndex(0)
+
         self.statusBar().showMessage(f"NEXO Piano Tutor v1.0.0 — Audio: {self.sound_engine.active_driver}")
 
     # ── Construcción de UI ─────────────────────────────────────────
 
     def _build_ui(self):
-        central = QWidget()
-        self.setCentralWidget(central)
-        layout = QVBoxLayout(central)
-        layout.setSpacing(10)
-        layout.setContentsMargins(16, 14, 16, 14)
+        self.stacked_widget = QStackedWidget()
+        self.setCentralWidget(self.stacked_widget)
 
-        # Cabezal: Título + Lección + Insignia MIDI
+        # PÁGINA 0: Widget de Autenticación / Selección de Estudiante
+        self.login_widget = LoginWidget(self.user_manager)
+        self.stacked_widget.addWidget(self.login_widget)
+
+        # PÁGINA 1: Interfaz Principal de Aprendizaje (Estudio)
+        self.study_widget = QWidget()
+        study_layout = QVBoxLayout(self.study_widget)
+        study_layout.setSpacing(10)
+        study_layout.setContentsMargins(16, 14, 16, 14)
+
+        # Cabezal: Título + Usuario Activo + Insignia MIDI + Cerrar Sesión
         head_row = QHBoxLayout()
         title = QLabel("🎼 NEXO Piano Tutor")
         title.setObjectName("titleLabel")
-        subtitle = QLabel("Método Clásico Progresivo")
-        subtitle.setObjectName("subtitleLabel")
-        subtitle.setAlignment(Qt.AlignmentFlag.AlignBottom)
+
+        self.user_badge = QLabel("👤 Estudiante: —")
+        self.user_badge.setStyleSheet("color: #38bdf8; font-weight: bold; font-size: 13px; background-color: #0f172a; padding: 4px 10px; border-radius: 6px; border: 1px solid #0284c7;")
 
         self.midi_badge = QLabel("🔌 Escaneando MIDI...")
         self.midi_badge.setStyleSheet("color: #94a3b8; font-size: 11px; font-weight: bold; background-color: #1e293b; padding: 4px 8px; border-radius: 4px;")
 
+        self.logout_btn = QPushButton("🚪 Cerrar Sesión")
+        self.logout_btn.setStyleSheet("background-color: #334155; color: #f8fafc; font-size: 11px; padding: 4px 8px; border-radius: 4px;")
+
         head_row.addWidget(title)
-        head_row.addWidget(subtitle)
+        head_row.addWidget(self.user_badge)
         head_row.addStretch()
         head_row.addWidget(self.midi_badge)
+        head_row.addWidget(self.logout_btn)
 
-        layout.addLayout(head_row)
+        study_layout.addLayout(head_row)
 
         # Separador
         sep = QFrame()
         sep.setStyleSheet("background-color: #2d3b54;")
         sep.setFixedHeight(1)
-        layout.addWidget(sep)
+        study_layout.addWidget(sep)
 
         # Selector de Lección y Repetidor Bucle xN
         lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y CURRICULUM")
@@ -94,7 +116,7 @@ class MainWindow(QMainWindow):
         self.reset_btn.setObjectName("resetBtn")
         lesson_layout.addWidget(self.reset_btn)
 
-        layout.addWidget(lesson_group)
+        study_layout.addWidget(lesson_group)
 
         # Partitura Gráfica Interactiva
         sheet_group = QGroupBox("PARTITURA & GUÍA")
@@ -103,7 +125,7 @@ class MainWindow(QMainWindow):
         self.sheet_view = SheetView()
         sheet_layout.addWidget(self.sheet_view)
 
-        layout.addWidget(sheet_group, stretch=1)
+        study_layout.addWidget(sheet_group, stretch=1)
 
         # Teclado Virtual Interactivo (Piano Roll)
         piano_group = QGroupBox("TECLADO DE PIANO INTERACTIVO")
@@ -111,7 +133,7 @@ class MainWindow(QMainWindow):
         self.piano_keyboard = PianoKeyboard(start_note=36, end_note=84)
         piano_layout.addWidget(self.piano_keyboard)
 
-        layout.addWidget(piano_group)
+        study_layout.addWidget(piano_group)
 
         # Panel de Feedback Pedagógico (Dedos + Veredicto)
         feedback_group = QGroupBox("GUÍA DE DIGITACIÓN & EVALUACIÓN EN TIEMPO REAL")
@@ -150,11 +172,16 @@ class MainWindow(QMainWindow):
 
         fb_layout.addLayout(fb_col, stretch=2)
 
-        layout.addWidget(feedback_group)
+        study_layout.addWidget(feedback_group)
+        self.stacked_widget.addWidget(self.study_widget)
 
     # ── Señales y Slots ────────────────────────────────────────────
 
     def _connect_signals(self):
+        # Autenticación y Cierre de Sesión
+        self.login_widget.authenticated.connect(self._on_user_authenticated)
+        self.logout_btn.clicked.connect(self._on_logout_clicked)
+
         self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
         self.repeat_combo.currentIndexChanged.connect(self._on_repeat_mode_changed)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
@@ -174,6 +201,29 @@ class MainWindow(QMainWindow):
             self._on_midi_device_connected(dev_name)
         else:
             self._on_midi_device_disconnected()
+
+    def _on_user_authenticated(self, user: User):
+        """Maneja el ingreso de un estudiante autenticado."""
+        self.user_badge.setText(f"👤 Estudiante: {user.username}")
+        self.stacked_widget.setCurrentIndex(1)
+        
+        # Cargar lección preferida del usuario
+        active_id = user.active_lesson_id
+        for idx in range(self.lesson_combo.count()):
+            fpath = self.lesson_combo.itemData(idx)
+            if fpath and active_id in fpath:
+                self.lesson_combo.setCurrentIndex(idx)
+                break
+
+        self.statusBar().showMessage(f"Sesión activa: {user.username} | Precisión: {user.stats.accuracy_pct}%")
+
+    def _on_logout_clicked(self):
+        """Cierra la sesión y vuelve a la pantalla de Login."""
+        self.user_manager.logout()
+        self.user_badge.setText("👤 Estudiante: —")
+        self.login_widget.refresh_user_list()
+        self.stacked_widget.setCurrentIndex(0)
+        self.statusBar().showMessage("Sesión cerrada. Por favor selecciona un estudiante.")
 
     def _on_midi_device_connected(self, device_name: str):
         display_name = device_name if device_name else "Teclado MIDI"
@@ -234,6 +284,12 @@ class MainWindow(QMainWindow):
                 self.sound_engine.set_instrument(lesson.instrument)
                 self.sheet_view.load_lesson(lesson, 0)
                 self._update_target_display()
+
+                # Guardar lección activa en el perfil del usuario
+                user = self.user_manager.get_active_user()
+                if user:
+                    user.active_lesson_id = lesson.id
+                    self.user_manager.save()
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
 
@@ -258,9 +314,17 @@ class MainWindow(QMainWindow):
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
 
+        # Registrar progreso en el User Manager
+        if self.evaluator.current_lesson:
+            self.user_manager.record_progress(
+                lesson_id=self.evaluator.current_lesson.id,
+                completed=self.evaluator.is_finished,
+                notes_played=1,
+                correct=result.is_correct_note
+            )
+
         if self.evaluator.is_finished:
             self.statusBar().showMessage("¡Serie de repeticiones completada con éxito!")
-
 
     def _update_target_display(self):
         self.piano_keyboard.clear_all_active()
@@ -276,6 +340,3 @@ class MainWindow(QMainWindow):
         self.midi_input.disconnect()
         self.sound_engine.cleanup()
         super().closeEvent(event)
-
-
-

@@ -16,6 +16,7 @@ from PySide6.QtCore import Qt
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
 from gui.sheet_view import SheetView, midi_to_note_name
+from gui.piano_keyboard import PianoKeyboard
 
 # Intentar importar MidiEngine si nexo-midi-synth está instalado o en PROYECTOS
 try:

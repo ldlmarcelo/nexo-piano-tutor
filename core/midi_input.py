@@ -1,10 +1,12 @@
 """
-Manejador y Detector de Entrada MIDI para NEXO Piano Tutor.
+Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.3.0).
 Captura eventos NOTE_ON de teclados MIDI físicos (ej: Samson Carbon 49)
-vía python-rtmidi y emite señales Qt para la evaluación pedagógica.
+vía python-rtmidi y utiliza un buffer de cola con QTimer thread-safe
+para garantizar que las señales Qt se procesen limpiamente en el hilo principal GUI.
 """
 
-from PySide6.QtCore import QObject, Signal
+from collections import deque
+from PySide6.QtCore import QObject, Signal, QTimer
 try:
     import rtmidi
     HAS_RTMIDI = True
@@ -13,7 +15,7 @@ except ImportError:
 
 
 class MidiInputHandler(QObject):
-    """Manejador de entrada MIDI física en tiempo real."""
+    """Manejador de entrada MIDI física en tiempo real con cola thread-safe."""
 
     note_played = Signal(int, int)   # (midi_note, velocity)
     note_released = Signal(int)      # (midi_note)
@@ -25,6 +27,13 @@ class MidiInputHandler(QObject):
         self._midiin = rtmidi.MidiIn() if HAS_RTMIDI else None
         self._connected_port_name: str | None = None
         self._is_open = False
+        self._queue = deque()
+
+        # Timer de vaciado de cola a 5ms (200Hz) en el hilo principal de Qt
+        self._timer = QTimer(self)
+        self._timer.setInterval(5)
+        self._timer.timeout.connect(self._process_queue)
+        self._timer.start()
 
     def get_available_ports(self) -> list[str]:
         """Devuelve la lista de puertos MIDI de entrada disponibles."""
@@ -57,13 +66,17 @@ class MidiInputHandler(QObject):
             return False
 
         try:
+            # Ignorar Sysex, Timing y Active Sense
+            self._midiin.ignore_types(sysex=True, timing=True, active_sense=True)
             self._midiin.open_port(port_index)
             self._midiin.set_callback(self._midi_callback)
             self._connected_port_name = ports[port_index]
             self._is_open = True
             self.device_connected.emit(self._connected_port_name)
+            print(f"[MIDI IN] Conectado exitosamente a: {self._connected_port_name}")
             return True
-        except Exception:
+        except Exception as e:
+            print(f"[MIDI IN] Error al conectar puerto MIDI: {e}")
             self._is_open = False
             self.device_disconnected.emit()
             return False
@@ -86,7 +99,7 @@ class MidiInputHandler(QObject):
         return self._connected_port_name
 
     def _midi_callback(self, event, data=None):
-        """Callback invocado en thread separado por rtmidi al recibir mensajes MIDI."""
+        """Callback de rtmidi (corre en el hilo C++ de rtmidi). Encola eventos."""
         message, _delta = event
         if not message or len(message) < 3:
             return
@@ -97,8 +110,17 @@ class MidiInputHandler(QObject):
 
         if status == 0x90:  # NOTE_ON
             if velocity > 0:
-                self.note_played.emit(note, velocity)
+                self._queue.append(("ON", note, velocity))
             else:
-                self.note_released.emit(note)
+                self._queue.append(("OFF", note, 0))
         elif status == 0x80:  # NOTE_OFF
-            self.note_released.emit(note)
+            self._queue.append(("OFF", note, 0))
+
+    def _process_queue(self):
+        """Procesador de la cola ejecutado en el HILO PRINCIPAL de Qt por QTimer."""
+        while self._queue:
+            evt_type, note, vel = self._queue.popleft()
+            if evt_type == "ON":
+                self.note_played.emit(note, vel)
+            elif evt_type == "OFF":
+                self.note_released.emit(note)

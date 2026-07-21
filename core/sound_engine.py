@@ -1,12 +1,14 @@
 """
 Motor de Síntesis Audio Soberano para NEXO Piano Tutor.
-Combina Microsoft GS Wavetable Synth (vía rtmidi.MidiOut en Windows)
-y FluidSynth (.sf2) como respaldo para audio de ultra-baja latencia sin lag.
+Soporta sintetizador nativo de Windows (rtmidi) y sintetizador de SoundFonts (.sf2 vía pyfluidsynth).
+Garantiza compatibilidad total de codificación ASCII en consolas Windows (cp1252).
 """
 
 import os
 import sys
 import glob
+
+CARPETA_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 try:
     import rtmidi
@@ -28,63 +30,68 @@ class SoundEngine:
         self._midiout = None
         self._fluidsynth = None
         self._sfid = None
-        self._active_driver = "ninguno"
+        self._active_driver = "Ninguno"
 
         self._init_audio()
 
     def _init_audio(self):
-        """Inicializa primero el sintetizador nativo de Windows (MidiOut) o FluidSynth."""
-        # 1. Intentar rtmidi.MidiOut (Sintetizador General MIDI Nativo de Windows: Microsoft GS Wavetable)
+        """Inicializa el sintetizador de audio (FluidSynth .sf2 o Windows MidiOut)."""
+        # 1. Priorizar FluidSynth si existe un archivo .sf2 en la raíz del proyecto
+        sf_path = self._find_soundfont()
+        if sf_path and HAS_FLUIDSYNTH:
+            try:
+                self._fluidsynth = fluidsynth.Synth()
+                driver = "dsound" if sys.platform == "win32" else None
+                try:
+                    if driver:
+                        self._fluidsynth.start(driver=driver)
+                    else:
+                        self._fluidsynth.start()
+                except Exception:
+                    self._fluidsynth.start()
+
+                self._sfid = self._fluidsynth.sfload(sf_path)
+                self._fluidsynth.program_select(0, self._sfid, 0, 0)  # General MIDI Program 0 (Acoustic Grand Piano)
+                self._active_driver = f"FluidSynth ({os.path.basename(sf_path)})"
+                print(f"[AUDIO] Motor Activo: {self._active_driver}")
+                return
+            except Exception as e:
+                print(f"[AUDIO] Fallo al iniciar FluidSynth: {e}")
+                self._fluidsynth = None
+
+        # 2. Respaldo: Intentar rtmidi.MidiOut (Sintetizador General MIDI Nativo de Windows)
         if HAS_RTMIDI:
             try:
                 self._midiout = rtmidi.MidiOut()
                 ports = self._midiout.get_ports()
                 if ports:
-                    # Buscar Microsoft GS Wavetable Synth o primer puerto de salida
                     target_idx = 0
                     for idx, name in enumerate(ports):
                         if "wavetable" in name.lower() or "microsoft" in name.lower() or "synth" in name.lower():
                             target_idx = idx
                             break
                     self._midiout.open_port(target_idx)
-                    self._active_driver = f"rtmidi ({ports[target_idx]})"
-                    print(f"🎵 Motor de Audio Activo: {self._active_driver}")
+                    self._active_driver = f"Windows MidiOut ({ports[target_idx]})"
+                    print(f"[AUDIO] Motor Activo: {self._active_driver}")
                     return
             except Exception as e:
-                print(f"No se pudo inicializar MidiOut: {e}")
+                print(f"[AUDIO] No se pudo inicializar MidiOut: {e}")
                 self._midiout = None
 
-        # 2. Intentar FluidSynth si hay un SoundFont disponible
-        if HAS_FLUIDSYNTH:
-            sf_path = self._find_soundfont()
-            if sf_path:
-                try:
-                    self._fluidsynth = fluidsynth.Synth()
-                    # En Windows dsound o winmm
-                    driver = "dsound" if sys.platform == "win32" else "alsa"
-                    self._fluidsynth.start(driver=driver)
-                    self._sfid = self._fluidsynth.sfload(sf_path)
-                    self._fluidsynth.program_select(0, self._sfid, 0, 0)  # Piano de cola (Program 0)
-                    self._active_driver = f"fluidsynth ({os.path.basename(sf_path)})"
-                    print(f"🎵 Motor de Audio Activo: {self._active_driver}")
-                    return
-                except Exception as e:
-                    print(f"No se pudo inicializar FluidSynth: {e}")
-                    self._fluidsynth = None
-
-        print("⚠️ Advertencia: No se detectó dispositivo de salida de audio sintetizado.")
+        print("[AUDIO WARN] Sin dispositivo de salida sintetizado. Coloca un archivo .sf2 en la raiz del proyecto.")
 
     def _find_soundfont(self) -> str | None:
-        """Busca archivos .sf2 en la carpeta actual o proyectos adyacentes."""
-        search_paths = [
+        """Busca archivos .sf2 en la carpeta raíz del proyecto y subcarpetas."""
+        search_dirs = [
+            CARPETA_RAIZ,
             os.getcwd(),
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "/home/marcelo/PROYECTOS/nexo-midi-synth",
-            "C:\\Users\\argen\\OneDrive\\Escritorio\\nexo-midi-synth",
+            os.path.join(CARPETA_RAIZ, "soundfonts"),
+            os.path.join(CARPETA_RAIZ, "..", "nexo-midi-synth"),
         ]
-        for path in search_paths:
+        for path in search_dirs:
             if os.path.exists(path):
-                sf_files = glob.glob(os.path.join(path, "*.sf2"))
+                pattern = os.path.join(path, "*.sf2")
+                sf_files = glob.glob(pattern)
                 if sf_files:
                     return sf_files[0]
         return None
@@ -94,23 +101,21 @@ class SoundEngine:
         velocity = max(1, min(127, velocity))
         note = max(0, min(127, note))
 
-        if self._midiout and self._midiout.is_port_open():
-            # Mensaje NOTE_ON: 0x90, nota, velocity
-            self._midiout.send_message([0x90, note, velocity])
-
         if self._fluidsynth:
             self._fluidsynth.noteon(0, note, velocity)
+
+        if self._midiout and self._midiout.is_port_open():
+            self._midiout.send_message([0x90, note, velocity])
 
     def stop_note(self, note: int):
         """Detiene una nota (NOTE_OFF)."""
         note = max(0, min(127, note))
 
-        if self._midiout and self._midiout.is_port_open():
-            # Mensaje NOTE_OFF: 0x80, nota, 0
-            self._midiout.send_message([0x80, note, 0])
-
         if self._fluidsynth:
             self._fluidsynth.noteoff(0, note)
+
+        if self._midiout and self._midiout.is_port_open():
+            self._midiout.send_message([0x80, note, 0])
 
     @property
     def active_driver(self) -> str:

@@ -114,6 +114,18 @@ class RealtimeEvaluator:
                 else:
                     # Última repetición de la serie completada
                     self.current_step += 1
+                    accuracy_pct = round((self.current_step / len(self.current_lesson.notes)) * 100, 1) if self.current_lesson.notes else 100.0
+
+                    if accuracy_pct >= 90.0:
+                        verdict = f"🌟 ¡EJECUCIÓN IMPECABLE! ({accuracy_pct}% de precisión). Lección aprobada con maestría."
+                        color = "#00e676"  # Verde esmeralda
+                    elif accuracy_pct >= 75.0:
+                        verdict = f"👍 ¡Buena Técnica! ({accuracy_pct}% de precisión). Sugerencia: Realizá una serie x3 en bucle para afinar la fluidez."
+                        color = "#38bdf8"  # Azul cian
+                    else:
+                        verdict = f"💡 Revisión Requerida ({accuracy_pct}% de precisión). Revisa la posición de la mano y reintenta a ritmo más pausado."
+                        color = "#ffb300"  # Ámbar
+
                     return EvaluationResult(
                         is_correct_note=True,
                         expected_note=target.midi_note,
@@ -121,10 +133,11 @@ class RealtimeEvaluator:
                         velocity=velocity,
                         expected_finger=target.finger,
                         time_delta_ms=0.0,
-                        feedback_text=f"🎉 ¡COMPLETADO! {self.repeat_target} repeticiones impecables.",
-                        feedback_color="#00e676",
+                        feedback_text=verdict,
+                        feedback_color=color,
                         is_rep_complete=True
                     )
+
             else:
                 self.current_step += 1
                 feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)})"

@@ -156,5 +156,36 @@ Para un entorno multitutor familiar:
 
 ---
 
+## 📈 6. Blueprint de Evaluación Realista, Tarjetas Teóricas y Bitácora
+
+### 6.1. Evaluación Realista e Inmunidad a las Felicitaciones Ciegas
+En concordancia con el Pilar II (Realimentación Inmediata de Baja Latencia), el evaluador no debe emitir mensajes de "Excelente" si el estudiante cometió desvíos tonales o de octava:
+- **Cálculo de Precisión (%)**: $(N_{correctas} / N_{totales}) \times 100$.
+- **Criterio de Maestría por Tramo**:
+  - **90% – 100%**: 🌟 *Ejecución Impecable* (Desbloquea la lección y suma insignia).
+  - **75% – 89%**: 👍 *Buena Técnica* (Consejo: "Notas logradas. Realizá una serie de repeticiones x3 para afinar la fluidez").
+  - **< 75%**: 💡 *Revisión Requerida* (Sin felicitaciones vacías. Consejo: "Atención con el dedo indicado. Revisá la posición y reintentá").
+
+---
+
+### 6.2. Tarjetas Teóricas Contextuales y Biblioteca Consultable
+Para desacoplar la teoría árida de la práctica activa:
+1. **Tarjetas Introductivas por Lección (Popups)**:
+   - *Lección 1*: ¿Qué es el Pentagrama?, ¿Qué es la Clave de Sol?, Digitación de la Mano Derecha (1 a 5).
+   - *Lección 2*: ¿Qué es la Clave de Fa?, Digitación de la Mano Izquierda (5 a 1).
+2. **La Biblioteca de la Fragua (Glosario Consultable)**:
+   - Panel accesible desde la interfaz principal para releer las tarjetas teóricas y la historia del piano (*De Cristofori al Piano Moderno*).
+
+---
+
+### 6.3. Bitácora del Estudiante (Dashboard de Progreso)
+- Panel de visualización de estadísticas individuales por perfil (`UserStats`):
+  - Total de notas ejecutadas y porcentaje de precisión acumulada %.
+  - Racha de repeticiones completadas y lecciones aprobadas.
+  - Ficha personalizada por estudiante.
+
+---
+
 *Documento de diseño pedagógico consolidado y actualizado el 2026-07-21 en el Terroir de Marcelo y NEXO.*
+
 

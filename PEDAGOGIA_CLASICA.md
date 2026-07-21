@@ -102,4 +102,59 @@ Para mantener la motivación infantil sin caer en trivialidades:
 
 ---
 
-*Documento de diseño pedagógico consolidado el 2026-07-19 en el Terroir de Marcelo y NEXO.*
+## 🔐 5. Blueprint de Autenticación y Gestión de Perfiles Soberanos
+
+### 5.1. Fundamentación y Ley de Universalidad Semántica
+El diseño del sistema de perfiles se rige de forma estricta por la **Ley de Universalidad Semántica (Ley VI de NEXO)**:
+
+> **"El código opera sobre abstracciones de sistema (User, Session, Progress, Auth), nunca sobre nombres customizados o constantes mágicas hardcodeadas."**
+
+Prohibimos explícitamente la presencia de cadenas de texto de nombres de usuario dentro del código fuente. La aplicación trata a los estudiantes como entidades dinámicas desacopladas, garantizando que el sistema sea 100% extensible, reutilizable y soberano.
+
+---
+
+### 5.2. Justificación Neuro-Pedagógica de la Sesión Aislada
+Para un entorno multitutor familiar:
+1. **Aislamiento de Muestras Rítmicas y Progreso**: Cada estudiante posee su propia velocidad de mielenización, racha de días consecutivos y curva de precisión tonal (tolerancia en ms). La mezcla de perfiles contaminaría la curva de aprendizaje del evaluador en tiempo real (`RealtimeEvaluator`).
+2. **Foco e Inmunidad Visual**: Una vez autenticado el estudiante, la interfaz principal de estudio **debe quedar libre de ruido administrativo**. Se elimina cualquier widget o selector permanente de la pantalla de la partitura. En el cabezal solo se exhibe la insignia del estudiante activo y el botón **`[ 🚪 Cerrar Sesión ]`**.
+
+---
+
+### 5.3. Modelo de Entidades y Lógica de Negocio
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      ESTRUCTURA USER                        │
+├─────────────────────────────────────────────────────────────┤
+│ - id: str (UUIDv4)                                          │
+│ - username: str (Nombre de pantalla universal)              │
+│ - pin: str (PIN opcional de 4 dígitos para privacidad)      │
+│ - created_at: str (ISO-8601)                                │
+│ - active_lesson_id: str                                     │
+│ - completed_lessons: list[str]                              │
+│ - stats: UserStats (total_notes, accuracy_pct, streak_days) │
+│ - history: list[SessionLog]                                 │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 5.4. Flujo de Navegación de Sesión
+
+1. **Arranque de Aplicación (Estado Desconectado)**:
+   - Al iniciar `main.py`, se verifica la persistencia en `users.json`.
+   - Si no hay sesión activa guardada, la ventana presenta el **Panel de Bienvenida y Autenticación** (`LoginWidget`), permitiendo:
+     - Seleccionar un perfil existente (e ingresar PIN si fuere requerido).
+     - Registrar un nuevo perfil de estudiante.
+
+2. **Transición a Pantalla de Estudio (Estado Autenticado)**:
+   - Al autenticarse con éxito, el `LoginWidget` se retira y se despliega la interfaz de Partitura, Teclado e Indicadores.
+   - Se cargan automáticamente las lecciones aprobadas y la última lección activa del perfil.
+
+3. **Cierre de Sesión (Logout)**:
+   - Al presionar **`[ 🚪 Cerrar Sesión ]`**, la aplicación guarda el progreso pendiente en `users.json`, limpia el estado del evaluador y retorna limpiamente a la pantalla de Autenticación.
+
+---
+
+*Documento de diseño pedagógico consolidado y actualizado el 2026-07-21 en el Terroir de Marcelo y NEXO.*
+

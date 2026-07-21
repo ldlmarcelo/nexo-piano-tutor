@@ -1,9 +1,10 @@
 """
-Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.6.0).
-Captura eventos NOTE_ON del teclado MIDI físico (ej: Samson Carbon 49)
-vía python-rtmidi, con reporte explícito de estados de conexión para la UI.
+Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.7.0).
+Captura eventos NOTE_ON del teclado MIDI físico (Samson Carbon 49)
+usando una ÚNICA instancia de rtmidi.MidiIn para evitar auto-bloqueos en Windows WinMM.
 """
 
+import time
 from PySide6.QtCore import QObject, Signal
 try:
     import rtmidi
@@ -13,7 +14,7 @@ except ImportError:
 
 
 class MidiInputHandler(QObject):
-    """Manejador de entrada MIDI física en tiempo real."""
+    """Manejador de entrada MIDI física en tiempo real con instancia única."""
 
     note_played = Signal(int, int)   # (midi_note, velocity)
     note_released = Signal(int)      # (midi_note)
@@ -22,66 +23,24 @@ class MidiInputHandler(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._midiin = None
+        self._midiin = rtmidi.MidiIn() if HAS_RTMIDI else None
         self._connected_port_name: str | None = None
         self._is_open = False
 
     def get_available_ports(self) -> list[str]:
         """Devuelve la lista de puertos MIDI de entrada disponibles."""
-        if not HAS_RTMIDI:
+        if not self._midiin:
             return []
         try:
-            temp_in = rtmidi.MidiIn()
-            ports = temp_in.get_ports()
-            del temp_in
-            return ports
+            return self._midiin.get_ports()
         except Exception:
             return []
 
-    def connect_port(self, port_index: int) -> tuple[bool, str]:
-        """
-        Conecta al puerto MIDI especificado por índice.
-        Retorna (exito: bool, mensaje: str).
-        """
-        self.disconnect()
-        ports = self.get_available_ports()
-        if not (0 <= port_index < len(ports)):
-            return False, "Índice de puerto inválido."
-
-        port_name = ports[port_index]
-
-        try:
-            self._midiin = rtmidi.MidiIn()
-            self._midiin.ignore_types(sysex=True, timing=True, active_sense=True)
-            self._midiin.open_port(port_index)
-            self._midiin.set_callback(self._midi_callback)
-            self._connected_port_name = port_name
-            self._is_open = True
-            self.device_connected.emit(self._connected_port_name)
-            print(f"[MIDI IN OK] Conectado exitosamente a: {self._connected_port_name}")
-            return True, f"Conectado a {port_name}"
-        except Exception as e:
-            err_msg = str(e)
-            if self._midiin:
-                try:
-                    self._midiin.close_port()
-                except Exception:
-                    pass
-                self._midiin = None
-
-            self._is_open = False
-            self.device_disconnected.emit()
-
-            if "MidiInWinMM::openPort" in err_msg or "error creating" in err_msg.lower():
-                user_msg = f"Puerto '{port_name}' retenido por otra app (cerrá nexo-midi-synth u otros programas MIDI)."
-            else:
-                user_msg = f"Error al abrir '{port_name}': {err_msg}"
-
-            print(f"[MIDI IN ERROR] {user_msg}")
-            return False, user_msg
-
     def auto_connect(self) -> tuple[bool, str]:
         """Intenta conectar automáticamente al Samson Carbon 49 o al primer puerto disponible."""
+        if not self._midiin:
+            return False, "rtmidi no está disponible."
+
         ports = self.get_available_ports()
         if not ports:
             return False, "No se detectó ningún teclado MIDI USB."
@@ -94,16 +53,52 @@ class MidiInputHandler(QObject):
 
         return self.connect_port(selected_idx)
 
-    def disconnect(self):
-        """Desconecta el puerto MIDI actual."""
-        if self._midiin:
+    def connect_port(self, port_index: int) -> tuple[bool, str]:
+        """Conecta al puerto MIDI especificado por índice usando el único objeto MidiIn."""
+        if not self._midiin:
+            return False, "rtmidi no está disponible."
+
+        # Si el puerto ya está abierto, cerrarlo limpiamente primero
+        if self._midiin.is_port_open():
             try:
-                if self._midiin.is_port_open():
-                    self._midiin.cancel_callback()
-                    self._midiin.close_port()
+                self._midiin.cancel_callback()
+                self._midiin.close_port()
             except Exception:
                 pass
-            self._midiin = None
+            self._is_open = False
+            time.sleep(0.1)  # Pausa breve para liberar la manija WinMM
+
+        ports = self.get_available_ports()
+        if not (0 <= port_index < len(ports)):
+            return False, "Índice de puerto inválido."
+
+        port_name = ports[port_index]
+
+        try:
+            self._midiin.ignore_types(sysex=True, timing=True, active_sense=True)
+            self._midiin.open_port(port_index)
+            self._midiin.set_callback(self._midi_callback)
+            self._connected_port_name = port_name
+            self._is_open = True
+            self.device_connected.emit(self._connected_port_name)
+            print(f"[MIDI IN OK] Conectado exitosamente a: {self._connected_port_name}")
+            return True, f"Conectado a {port_name}"
+        except Exception as e:
+            err_msg = str(e)
+            self._is_open = False
+            self.device_disconnected.emit()
+            user_msg = f"Error al abrir '{port_name}': {err_msg}"
+            print(f"[MIDI IN ERROR] {user_msg}")
+            return False, user_msg
+
+    def disconnect(self):
+        """Desconecta el puerto MIDI actual."""
+        if self._midiin and self._midiin.is_port_open():
+            try:
+                self._midiin.cancel_callback()
+                self._midiin.close_port()
+            except Exception:
+                pass
         self._is_open = False
         self._connected_port_name = None
         self.device_disconnected.emit()

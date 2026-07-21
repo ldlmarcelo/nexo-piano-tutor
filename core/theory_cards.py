@@ -1,5 +1,5 @@
 """
-Biblioteca de Tarjetas Teóricas y Glosario Pedagógico para NEXO Piano Tutor (v1.0.0).
+Biblioteca de Tarjetas Teóricas y Glosario Pedagógico para NEXO Piano Tutor (v1.1.0).
 Implementa la Sección 6.2 de PEDAGOGIA_CLASICA.md.
 """
 
@@ -54,6 +54,54 @@ THEORY_CARDS_DATABASE: Dict[str, TheoryCard] = {
             {
                 "topic": "3. Relajación de Muñeca",
                 "text": "Mantené el peso de la mano descansando sobre las yemas y evitá levantar los hombros o tensionar el brazo."
+            }
+        ]
+    ),
+    "beyer_op101_03": TheoryCard(
+        lesson_id="beyer_op101_03",
+        title="Lección 3: Saltos de Terceras en Mano Derecha",
+        subtitle="Agilidad en Dedos 1, 3 y 5",
+        icon="🎵",
+        sections=[
+            {
+                "topic": "1. El Intervalo de Tercera",
+                "text": "Una 'tercera' es la distancia entre dos notas separadas por un grado (ej: Do a Mi, o Re a Fa). En la partitura se ve saltando de línea a línea o de espacio a espacio."
+            },
+            {
+                "topic": "2. Articulación de los Dedos Impares",
+                "text": "Esta lección ejercita los dedos 1 (Pulgar), 3 (Mayor) y 5 (Meñique). Mantené apoyados los dedos 2 y 4 relajados sobre las teclas sin presionarlas."
+            }
+        ]
+    ),
+    "beyer_op101_04": TheoryCard(
+        lesson_id="beyer_op101_04",
+        title="Lección 4: Saltos de Terceras en Mano Izquierda",
+        subtitle="Agilidad en Dedos 5, 3 y 1 en Clave de Fa",
+        icon="🎶",
+        sections=[
+            {
+                "topic": "1. Terceras en Clave de Fa",
+                "text": "La mano izquierda realiza saltos entre Do3, Mi3 y Sol3. Observá cómo las notas saltan de espacio a espacio dentro del pentagrama grave."
+            },
+            {
+                "topic": "2. Control del Peso",
+                "text": "Dejá caer suavemente el peso de la mano sobre el meñique (5) al tocar Do3 y apoyá el pulgar (1) para Sol3."
+            }
+        ]
+    ),
+    "beyer_op101_05": TheoryCard(
+        lesson_id="beyer_op101_05",
+        title="Lección 5: El Paso del Pulgar (Escala de Do Mayor)",
+        subtitle="Extensión Dinámica del Teclado",
+        icon="🚀",
+        sections=[
+            {
+                "topic": "1. La Técnica del Paso del Pulgar",
+                "text": "Para tocar más de 5 notas seguidas, la mano no 'salta', sino que el pulgar (1) pasa por debajo del dedo mayor (3) para alcanzar la nota Fa4 sin interrumpir el sonido legato."
+            },
+            {
+                "topic": "2. Secuencia de Digitación Ascendente",
+                "text": "Do4(1) ➔ Re4(2) ➔ Mi4(3) ➔ [PASO] ➔ Fa4(1) ➔ Sol4(2) ➔ La4(3) ➔ Si4(4) ➔ Do5(5)."
             }
         ]
     )

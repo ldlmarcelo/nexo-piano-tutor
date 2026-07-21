@@ -1,0 +1,28 @@
+{
+  "id": "beyer_op101_05",
+  "title": "Ejercicio N° 5 (Paso del Pulgar - Escala de Do Mayor)",
+  "composer": "Ferdinand Beyer",
+  "opus": "Opus 101",
+  "description": "Primera lección de extensión: la mano derecha ejecuta la escala completa de Do Mayor de 8 notas (Do4 a Do5) introduciendo la técnica del paso del pulgar (dedos 1-2-3, el pulgar pasa por debajo del 3 para tocar Fa4).",
+  "clef": "treble",
+  "bpm_recommended": 54,
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
+    {"midi_note": 71, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si"},
+    {"midi_note": 72, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "Do"},
+    
+    {"midi_note": 71, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

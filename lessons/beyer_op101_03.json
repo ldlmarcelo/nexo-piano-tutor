@@ -1,0 +1,24 @@
+{
+  "id": "beyer_op101_03",
+  "title": "Ejercicio N° 3 (Saltos de Terceras en Mano Derecha)",
+  "composer": "Ferdinand Beyer",
+  "opus": "Opus 101",
+  "description": "Estudio preparatorio para la mano derecha en Clave de Sol introduciendo el intervalo de tercera (Do4 - Mi4 - Sol4). Desarrolla el control independiente de los dedos 1, 3 y 5.",
+  "clef": "treble",
+  "bpm_recommended": 60,
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

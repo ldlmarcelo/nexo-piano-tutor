@@ -1,12 +1,10 @@
 """
-Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.3.0).
+Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.4.0).
 Captura eventos NOTE_ON de teclados MIDI físicos (ej: Samson Carbon 49)
-vía python-rtmidi y utiliza un buffer de cola con QTimer thread-safe
-para garantizar que las señales Qt se procesen limpiamente en el hilo principal GUI.
+vía python-rtmidi y emite señales Qt directas con trazabilidad por consola.
 """
 
-from collections import deque
-from PySide6.QtCore import QObject, Signal, QTimer
+from PySide6.QtCore import QObject, Signal
 try:
     import rtmidi
     HAS_RTMIDI = True
@@ -15,7 +13,7 @@ except ImportError:
 
 
 class MidiInputHandler(QObject):
-    """Manejador de entrada MIDI física en tiempo real con cola thread-safe."""
+    """Manejador de entrada MIDI física en tiempo real."""
 
     note_played = Signal(int, int)   # (midi_note, velocity)
     note_released = Signal(int)      # (midi_note)
@@ -27,13 +25,6 @@ class MidiInputHandler(QObject):
         self._midiin = rtmidi.MidiIn() if HAS_RTMIDI else None
         self._connected_port_name: str | None = None
         self._is_open = False
-        self._queue = deque()
-
-        # Timer de vaciado de cola a 5ms (200Hz) en el hilo principal de Qt
-        self._timer = QTimer(self)
-        self._timer.setInterval(5)
-        self._timer.timeout.connect(self._process_queue)
-        self._timer.start()
 
     def get_available_ports(self) -> list[str]:
         """Devuelve la lista de puertos MIDI de entrada disponibles."""
@@ -42,11 +33,10 @@ class MidiInputHandler(QObject):
         return self._midiin.get_ports()
 
     def auto_connect(self) -> bool:
-        """
-        Intenta conectar automáticamente al Samson Carbon 49 o al primer puerto disponible.
-        """
+        """Intenta conectar automáticamente al Samson Carbon 49 o al primer puerto disponible."""
         ports = self.get_available_ports()
         if not ports:
+            print("[MIDI IN WARN] No se detectaron dispositivos MIDI de entrada.")
             return False
 
         # Priorizar Samson Carbon 49 si está presente
@@ -73,10 +63,10 @@ class MidiInputHandler(QObject):
             self._connected_port_name = ports[port_index]
             self._is_open = True
             self.device_connected.emit(self._connected_port_name)
-            print(f"[MIDI IN] Conectado exitosamente a: {self._connected_port_name}")
+            print(f"[MIDI IN OK] Conectado exitosamente a: {self._connected_port_name}")
             return True
         except Exception as e:
-            print(f"[MIDI IN] Error al conectar puerto MIDI: {e}")
+            print(f"[MIDI IN ERROR] Fallo al abrir puerto MIDI: {e}")
             self._is_open = False
             self.device_disconnected.emit()
             return False
@@ -99,7 +89,7 @@ class MidiInputHandler(QObject):
         return self._connected_port_name
 
     def _midi_callback(self, event, data=None):
-        """Callback de rtmidi (corre en el hilo C++ de rtmidi). Encola eventos."""
+        """Callback directo de rtmidi al recibir mensajes MIDI de hardware."""
         message, _delta = event
         if not message or len(message) < 3:
             return
@@ -110,17 +100,11 @@ class MidiInputHandler(QObject):
 
         if status == 0x90:  # NOTE_ON
             if velocity > 0:
-                self._queue.append(("ON", note, velocity))
+                print(f"[MIDI HARDWARE] NOTE_ON -> Nota MIDI: {note}, Velocity: {velocity}")
+                self.note_played.emit(note, velocity)
             else:
-                self._queue.append(("OFF", note, 0))
-        elif status == 0x80:  # NOTE_OFF
-            self._queue.append(("OFF", note, 0))
-
-    def _process_queue(self):
-        """Procesador de la cola ejecutado en el HILO PRINCIPAL de Qt por QTimer."""
-        while self._queue:
-            evt_type, note, vel = self._queue.popleft()
-            if evt_type == "ON":
-                self.note_played.emit(note, vel)
-            elif evt_type == "OFF":
+                print(f"[MIDI HARDWARE] NOTE_OFF -> Nota MIDI: {note}")
                 self.note_released.emit(note)
+        elif status == 0x80:  # NOTE_OFF
+            print(f"[MIDI HARDWARE] NOTE_OFF -> Nota MIDI: {note}")
+            self.note_released.emit(note)

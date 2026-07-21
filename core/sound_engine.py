@@ -180,7 +180,37 @@ class SoundEngine:
             ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
             print(f"[AUDIO] Instrumento cambiado a Program GM {self._current_program} (WINMM)")
 
+    def play_metronome_click(self, is_downbeat: bool = False):
+        """
+        Reproduce un pulso auditivo de metrónomo.
+        is_downbeat=True: Acento de compás (nota más aguda / golpe fuerte).
+        is_downbeat=False: Golpe secundario de pulso.
+        """
+        velocity = 115 if is_downbeat else 85
+        note_downbeat = 76  # High Woodblock
+        note_upbeat = 77    # Low Woodblock
+
+        if self._fluidsynth:
+            try:
+                # Intentar canal 9 (Percusión General MIDI) o canal 0 con nota de percusión/piano agudo
+                click_note = note_downbeat if is_downbeat else note_upbeat
+                self._fluidsynth.noteon(9, click_note, velocity)
+            except Exception:
+                try:
+                    self._fluidsynth.noteon(0, 84 if is_downbeat else 72, velocity)
+                except Exception:
+                    pass
+        elif self._hwinmm:
+            # Canal de Percusión MIDI (Channel 10 en WinMM -> 0x99)
+            click_note = note_downbeat if is_downbeat else note_upbeat
+            msg = 0x99 | (click_note << 8) | (velocity << 16)
+            ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
+        elif self._midiout and self._midiout.is_port_open():
+            click_note = note_downbeat if is_downbeat else note_upbeat
+            self._midiout.send_message([0x99, click_note, velocity])
+
     def play_note(self, note: int, velocity: int = 100):
+
         """Reproduce una nota (NOTE_ON)."""
         velocity = max(1, min(127, velocity))
         note = max(0, min(127, note))

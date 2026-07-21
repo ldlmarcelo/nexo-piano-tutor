@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QGroupBox, QComboBox, QLabel, QPushButton, QFrame,
     QStackedWidget, QStatusBar
 )
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
@@ -300,6 +300,75 @@ class MainWindow(QMainWindow):
                 except (json.JSONDecodeError, OSError):
                     pass
 
+    def _on_study_mode_changed(self, index: int):
+        modes = ["read", "tempo", "full"]
+        if 0 <= index < len(modes):
+            mode = modes[index]
+            self.evaluator.mode = mode
+            if mode in ("tempo", "full"):
+                self._start_metronome_and_countdown()
+            else:
+                self._stop_metronome()
+
+    def _start_metronome_and_countdown(self):
+        """Inicia el metrónomo y la cuenta regresiva previa de 4 pulsos."""
+        self.metronome_timer.stop()
+        lesson = self.evaluator.current_lesson
+        bpm = lesson.bpm_recommended if lesson else 60
+        interval_ms = int((60.0 / max(30, min(240, bpm))) * 1000)
+        self.metronome_timer.setInterval(interval_ms)
+
+        self._is_countdown = True
+        self._countdown_count = 4
+        self._metronome_beat = 0
+        self._in_countdown_evaluation_paused = True
+
+        self.feedback_val.setText("⏱️ ¡Preparados! Cuenta Regresiva: 4...")
+        self.feedback_val.setStyleSheet("color: #fbbf24; font-size: 14px; font-weight: bold;")
+        self.metronome_timer.start()
+
+    def _stop_metronome(self):
+        """Detiene el metrónomo y reinicia el estado de conteo."""
+        self.metronome_timer.stop()
+        self._is_countdown = False
+        self._in_countdown_evaluation_paused = False
+        self._metronome_beat = 0
+        if self.evaluator.get_current_target():
+            self.feedback_val.setText("📖 Modo Lectura: Toca la tecla indicada")
+            self.feedback_val.setStyleSheet("color: #38bdf8;")
+
+    def _on_metronome_tick(self):
+        """Maneja cada pulso del timer de metrónomo."""
+        lesson = self.evaluator.current_lesson
+        ts_str = getattr(lesson, "time_signature", "4/4") if lesson else "4/4"
+        try:
+            beats_per_measure = int(ts_str.split("/")[0])
+        except Exception:
+            beats_per_measure = 4
+
+        if self._is_countdown:
+            # Golpe acentuado en el 4 inicial
+            is_downbeat = (self._countdown_count == 4)
+            self.sound_engine.play_metronome_click(is_downbeat)
+
+            colors = {4: "#fbbf24", 3: "#f59e0b", 2: "#eab308", 1: "#84cc16"}
+            cur_color = colors.get(self._countdown_count, "#fbbf24")
+            self.feedback_val.setText(f"⏱️ Cuenta Regresiva: {self._countdown_count}... (¡Escuchá el pulso!)")
+            self.feedback_val.setStyleSheet(f"color: {cur_color}; font-size: 15px; font-weight: bold;")
+
+            self._countdown_count -= 1
+            if self._countdown_count == 0:
+                self._is_countdown = False
+                self._in_countdown_evaluation_paused = False
+                self._metronome_beat = 0
+                self.feedback_val.setText("🎵 ¡A TOCAR! Mantené el pulso constante")
+                self.feedback_val.setStyleSheet("color: #00e676; font-size: 14px; font-weight: bold;")
+        else:
+            # Pulso normal durante la lección
+            is_downbeat = (self._metronome_beat == 0)
+            self.sound_engine.play_metronome_click(is_downbeat)
+            self._metronome_beat = (self._metronome_beat + 1) % beats_per_measure
+
     def _on_repeat_mode_changed(self, index: int):
         modes = ["1x", "3x", "5x", "loop"]
         mode = modes[index] if 0 <= index < len(modes) else "1x"
@@ -339,10 +408,13 @@ class MainWindow(QMainWindow):
                 if user:
                     user.active_lesson_id = lesson.id
                     self.user_manager.save()
+
+                if self.evaluator.mode in ("tempo", "full"):
+                    self._start_metronome_and_countdown()
+                else:
+                    self._stop_metronome()
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
-
-
 
     def _on_reset_clicked(self):
         self.evaluator.reset()
@@ -350,9 +422,18 @@ class MainWindow(QMainWindow):
             self.sheet_view.set_step(0)
             self._update_target_display()
             self.statusBar().showMessage("Lección reiniciada")
+            if self.evaluator.mode in ("tempo", "full"):
+                self._start_metronome_and_countdown()
+            else:
+                self._stop_metronome()
 
     def _on_note_played(self, note: int, velocity: int):
         if self.evaluator.is_finished:
+            return
+
+        # Durante la cuenta regresiva previa, hacemos sonar la tecla pero no evaluamos avance
+        if self._in_countdown_evaluation_paused:
+            self.sound_engine.play_note(note, velocity)
             return
 
         result = self.evaluator.evaluate_note_on(note, velocity)
@@ -376,6 +457,7 @@ class MainWindow(QMainWindow):
 
         if self.evaluator.is_finished:
             self.statusBar().showMessage("¡Serie de repeticiones completada con éxito!")
+
 
     def _update_target_display(self):
         self.piano_keyboard.clear_all_active()

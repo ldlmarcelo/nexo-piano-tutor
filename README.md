@@ -57,6 +57,12 @@ python main.py
 
 Módulo federado del ecosistema NEXO, diseñado para la formación musical clásica de los hijos de Marcelo.
 
+## 🔄 Protocolo de Desarrollo Cross-Platform (NUC ➔ Windows)
+
+> ⚠️ **IMPERATIVO DE COMMIT Y PUSH**: Dado que el código se escribe y refacciona en el host Linux (NUC) pero **la aplicación real con hardware MIDI (Samson Carbon 49) se ejecuta y prueba físicamente en Windows**, **es obligatorio realizar `git commit` y `git push` tras cada implementación o ajuste completado**, garantizando que la máquina Windows pueda sincronizar (`git pull`) y verificar inmediatamente los cambios en caliente.
+
+---
+
 ## Licencia
 
 MIT

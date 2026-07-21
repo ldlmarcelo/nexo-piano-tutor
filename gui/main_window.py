@@ -339,11 +339,9 @@ class MainWindow(QMainWindow):
                 if user:
                     user.active_lesson_id = lesson.id
                     self.user_manager.save()
-
-                # Desplegar tarjeta teórica introductiva
-                self._show_theory_dialog()
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
+
 
 
     def _on_reset_clicked(self):

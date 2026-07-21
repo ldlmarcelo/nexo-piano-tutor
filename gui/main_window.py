@@ -158,9 +158,6 @@ class MainWindow(QMainWindow):
         feedback_group.setFixedHeight(110)
         fb_layout = QHBoxLayout(feedback_group)
         fb_layout.setContentsMargins(10, 6, 10, 6)
- + Veredicto)
-        feedback_group = QGroupBox("GUÍA DE DIGITACIÓN & EVALUACIÓN EN TIEMPO REAL")
-        fb_layout = QHBoxLayout(feedback_group)
 
         # Digitación grande
         finger_col = QVBoxLayout()

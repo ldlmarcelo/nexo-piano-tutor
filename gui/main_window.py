@@ -104,12 +104,22 @@ class MainWindow(QMainWindow):
         study_layout.addWidget(sep)
 
         # Selector de Lección, Repetidor Bucle xN y Botones de Teoría / Bitácora
-        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y BITÁCORA")
+        # Selector de Lección, Modo Neuro-Pedagógico, Repetidor y Botones
+        lesson_group = QGroupBox("LECCIÓN, MODO DE ESTUDIO Y BITÁCORA")
         lesson_layout = QHBoxLayout(lesson_group)
         lesson_layout.addWidget(QLabel("Lección:"))
         
         self.lesson_combo = QComboBox()
         lesson_layout.addWidget(self.lesson_combo, stretch=2)
+
+        lesson_layout.addWidget(QLabel("Modo:"))
+        self.mode_combo = QComboBox()
+        self.mode_combo.addItems([
+            "📖 Lectura (Sin tiempo)",
+            "⏱️ Tiempo (Metrónomo)",
+            "🎭 Expresión (Integración)"
+        ])
+        lesson_layout.addWidget(self.mode_combo, stretch=1)
 
         lesson_layout.addWidget(QLabel("Bucle:"))
         self.repeat_combo = QComboBox()
@@ -133,6 +143,7 @@ class MainWindow(QMainWindow):
         lesson_layout.addWidget(self.reset_btn)
 
         study_layout.addWidget(lesson_group)
+
 
         # Partitura Gráfica Interactiva (Toma todo el espacio vertical disponible en 16:9)
         sheet_group = QGroupBox("PARTITURA & GUÍA")

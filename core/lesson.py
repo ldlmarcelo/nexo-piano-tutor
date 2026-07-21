@@ -27,5 +27,7 @@ class Lesson:
     description: str
     clef: str                 # "treble" (Sol), "bass" (Fa), "grand" (Ambas)
     bpm_recommended: int
+    time_signature: str = "4/4" # Compás musical ("4/4", "3/4", "2/4", etc.)
     instrument: int = 0       # Programa General MIDI (0 = Piano, 6 = Clavecín, 19 = Órgano)
     notes: List[TargetNote] = field(default_factory=list)
+

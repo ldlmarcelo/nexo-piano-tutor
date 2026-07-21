@@ -1,7 +1,8 @@
 """
 Renderizador gráfico interactivo de la partitura y la lección en tiempo real.
-Muestra el pentagrama (Clave de Sol / Fa), el signo de clave estándar,
-las notas en sus posiciones diatónicas exactas y el cursor de avance.
+Muestra el pentagrama (Clave de Sol / Fa), signo de clave, métrica de compás (4/4, 3/4),
+figuras rítmicas (redondas, blancas, negras, corchetes), plicas, líneas divisoras de compás,
+digitación (1-5 por mano) y cursor de avance en tiempo real.
 """
 
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
@@ -31,7 +32,7 @@ def midi_to_diatonic_step(note: int) -> int:
 
 
 class SheetView(QGraphicsView):
-    """Vista gráfica interactiva de la lección y pentagrama."""
+    """Vista gráfica interactiva de la lección con notación musical rítmica completa."""
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -57,13 +58,26 @@ class SheetView(QGraphicsView):
         if not self._lesson:
             return
 
-        # Geometría del pentagrama
-        # 5 líneas: Línea 5 (80), Línea 4 (94), Línea 3 (108), Línea 2 (122), Línea 1 (136)
+        # Geometría del pentagrama (5 líneas)
+        # Línea 5 (80), Línea 4 (94), Línea 3 (108 - centro), Línea 2 (122), Línea 1 (136)
         staff_y_start = 80
         line_spacing = 14
+        staff_y_end = staff_y_start + 4 * line_spacing  # 136
         half_spacing = line_spacing / 2  # 7px por paso diatónico
 
-        width = max(560, len(self._lesson.notes) * 52 + 130)
+        # Métrica / Compás (ej: "4/4" -> 4 tiempos de negra por compás)
+        ts_str = getattr(self._lesson, "time_signature", "4/4")
+        try:
+            ts_num, ts_den = map(int, ts_str.split("/"))
+        except Exception:
+            ts_num, ts_den = 4, 4
+
+        beats_per_measure = float(ts_num)
+
+        # Ancho adaptable de escena
+        x_start = 135  # Espacio tras clave + métrica
+        x_step = 54
+        width = max(600, len(self._lesson.notes) * x_step + x_start + 60)
         self._scene.setSceneRect(0, 0, width, 220)
 
         # 1. Dibujar las 5 líneas principales del pentagrama
@@ -75,36 +89,38 @@ class SheetView(QGraphicsView):
         # 2. Dibujar el Signo de Clave sobre el pentagrama
         is_treble = (self._lesson.clef == "treble")
         clef_symbol = "𝄞" if is_treble else "𝄢"
-        
-        # Intentar renderizar la clave musical con fuente rica
         clef_font = QFont("Segoe UI Symbol", 36 if is_treble else 30, QFont.Weight.Bold)
         clef_item = self._scene.addText(clef_symbol, clef_font)
         clef_item.setDefaultTextColor(QColor("#38bdf8"))
+        clef_item.setPos(22, 60 if is_treble else 70)
+
+        # 3. Dibujar la Métrica de Compás (Time Signature e.g. 4/4, 3/4)
+        ts_font = QFont("Segoe UI", 13, QFont.Weight.Bold)
         
-        # Ajuste Físico de Posición de Clave en el Pentagrama:
-        # Clave de Sol rodea Línea 2 (y=122). Clave de Fa los puntos rodean Línea 4 (y=94).
-        if is_treble:
-            clef_item.setPos(22, 60)
-        else:
-            clef_item.setPos(22, 70)
+        num_item = self._scene.addText(str(ts_num), ts_font)
+        num_item.setDefaultTextColor(QColor("#0284c7"))
+        num_item.setPos(72, 75)
+
+        den_item = self._scene.addText(str(ts_den), ts_font)
+        den_item.setDefaultTextColor(QColor("#0284c7"))
+        den_item.setPos(72, 103)
 
         # Título de la lección y clave
         clef_title = "Clave de Sol (Mano Derecha)" if is_treble else "Clave de Fa (Mano Izquierda)"
-        title_text = self._scene.addText(f"{clef_title} — {self._lesson.title}", QFont("Segoe UI", 10, QFont.Weight.Bold))
+        title_text = self._scene.addText(f"{clef_title} — {self._lesson.title} [{ts_str}]", QFont("Segoe UI", 10, QFont.Weight.Bold))
         title_text.setDefaultTextColor(QColor("#94a3b8"))
         title_text.setPos(75, 18)
 
-        # 3. Dibujar notas musicales de la lección
-        x_start = 95
-        x_step = 48
+        # 4. Dibujar notas musicales y líneas divisoras de compás
+        cumulative_beats = 0.0
+        pen_barline = QPen(QColor("#64748b"), 2)
 
         for idx, note in enumerate(self._lesson.notes):
             x = x_start + idx * x_step
             diatonic_val = midi_to_diatonic_step(note.midi_note)
 
-            # Cálculo de Y según la Clave:
-            # En Clave de Sol: Sol4 (67, diatónico 32) está en Línea 2 (y = 122)
-            # En Clave de Fa: Fa3 (53, diatónico 24) está en Línea 4 (y = 94)
+            # En Clave de Sol: Sol4 (67, diatónico 32) en Línea 2 (y = 122)
+            # En Clave de Fa: Fa3 (53, diatónico 24) en Línea 4 (y = 94)
             if is_treble:
                 y_center = 122 - (diatonic_val - 32) * half_spacing
             else:
@@ -115,46 +131,91 @@ class SheetView(QGraphicsView):
             is_current = (idx == self._current_step)
             is_past = (idx < self._current_step)
 
+            # Colores de estado
             if is_current:
-                brush = QBrush(QColor("#38bdf8"))  # Azul cian brillante para nota activa
-                pen = QPen(QColor("#0284c7"), 2)
+                color_note = QColor("#38bdf8")  # Azul cian brillante para nota activa
+                pen_note = QPen(QColor("#0284c7"), 2)
                 # Anillo pulsante alrededor de la nota activa
                 self._scene.addEllipse(x - 4, y_oval - 4, 22, 22, QPen(QColor("#38bdf8"), 2, Qt.PenStyle.DashLine))
             elif is_past:
-                brush = QBrush(QColor("#22c55e"))  # Verde para completadas
-                pen = QPen(QColor("#15803d"), 1)
+                color_note = QColor("#22c55e")  # Verde para completadas
+                pen_note = QPen(QColor("#15803d"), 1)
             else:
-                brush = QBrush(QColor("#64748b"))  # Gris para futuras
-                pen = QPen(QColor("#334155"), 1)
+                color_note = QColor("#94a3b8")  # Gris claro para futuras
+                pen_note = QPen(QColor("#475569"), 1)
 
-            # 4. Líneas Adicionales (Ledger Lines)
-            # Línea 1 inferior = 136. Si y_center >= 150, se requiere línea adicional inferior.
-            # Línea 5 superior = 80. Si y_center <= 66, se requiere línea adicional superior.
+            # Relleno de cabeza de nota según duración (Redonda/Blanca = transparente/hollow, Negra/Corchea = sólida)
+            duration = getattr(note, "duration_quarter", 1.0)
+            is_hollow = (duration >= 2.0)
+            brush_note = QBrush(Qt.BrushStyle.NoBrush) if is_hollow else QBrush(color_note)
+
+            # A. Líneas Adicionales (Ledger Lines)
             if y_center >= 150:
-                # Líneas adicionales inferiores (ej. Do4 en Clave de Sol a y=150)
                 y_ledger = 150
                 while y_ledger <= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else QColor("#64748b"), 2)
                     self._scene.addLine(x - 5, y_ledger, x + 19, y_ledger, pen_ledger)
                     y_ledger += 14
             elif y_center <= 66:
-                # Líneas adicionales superiores (ej. Do4 en Clave de Fa a y=66)
                 y_ledger = 66
                 while y_ledger >= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else QColor("#64748b"), 2)
                     self._scene.addLine(x - 5, y_ledger, x + 19, y_ledger, pen_ledger)
                     y_ledger -= 14
 
-            # Cabeza de la nota (óvalo estilizado 14x14)
-            self._scene.addEllipse(x, y_oval, 14, 14, pen, brush)
+            # B. Cabeza de la nota (óvalo estilizado 14x14)
+            self._scene.addEllipse(x, y_oval, 14, 14, pen_note, brush_note)
 
-            # Digitación (1 al 5) arriba de la nota
+            # C. Plica (Stem) y Corchete (Flag)
+            # Redonda (>= 4.0 tiempos) no lleva plica
+            if duration < 4.0:
+                # Dirección de plica: Hacia arriba si nota está abajo de Línea 3 (y > 108), abajo si y <= 108
+                stem_up = (y_center > 108)
+                pen_stem = QPen(color_note, 2)
+
+                if stem_up:
+                    stem_x = x + 13
+                    stem_y1 = y_center
+                    stem_y2 = y_center - 32
+                    self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
+                    # Corchete para corcheas (0.5)
+                    if duration <= 0.5:
+                        self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 + 10, pen_stem)
+                else:
+                    stem_x = x + 1
+                    stem_y1 = y_center
+                    stem_y2 = y_center + 32
+                    self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
+                    # Corchete para corcheas (0.5)
+                    if duration <= 0.5:
+                        self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 - 10, pen_stem)
+
+            # D. Digitación (1 al 5) con color distintivo por mano (Derecha: Cian, Izquierda: Esmeralda)
+            is_right_hand = (getattr(note, "hand", "R").upper() == "R")
+            finger_color = QColor("#38bdf8") if is_right_hand else QColor("#22c55e")
+            if is_current:
+                finger_color = QColor("#38bdf8")
+
             finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
-            finger_text.setDefaultTextColor(QColor("#38bdf8") if is_current else QColor("#94a3b8"))
-            finger_text.setPos(x - 2, y_oval - 28)
+            finger_text.setDefaultTextColor(finger_color)
+            # Posicionar digitación sobre o debajo de la nota para no colisionar con plica
+            finger_y = y_oval - 28 if (y_center > 108 or duration >= 4.0) else y_oval + 18
+            finger_text.setPos(x - 2, finger_y)
 
-            # Nombre / Lírica abajo de la partitura
+            # E. Nombre / Lírica debajo del pentagrama
             name_str = note.lyric or midi_to_note_name(note.midi_note)
             lyric_text = self._scene.addText(name_str, QFont("Segoe UI", 9, QFont.Weight.Bold if is_current else QFont.Weight.Normal))
             lyric_text.setDefaultTextColor(QColor("#38bdf8") if is_current else QColor("#64748b"))
             lyric_text.setPos(x - 4, 172)
+
+            # F. Acumular tiempos y dibujar Línea Divisora de Compás
+            cumulative_beats += duration
+            if cumulative_beats >= beats_per_measure and idx < len(self._lesson.notes) - 1:
+                x_bar = x + (x_step / 2) + 6
+                self._scene.addLine(x_bar, staff_y_start, x_bar, staff_y_end, pen_barline)
+                cumulative_beats = 0.0
+
+        # Línea final de cierre del pentagrama (Doble barra de compás final)
+        x_final = x_start + len(self._lesson.notes) * x_step - 15
+        self._scene.addLine(x_final - 4, staff_y_start, x_final - 4, staff_y_end, QPen(QColor("#64748b"), 1))
+        self._scene.addLine(x_final, staff_y_start, x_final, staff_y_end, QPen(QColor("#cbd5e1"), 3))

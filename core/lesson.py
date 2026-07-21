@@ -27,4 +27,5 @@ class Lesson:
     description: str
     clef: str                 # "treble" (Sol), "bass" (Fa), "grand" (Ambas)
     bpm_recommended: int
+    instrument: int = 0       # Programa General MIDI (0 = Piano, 6 = Clavecín, 19 = Órgano)
     notes: List[TargetNote] = field(default_factory=list)

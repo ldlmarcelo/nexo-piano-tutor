@@ -212,13 +212,16 @@ class MainWindow(QMainWindow):
                     description=data.get("description", ""),
                     clef=data.get("clef", "treble"),
                     bpm_recommended=data.get("bpm_recommended", 60),
+                    instrument=data.get("instrument", 0),
                     notes=notes
                 )
                 self.evaluator.load_lesson(lesson)
+                self.sound_engine.set_instrument(lesson.instrument)
                 self.sheet_view.load_lesson(lesson, 0)
                 self._update_target_display()
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
+
 
     def _on_reset_clicked(self):
         self.evaluator.reset()

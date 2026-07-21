@@ -1,5 +1,5 @@
 """
-Script de Diagnóstico Quirúrgico y Aislado para NEXO Piano Tutor.
+Script de Diagnostico Quirurgico y Aislado para NEXO Piano Tutor (ASCII 100% puro).
 Ejecutar con: python diagnose_midi.py
 """
 
@@ -8,7 +8,7 @@ import os
 import time
 
 print("=" * 60)
-print(" 🔬 NEXO Piano Tutor — Script de Diagnóstico Sistemático")
+print(" NEXO Piano Tutor -- Script de Diagnostico Sistematico")
 print("=" * 60)
 print(f"Python Version: {sys.version}")
 print(f"Plataforma: {sys.platform}")
@@ -45,7 +45,7 @@ try:
 except Exception as e:
     print(f" [!] ERROR en SoundEngine: {e}")
 
-# 3. Test de Evaluador Pedagógico (RealtimeEvaluator)
+# 3. Test de Evaluador Pedagogico (RealtimeEvaluator)
 print("\n[PASO 3] Verificando Evaluador (RealtimeEvaluator)...")
 try:
     from core.evaluator import RealtimeEvaluator, midi_to_note_name
@@ -59,7 +59,7 @@ try:
     evaluator = RealtimeEvaluator()
     evaluator.load_lesson(lesson)
 
-    print(f" -> Lección cargada. Nota esperada: {evaluator.get_current_target()}")
+    print(f" -> Leccion cargada. Nota esperada: {evaluator.get_current_target()}")
     
     # Test 1: Misma nota, otra octava (MIDI 48 = Do3 vs 60 = Do4)
     res_octave = evaluator.evaluate_note_on(48, 100)
@@ -75,13 +75,13 @@ except Exception as e:
 # 4. Test Escucha MIDI en Tiempo Real (30 segundos)
 if in_ports and midiin:
     print("\n" + "=" * 60)
-    print(" 🎹 ESCUCHA EN TIEMPO REAL DEL TECLADO MIDI (30 segundos)")
+    print(" ESCUCHA EN TIEMPO REAL DEL TECLADO MIDI (30 segundos)")
     print(" Por favor toca varias teclas en tu Samson Carbon 49...")
     print("=" * 60)
 
     selected_port = 0
-    for idx, name in enumerate(in_ports):
-        if "samson" in name.lower() or "carbon" in port.lower():
+    for idx, port_name in enumerate(in_ports):
+        if "samson" in port_name.lower() or "carbon" in port_name.lower():
             selected_port = idx
             break
 
@@ -109,5 +109,5 @@ if in_ports and midiin:
         print(f"\n [!] ERROR en captura de eventos MIDI: {e}")
 
 print("\n" + "=" * 60)
-print(" 🔬 Diagnóstico Finalizado.")
+print(" Diagnostico Finalizado.")
 print("=" * 60)

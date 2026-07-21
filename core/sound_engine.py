@@ -71,15 +71,23 @@ class SoundEngine:
                     self._fluidsynth = fluidsynth.Synth()
                     driver = "dsound" if sys.platform == "win32" else None
                     try:
-                        # midi_driver=None es CRÍTICO: impide que FluidSynth abra
+                        # midi_driver="none" es CRÍTICO: impide que FluidSynth abra
                         # su propio driver winmm de ENTRADA MIDI, que tomaría el
                         # puerto del Carbon 49 antes que nuestro rtmidi.MidiIn.
+                        try:
+                            self._fluidsynth.setting("midi.driver", "none")
+                        except Exception:
+                            pass
+
                         if driver:
-                            self._fluidsynth.start(driver=driver, midi_driver=None)
+                            self._fluidsynth.start(driver=driver, midi_driver="none")
                         else:
-                            self._fluidsynth.start(midi_driver=None)
+                            self._fluidsynth.start(midi_driver="none")
                     except Exception:
-                        self._fluidsynth.start(midi_driver=None)
+                        try:
+                            self._fluidsynth.start(midi_driver="none")
+                        except Exception:
+                            pass
 
                     self._sfid = self._fluidsynth.sfload(sf_path)
                     self._fluidsynth.program_select(0, self._sfid, 0, self._current_program)

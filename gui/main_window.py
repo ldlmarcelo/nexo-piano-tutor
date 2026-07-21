@@ -77,15 +77,20 @@ class MainWindow(QMainWindow):
         sep.setFixedHeight(1)
         layout.addWidget(sep)
 
-        # Selector de Lección
-        lesson_group = QGroupBox("LECCIÓN Y CURRICULUM")
+        # Selector de Lección y Repetidor Bucle xN
+        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y CURRICULUM")
         lesson_layout = QHBoxLayout(lesson_group)
-        lesson_layout.addWidget(QLabel("Seleccionar Lección:"))
+        lesson_layout.addWidget(QLabel("Lección:"))
         
         self.lesson_combo = QComboBox()
-        lesson_layout.addWidget(self.lesson_combo, stretch=1)
+        lesson_layout.addWidget(self.lesson_combo, stretch=2)
 
-        self.reset_btn = QPushButton("🔄 Reiniciar Lección")
+        lesson_layout.addWidget(QLabel("Bucle:"))
+        self.repeat_combo = QComboBox()
+        self.repeat_combo.addItems(["1x (Normal)", "3x (Serie x3)", "5x (Serie x5)", "♾️ Bucle Infinito"])
+        lesson_layout.addWidget(self.repeat_combo, stretch=1)
+
+        self.reset_btn = QPushButton("🔄 Reiniciar")
         self.reset_btn.setObjectName("resetBtn")
         lesson_layout.addWidget(self.reset_btn)
 
@@ -151,6 +156,7 @@ class MainWindow(QMainWindow):
 
     def _connect_signals(self):
         self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
+        self.repeat_combo.currentIndexChanged.connect(self._on_repeat_mode_changed)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
         self.piano_keyboard.note_pressed.connect(self._on_note_played)
         self.piano_keyboard.note_released.connect(self.sound_engine.stop_note)
@@ -195,6 +201,13 @@ class MainWindow(QMainWindow):
                 except (json.JSONDecodeError, OSError):
                     pass
 
+    def _on_repeat_mode_changed(self, index: int):
+        modes = ["1x", "3x", "5x", "loop"]
+        mode = modes[index] if 0 <= index < len(modes) else "1x"
+        self.evaluator.set_repeat_mode(mode)
+        self.sheet_view.set_step(self.evaluator.current_step)
+        self._update_target_display()
+
     def _on_lesson_changed(self, index: int):
         if index < 0:
             return
@@ -224,7 +237,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
 
-
     def _on_reset_clicked(self):
         self.evaluator.reset()
         if self.evaluator.current_lesson:
@@ -247,9 +259,8 @@ class MainWindow(QMainWindow):
         self._update_target_display()
 
         if self.evaluator.is_finished:
-            self.feedback_val.setText("🎉 ¡FELICITACIONES! Lección completada")
-            self.feedback_val.setStyleSheet("color: #00e676;")
-            self.statusBar().showMessage("¡Lección completada con éxito!")
+            self.statusBar().showMessage("¡Serie de repeticiones completada con éxito!")
+
 
     def _update_target_display(self):
         self.piano_keyboard.clear_all_active()

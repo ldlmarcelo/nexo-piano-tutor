@@ -1,7 +1,7 @@
 """
-Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.7.0).
+Manejador y Detector de Entrada MIDI para NEXO Piano Tutor (v1.9.0).
 Captura eventos NOTE_ON del teclado MIDI físico (Samson Carbon 49)
-usando una ÚNICA instancia de rtmidi.MidiIn para evitar auto-bloqueos en Windows WinMM.
+abriendo open_port() PRIMERO antes de establecer ignore_types() para evitar fallos de WinMM en Windows.
 """
 
 import time
@@ -14,7 +14,7 @@ except ImportError:
 
 
 class MidiInputHandler(QObject):
-    """Manejador de entrada MIDI física en tiempo real con instancia única."""
+    """Manejador de entrada MIDI física en tiempo real."""
 
     note_played = Signal(int, int)   # (midi_note, velocity)
     note_released = Signal(int)      # (midi_note)
@@ -37,7 +37,10 @@ class MidiInputHandler(QObject):
             return []
 
     def auto_connect(self) -> tuple[bool, str]:
-        """Intenta conectar automáticamente al Samson Carbon 49 o al primer puerto disponible."""
+        """
+        Intenta conectar al Samson Carbon 49 probando el puerto preferido
+        y luego iterando sobre TODOS los puertos disponibles.
+        """
         if not self._midiin:
             return False, "rtmidi no está disponible."
 
@@ -45,16 +48,34 @@ class MidiInputHandler(QObject):
         if not ports:
             return False, "No se detectó ningún teclado MIDI USB."
 
-        selected_idx = 0
+        print(f"[MIDI IN] Escaneando {len(ports)} puerto(s) MIDI de entrada:")
+        for idx, p in enumerate(ports):
+            print(f"  [{idx}] '{p}'")
+
+        # Priorizar índices que contengan 'samson' o 'carbon'
+        candidate_indices = []
         for idx, port_name in enumerate(ports):
             if "samson" in port_name.lower() or "carbon" in port_name.lower():
-                selected_idx = idx
-                break
+                candidate_indices.append(idx)
 
-        return self.connect_port(selected_idx)
+        for idx in range(len(ports)):
+            if idx not in candidate_indices:
+                candidate_indices.append(idx)
+
+        last_err = ""
+        for idx in candidate_indices:
+            print(f"[MIDI IN] Intentando abrir puerto [{idx}] '{ports[idx]}'...")
+            ok, msg = self.connect_port(idx)
+            if ok:
+                print(f"[MIDI IN OK] Conexión establecida en puerto [{idx}] '{ports[idx]}'")
+                return True, msg
+            else:
+                last_err = msg
+
+        return False, f"No se pudo abrir ningún puerto MIDI. Último error: {last_err}"
 
     def connect_port(self, port_index: int) -> tuple[bool, str]:
-        """Conecta al puerto MIDI especificado por índice usando el único objeto MidiIn."""
+        """Conecta al puerto MIDI especificado por índice con orden correcto WinMM."""
         if not self._midiin:
             return False, "rtmidi no está disponible."
 
@@ -66,7 +87,7 @@ class MidiInputHandler(QObject):
             except Exception:
                 pass
             self._is_open = False
-            time.sleep(0.1)  # Pausa breve para liberar la manija WinMM
+            time.sleep(0.1)
 
         ports = self.get_available_ports()
         if not (0 <= port_index < len(ports)):
@@ -75,20 +96,20 @@ class MidiInputHandler(QObject):
         port_name = ports[port_index]
 
         try:
-            self._midiin.ignore_types(sysex=True, timing=True, active_sense=True)
+            # ORDEN CRÍTICO WINMM: Abrir puerto PRIMERO, luego ignorar tipos
             self._midiin.open_port(port_index)
+            self._midiin.ignore_types(sysex=True, timing=True, active_sense=True)
             self._midiin.set_callback(self._midi_callback)
             self._connected_port_name = port_name
             self._is_open = True
             self.device_connected.emit(self._connected_port_name)
-            print(f"[MIDI IN OK] Conectado exitosamente a: {self._connected_port_name}")
             return True, f"Conectado a {port_name}"
         except Exception as e:
             err_msg = str(e)
             self._is_open = False
+            self._connected_port_name = None
             self.device_disconnected.emit()
             user_msg = f"Error al abrir '{port_name}': {err_msg}"
-            print(f"[MIDI IN ERROR] {user_msg}")
             return False, user_msg
 
     def disconnect(self):
@@ -123,11 +144,11 @@ class MidiInputHandler(QObject):
 
         if status == 0x90:  # NOTE_ON
             if velocity > 0:
-                print(f"[MIDI EVENT] NOTE_ON -> Nota: {note}, Velocity: {velocity}")
+                print(f"[MIDI HARDWARE] NOTE_ON -> Nota: {note}, Velocity: {velocity}")
                 self.note_played.emit(note, velocity)
             else:
-                print(f"[MIDI EVENT] NOTE_OFF -> Nota: {note}")
+                print(f"[MIDI HARDWARE] NOTE_OFF -> Nota: {note}")
                 self.note_released.emit(note)
         elif status == 0x80:  # NOTE_OFF
-            print(f"[MIDI EVENT] NOTE_OFF -> Nota: {note}")
+            print(f"[MIDI HARDWARE] NOTE_OFF -> Nota: {note}")
             self.note_released.emit(note)

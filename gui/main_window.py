@@ -103,6 +103,14 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(sheet_group, stretch=1)
 
+        # Teclado Virtual Interactivo (Piano Roll)
+        piano_group = QGroupBox("TECLADO DE PIANO INTERACTIVO")
+        piano_layout = QVBoxLayout(piano_group)
+        self.piano_keyboard = PianoKeyboard(start_note=36, end_note=84)
+        piano_layout.addWidget(self.piano_keyboard)
+
+        layout.addWidget(piano_group)
+
         # Panel de Feedback Pedagógico (Dedos + Veredicto)
         feedback_group = QGroupBox("GUÍA DE DIGITACIÓN & EVALUACIÓN EN TIEMPO REAL")
         fb_layout = QHBoxLayout(feedback_group)
@@ -147,6 +155,7 @@ class MainWindow(QMainWindow):
     def _connect_signals(self):
         self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
+        self.piano_keyboard.note_pressed.connect(self._on_note_played)
 
         if self.engine:
             self.engine.note_played.connect(self._on_note_played)
@@ -209,6 +218,10 @@ class MainWindow(QMainWindow):
         self.feedback_val.setText(result.feedback_text)
         self.feedback_val.setStyleSheet(f"color: {result.feedback_color};")
 
+        # Reproducir nota por audio si hay motor sintetizador
+        if self.engine:
+            self.engine.play_note(note, velocity)
+
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
 
@@ -218,9 +231,12 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage("¡Lección completada con éxito!")
 
     def _update_target_display(self):
+        self.piano_keyboard.clear_all_active()
         target = self.evaluator.get_current_target()
         if target:
             self.finger_val.setText(str(target.finger))
+            # Resaltar la nota objetivo esperada en cian
+            self.piano_keyboard.set_key_active(target.midi_note, "#38bdf8")
         else:
             self.finger_val.setText("—")
 
@@ -228,3 +244,4 @@ class MainWindow(QMainWindow):
         if self.engine:
             self.engine.cleanup()
         super().closeEvent(event)
+

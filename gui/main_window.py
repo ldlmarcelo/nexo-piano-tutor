@@ -46,9 +46,18 @@ class MainWindow(QMainWindow):
         self.sound_engine = SoundEngine()
         self._is_initial_auth = False
 
+        # Timer de Metrónomo y estado de cuenta regresiva
+        self.metronome_timer = QTimer(self)
+        self.metronome_timer.timeout.connect(self._on_metronome_tick)
+        self._is_countdown = False
+        self._countdown_count = 4
+        self._metronome_beat = 0
+        self._in_countdown_evaluation_paused = False
+
         self._build_ui()
         self._connect_signals()
         self._load_available_lessons()
+
 
         # Verificar si hay usuario activo previamente autenticado
         active_user = self.user_manager.get_active_user()

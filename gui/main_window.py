@@ -19,9 +19,11 @@ from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
 from core.sound_engine import SoundEngine
 from core.user_manager import UserManager, User
+from core.theory_cards import get_theory_card
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard
 from gui.login_widget import LoginWidget
+from gui.theory_dialog import TheoryDialog, LibraryDialog
 
 CARPETA_SCRIPT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LESSONS_DIR = os.path.join(CARPETA_SCRIPT, "lessons")
@@ -34,7 +36,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("🎼 NEXO Piano Tutor — Formación Clásica")
         self.setMinimumSize(640, 740)
-        self.resize(720, 800)
+        self.resize(740, 820)
 
         # Gestor de Usuarios, Evaluador, Entrada MIDI física y Motor Audio
         self.user_manager = UserManager()
@@ -99,8 +101,8 @@ class MainWindow(QMainWindow):
         sep.setFixedHeight(1)
         study_layout.addWidget(sep)
 
-        # Selector de Lección y Repetidor Bucle xN
-        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y CURRICULUM")
+        # Selector de Lección, Repetidor Bucle xN y Botones de Teoría / Biblioteca
+        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y RECURSOS TEÓRICOS")
         lesson_layout = QHBoxLayout(lesson_group)
         lesson_layout.addWidget(QLabel("Lección:"))
         
@@ -112,11 +114,20 @@ class MainWindow(QMainWindow):
         self.repeat_combo.addItems(["1x (Normal)", "3x (Serie x3)", "5x (Serie x5)", "♾️ Bucle Infinito"])
         lesson_layout.addWidget(self.repeat_combo, stretch=1)
 
+        self.theory_btn = QPushButton("📖 Teoría")
+        self.theory_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;")
+        lesson_layout.addWidget(self.theory_btn)
+
+        self.library_btn = QPushButton("🏛️ Biblioteca")
+        self.library_btn.setStyleSheet("background-color: #1e293b; color: #38bdf8; font-weight: bold; border: 1px solid #0284c7; padding: 5px 10px; border-radius: 4px;")
+        lesson_layout.addWidget(self.library_btn)
+
         self.reset_btn = QPushButton("🔄 Reiniciar")
         self.reset_btn.setObjectName("resetBtn")
         lesson_layout.addWidget(self.reset_btn)
 
         study_layout.addWidget(lesson_group)
+
 
         # Partitura Gráfica Interactiva
         sheet_group = QGroupBox("PARTITURA & GUÍA")
@@ -184,6 +195,8 @@ class MainWindow(QMainWindow):
 
         self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
         self.repeat_combo.currentIndexChanged.connect(self._on_repeat_mode_changed)
+        self.theory_btn.clicked.connect(self._show_theory_dialog)
+        self.library_btn.clicked.connect(self._show_library_dialog)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
         self.piano_keyboard.note_pressed.connect(self._on_note_played)
         self.piano_keyboard.note_released.connect(self.sound_engine.stop_note)
@@ -201,6 +214,22 @@ class MainWindow(QMainWindow):
             self._on_midi_device_connected(dev_name)
         else:
             self._on_midi_device_disconnected()
+
+    def _show_theory_dialog(self):
+        """Muestra el popup de Tarjeta Teórica para la lección activa."""
+        if not self.evaluator.current_lesson:
+            return
+        card = get_theory_card(self.evaluator.current_lesson.id)
+        if card:
+            dlg = TheoryDialog(card, self)
+            dlg.exec()
+        else:
+            self.statusBar().showMessage(f"No hay tarjeta teórica registrada para {self.evaluator.current_lesson.title}")
+
+    def _show_library_dialog(self):
+        """Abre 'La Biblioteca de la Fragua' (Glosario Teórico Completo)."""
+        dlg = LibraryDialog(self)
+        dlg.exec()
 
     def _on_user_authenticated(self, user: User):
         """Maneja el ingreso de un estudiante autenticado."""
@@ -290,8 +319,12 @@ class MainWindow(QMainWindow):
                 if user:
                     user.active_lesson_id = lesson.id
                     self.user_manager.save()
+
+                # Desplegar tarjeta teórica introductiva
+                self._show_theory_dialog()
         except Exception as e:
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
+
 
     def _on_reset_clicked(self):
         self.evaluator.reset()

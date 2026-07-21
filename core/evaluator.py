@@ -36,6 +36,11 @@ class RealtimeEvaluator:
         self.current_step: int = 0
         self.mode: str = "read"  # "read" (Esperar nota sin metrónomo), "tempo", "full"
         
+        # Métrica de Precisión Real (Intento por Intento)
+        self.total_attempts: int = 0
+        self.correct_attempts: int = 0
+        self.wrong_attempts: int = 0
+
         # Sistema de Bucle xN
         self.repeat_target: int = 1  # 1, 3, 5, o -1 para bucle infinito
         self.current_rep: int = 1     # Repetición activa (1-indexed)
@@ -43,8 +48,7 @@ class RealtimeEvaluator:
     def load_lesson(self, lesson: Lesson):
         """Carga una lección pedagógica y reinicia el índice de progreso y repeticiones."""
         self.current_lesson = lesson
-        self.current_step = 0
-        self.current_rep = 1
+        self.reset()
 
     def set_repeat_mode(self, mode_str: str):
         """Configura el modo de repetición (1x, 3x, 5x, loop)."""
@@ -84,11 +88,13 @@ class RealtimeEvaluator:
                 is_rep_complete=True
             )
 
+        self.total_attempts += 1
         is_exact_correct = (played_note == target.midi_note)
         is_same_pitch = (played_note % 12 == target.midi_note % 12)
         is_rep_complete = False
 
         if is_exact_correct:
+            self.correct_attempts += 1
             # Si tocamos la última nota de la lección
             if self.current_step == len(self.current_lesson.notes) - 1:
                 is_rep_complete = True
@@ -97,7 +103,7 @@ class RealtimeEvaluator:
                     completed_rep = self.current_rep
                     self.current_rep += 1
                     self.current_step = 0
-                    rep_str = f"🔄 ¡Excelente! Repetición {completed_rep} lista. Arrancando repetición {self.current_rep}..."
+                    rep_str = f"🔄 Repetición {completed_rep} lista. Arrancando repetición {self.current_rep}..."
                     if self.repeat_target != -1:
                         rep_str = f"🔄 Repetición {completed_rep} de {self.repeat_target} completada. ¡Vas por la {self.current_rep}!"
                     return EvaluationResult(
@@ -112,18 +118,18 @@ class RealtimeEvaluator:
                         is_rep_complete=True
                     )
                 else:
-                    # Última repetición de la serie completada
+                    # Última repetición de la serie completada -> Calcular precisión real porcentual
                     self.current_step += 1
-                    accuracy_pct = round((self.current_step / len(self.current_lesson.notes)) * 100, 1) if self.current_lesson.notes else 100.0
+                    accuracy_pct = round((self.correct_attempts / self.total_attempts) * 100, 1) if self.total_attempts > 0 else 100.0
 
                     if accuracy_pct >= 90.0:
-                        verdict = f"🌟 ¡EJECUCIÓN IMPECABLE! ({accuracy_pct}% de precisión). Lección aprobada con maestría."
+                        verdict = f"🌟 ¡EJECUCIÓN IMPECABLE! ({accuracy_pct}% de precisión en {self.total_attempts} notas). Lección aprobada con maestría."
                         color = "#00e676"  # Verde esmeralda
                     elif accuracy_pct >= 75.0:
-                        verdict = f"👍 ¡Buena Técnica! ({accuracy_pct}% de precisión). Sugerencia: Realizá una serie x3 en bucle para afinar la fluidez."
+                        verdict = f"👍 ¡Buena Técnica! ({accuracy_pct}% de precisión en {self.total_attempts} notas). Sugerencia: Realizá una serie x3 en bucle para afinar la fluidez."
                         color = "#38bdf8"  # Azul cian
                     else:
-                        verdict = f"💡 Revisión Requerida ({accuracy_pct}% de precisión). Revisa la posición de la mano y reintenta a ritmo más pausado."
+                        verdict = f"💡 Revisión Requerida ({accuracy_pct}% de precisión, {self.wrong_attempts} errores). Revisa la posición de la mano y reintenta."
                         color = "#ffb300"  # Ámbar
 
                     return EvaluationResult(
@@ -137,21 +143,25 @@ class RealtimeEvaluator:
                         feedback_color=color,
                         is_rep_complete=True
                     )
-
             else:
                 self.current_step += 1
-                feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)})"
+                if self.wrong_attempts > 0:
+                    feedback = f"Bien: Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)}) [Errores: {self.wrong_attempts}]"
+                else:
+                    feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)})"
                 color = "#00e676"
-        elif is_same_pitch:
-            played_name = midi_to_note_name(played_note)
-            target_name = midi_to_note_name(target.midi_note)
-            feedback = f"¡Es un {target.lyric or ''}! Pero en octava distinta (Tocaste {played_name}, se busca {target_name})."
-            color = "#ffb300"
         else:
-            played_name = midi_to_note_name(played_note)
-            target_name = midi_to_note_name(target.midi_note)
-            feedback = f"Tocaste {played_name}. Se esperaba Dedo {target.finger} ({target.lyric or ''} / {target_name})"
-            color = "#e74c3c"
+            self.wrong_attempts += 1
+            if is_same_pitch:
+                played_name = midi_to_note_name(played_note)
+                target_name = midi_to_note_name(target.midi_note)
+                feedback = f"¡Es un {target.lyric or ''}! Pero en octava distinta (Tocaste {played_name}, se busca {target_name})."
+                color = "#ffb300"
+            else:
+                played_name = midi_to_note_name(played_note)
+                target_name = midi_to_note_name(target.midi_note)
+                feedback = f"Tocaste {played_name}. Se esperaba Dedo {target.finger} ({target.lyric or ''} / {target_name})"
+                color = "#e74c3c"
 
         return EvaluationResult(
             is_correct_note=is_exact_correct,
@@ -166,8 +176,12 @@ class RealtimeEvaluator:
         )
 
     def reset(self):
-        """Reinicia el paso actual y las repeticiones al inicio de la lección."""
+        """Reinicia el paso actual, repeticiones e intentos acumulados al inicio de la lección."""
         self.current_step = 0
         self.current_rep = 1
+        self.total_attempts = 0
+        self.correct_attempts = 0
+        self.wrong_attempts = 0
+
 
 

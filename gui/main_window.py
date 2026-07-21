@@ -16,19 +16,9 @@ from PySide6.QtCore import Qt
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
+from core.sound_engine import SoundEngine
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard
-
-# Intentar importar MidiEngine si nexo-midi-synth está instalado o en PROYECTOS
-try:
-    import sys
-    synth_path = "/home/marcelo/PROYECTOS/nexo-midi-synth"
-    if synth_path not in sys.path:
-        sys.path.insert(0, synth_path)
-    from core.engine import MidiEngine
-    HAS_SYNTH = True
-except ImportError:
-    HAS_SYNTH = False
 
 CARPETA_SCRIPT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LESSONS_DIR = os.path.join(CARPETA_SCRIPT, "lessons")
@@ -43,16 +33,16 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(600, 720)
         self.resize(700, 780)
 
-        # Evaluador, Entrada MIDI física y Motor Audio
+        # Evaluador, Entrada MIDI física y Motor Audio Soberano
         self.evaluator = RealtimeEvaluator()
         self.midi_input = MidiInputHandler(self)
-        self.engine = MidiEngine(self) if HAS_SYNTH else None
+        self.sound_engine = SoundEngine()
 
         self._build_ui()
         self._connect_signals()
         self._load_available_lessons()
 
-        self.statusBar().showMessage("NEXO Piano Tutor v1.0.0 — Listo para estudiar")
+        self.statusBar().showMessage(f"NEXO Piano Tutor v1.0.0 — Audio: {self.sound_engine.active_driver}")
 
     # ── Construcción de UI ─────────────────────────────────────────
 
@@ -163,9 +153,11 @@ class MainWindow(QMainWindow):
         self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
         self.piano_keyboard.note_pressed.connect(self._on_note_played)
+        self.piano_keyboard.note_released.connect(self.sound_engine.stop_note)
 
         # Captura de Teclado Físico (Samson Carbon 49)
         self.midi_input.note_played.connect(self._on_note_played)
+        self.midi_input.note_released.connect(self.sound_engine.stop_note)
         self.midi_input.device_connected.connect(self._on_midi_device_connected)
         self.midi_input.device_disconnected.connect(self._on_midi_device_disconnected)
 
@@ -176,13 +168,10 @@ class MainWindow(QMainWindow):
         else:
             self._on_midi_device_disconnected()
 
-        if self.engine:
-            self.engine.note_played.connect(self._on_note_played)
-
     def _on_midi_device_connected(self, device_name: str):
         self.midi_badge.setText(f"🎹 {device_name}")
         self.midi_badge.setStyleSheet("color: #00e676; font-size: 11px; font-weight: bold; background-color: #064e3b; padding: 4px 8px; border-radius: 4px;")
-        self.statusBar().showMessage(f"Teclado MIDI conectado: {device_name}")
+        self.statusBar().showMessage(f"Teclado MIDI conectado: {device_name} | Audio: {self.sound_engine.active_driver}")
 
     def _on_midi_device_disconnected(self):
         self.midi_badge.setText("⌨️ Teclado Virtual Activo (Sin MIDI Físico)")
@@ -246,9 +235,8 @@ class MainWindow(QMainWindow):
         self.feedback_val.setText(result.feedback_text)
         self.feedback_val.setStyleSheet(f"color: {result.feedback_color};")
 
-        # Reproducir nota por audio si hay motor sintetizador
-        if self.engine:
-            self.engine.play_note(note, velocity)
+        # Reproducir nota por audio mediante SoundEngine
+        self.sound_engine.play_note(note, velocity)
 
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
@@ -270,8 +258,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         self.midi_input.disconnect()
-        if self.engine:
-            self.engine.cleanup()
+        self.sound_engine.cleanup()
         super().closeEvent(event)
+
 
 

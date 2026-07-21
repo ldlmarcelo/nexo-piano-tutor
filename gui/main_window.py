@@ -17,7 +17,8 @@ from PySide6.QtCore import Qt
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
-from core.sound_engine import SoundEnginfrom core.user_manager import UserManager, User
+from core.sound_engine import SoundEngine
+from core.user_manager import UserManager, User
 from core.theory_cards import get_theory_card
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard

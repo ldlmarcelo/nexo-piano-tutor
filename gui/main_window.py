@@ -17,13 +17,13 @@ from PySide6.QtCore import Qt
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
-from core.sound_engine import SoundEngine
-from core.user_manager import UserManager, User
+from core.sound_engine import SoundEnginfrom core.user_manager import UserManager, User
 from core.theory_cards import get_theory_card
 from gui.sheet_view import SheetView, midi_to_note_name
 from gui.piano_keyboard import PianoKeyboard
 from gui.login_widget import LoginWidget
 from gui.theory_dialog import TheoryDialog, LibraryDialog
+from gui.dashboard_dialog import DashboardDialog
 
 CARPETA_SCRIPT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LESSONS_DIR = os.path.join(CARPETA_SCRIPT, "lessons")
@@ -35,14 +35,15 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("🎼 NEXO Piano Tutor — Formación Clásica")
-        self.setMinimumSize(640, 740)
-        self.resize(740, 820)
+        self.setMinimumSize(680, 740)
+        self.resize(760, 820)
 
         # Gestor de Usuarios, Evaluador, Entrada MIDI física y Motor Audio
         self.user_manager = UserManager()
         self.evaluator = RealtimeEvaluator()
         self.midi_input = MidiInputHandler(self)
         self.sound_engine = SoundEngine()
+        self._is_initial_auth = False
 
         self._build_ui()
         self._connect_signals()
@@ -70,8 +71,8 @@ class MainWindow(QMainWindow):
         # PÁGINA 1: Interfaz Principal de Aprendizaje (Estudio)
         self.study_widget = QWidget()
         study_layout = QVBoxLayout(self.study_widget)
-        study_layout.setSpacing(10)
-        study_layout.setContentsMargins(16, 14, 16, 14)
+        study_layout.setSpacing(8)
+        study_layout.setContentsMargins(16, 12, 16, 12)
 
         # Cabezal: Título + Usuario Activo + Insignia MIDI + Cerrar Sesión
         head_row = QHBoxLayout()
@@ -101,8 +102,8 @@ class MainWindow(QMainWindow):
         sep.setFixedHeight(1)
         study_layout.addWidget(sep)
 
-        # Selector de Lección, Repetidor Bucle xN y Botones de Teoría / Biblioteca
-        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y RECURSOS TEÓRICOS")
+        # Selector de Lección, Repetidor Bucle xN y Botones de Teoría / Bitácora
+        lesson_group = QGroupBox("LECCIÓN, REPETICIÓN Y BITÁCORA")
         lesson_layout = QHBoxLayout(lesson_group)
         lesson_layout.addWidget(QLabel("Lección:"))
         
@@ -113,6 +114,10 @@ class MainWindow(QMainWindow):
         self.repeat_combo = QComboBox()
         self.repeat_combo.addItems(["1x (Normal)", "3x (Serie x3)", "5x (Serie x5)", "♾️ Bucle Infinito"])
         lesson_layout.addWidget(self.repeat_combo, stretch=1)
+
+        self.dashboard_btn = QPushButton("📊 Bitácora")
+        self.dashboard_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;")
+        lesson_layout.addWidget(self.dashboard_btn)
 
         self.theory_btn = QPushButton("📖 Teoría")
         self.theory_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;")
@@ -128,25 +133,31 @@ class MainWindow(QMainWindow):
 
         study_layout.addWidget(lesson_group)
 
-
-        # Partitura Gráfica Interactiva
+        # Partitura Gráfica Interactiva (Toma todo el espacio vertical disponible en 16:9)
         sheet_group = QGroupBox("PARTITURA & GUÍA")
         sheet_layout = QVBoxLayout(sheet_group)
         
         self.sheet_view = SheetView()
         sheet_layout.addWidget(self.sheet_view)
 
-        study_layout.addWidget(sheet_group, stretch=1)
+        study_layout.addWidget(sheet_group, stretch=3)
 
-        # Teclado Virtual Interactivo (Piano Roll)
+        # Teclado Virtual Interactivo (Piano Roll) — Altura fija para no tapar la partitura en 16:9
         piano_group = QGroupBox("TECLADO DE PIANO INTERACTIVO")
+        piano_group.setFixedHeight(150)
         piano_layout = QVBoxLayout(piano_group)
+        piano_layout.setContentsMargins(6, 6, 6, 6)
         self.piano_keyboard = PianoKeyboard(start_note=36, end_note=84)
         piano_layout.addWidget(self.piano_keyboard)
 
-        study_layout.addWidget(piano_group)
+        study_layout.addWidget(piano_group, stretch=0)
 
         # Panel de Feedback Pedagógico (Dedos + Veredicto)
+        feedback_group = QGroupBox("GUÍA DE DIGITACIÓN & EVALUACIÓN EN TIEMPO REAL")
+        feedback_group.setFixedHeight(110)
+        fb_layout = QHBoxLayout(feedback_group)
+        fb_layout.setContentsMargins(10, 6, 10, 6)
+ + Veredicto)
         feedback_group = QGroupBox("GUÍA DE DIGITACIÓN & EVALUACIÓN EN TIEMPO REAL")
         fb_layout = QHBoxLayout(feedback_group)
 

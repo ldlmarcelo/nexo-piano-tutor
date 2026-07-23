@@ -282,7 +282,7 @@ class SheetView(QGraphicsView):
             fm_head = QFontMetrics(head_font)
             head_item = self._scene.addText(head_glyph, head_font)
             head_item.setDefaultTextColor(color_note)
-            head_item.setPos(x - 9, y_center - fm_head.ascent() - 5)
+            head_item.setPos(x - 9, y_center - fm_head.ascent() - 4)
 
             # C. Plica (Stem) y Corchete (Flag)
             # Redonda (>= 4.0 tiempos) no lleva plica

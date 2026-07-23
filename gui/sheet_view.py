@@ -260,13 +260,13 @@ class SheetView(QGraphicsView):
                 y_ledger = 150
                 while y_ledger <= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 6, y_ledger, x + 18, y_ledger, pen_ledger)
+                    self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
                     y_ledger += 14
             elif y_center <= 66:
                 y_ledger = 66
                 while y_ledger >= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 6, y_ledger, x + 18, y_ledger, pen_ledger)
+                    self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
                     y_ledger -= 14
 
             # B. Renderizado de Cabeza de Nota SMuFL Vectorial (Bravura.otf)
@@ -282,7 +282,7 @@ class SheetView(QGraphicsView):
             fm_head = QFontMetrics(head_font)
             head_item = self._scene.addText(head_glyph, head_font)
             head_item.setDefaultTextColor(color_note)
-            head_item.setPos(x - 5, y_center - fm_head.ascent() - 3)
+            head_item.setPos(x - 9, y_center - fm_head.ascent() - 3)
 
             # C. Plica (Stem) y Corchete (Flag)
             # Redonda (>= 4.0 tiempos) no lleva plica
@@ -292,7 +292,7 @@ class SheetView(QGraphicsView):
                 pen_stem = QPen(color_note, 2)
 
                 if stem_up:
-                    stem_x = x + 8
+                    stem_x = x + 5
                     stem_y1 = y_center - 2
                     stem_y2 = y_center - 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)

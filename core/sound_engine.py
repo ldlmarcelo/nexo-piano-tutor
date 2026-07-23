@@ -91,6 +91,12 @@ class SoundEngine:
 
                     self._sfid = self._fluidsynth.sfload(sf_path)
                     self._fluidsynth.program_select(0, self._sfid, 0, self._current_program)
+                    try:
+                        # Mapear Banco 128 (Drum Kit / Percusión GM) en el Canal 9 de FluidSynth
+                        self._fluidsynth.program_select(9, self._sfid, 128, 0)
+                    except Exception as e:
+                        print(f"[AUDIO WARN] No se pudo seleccionar banco de percusión 128 en canal 9: {e}")
+
                     self._active_driver = f"FluidSynth ({os.path.basename(sf_path)})"
                     print(f"[AUDIO] Motor Activo: {self._active_driver}")
                     return

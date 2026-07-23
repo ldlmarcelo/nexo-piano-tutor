@@ -16,6 +16,7 @@ if CARPETA_RAIZ not in sys.path:
 
 from gui.main_window import MainWindow
 from gui.theme import TUTOR_THEME
+from gui.smufl import load_smufl_font
 
 
 def main():
@@ -26,6 +27,9 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("NEXO Piano Tutor")
     app.setOrganizationName("NEXO")
+
+    # Cargar tipografía musical SMuFL (Bravura.otf)
+    load_smufl_font()
 
     # Aplicar Dark Theme de Partitura
     app.setStyleSheet(TUTOR_THEME)

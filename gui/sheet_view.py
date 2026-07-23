@@ -11,6 +11,18 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QFont, QPen, QBrush, QPainter
 
 from core.lesson import Lesson
+from gui.smufl import (
+    get_smufl_font,
+    CLEF_TREBLE,
+    CLEF_BASS,
+    NOTEHEAD_BLACK,
+    NOTEHEAD_HALF,
+    NOTEHEAD_WHOLE,
+    TIME_SIG_DIGITS,
+    ACCIDENTAL_SHARP,
+    ACCIDENTAL_FLAT,
+    ACCIDENTAL_NATURAL,
+)
 
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
@@ -129,24 +141,26 @@ class SheetView(QGraphicsView):
             y = staff_y_start + i * line_spacing
             self._scene.addLine(20, y, width - 20, y, pen_staff)
 
-        # 2. Dibujar el Signo de Clave sobre el pentagrama
+        # 2. Dibujar el Signo de Clave SMuFL sobre el pentagrama
         is_treble = (self._lesson.clef == "treble")
-        clef_symbol = "𝄞" if is_treble else "𝄢"
-        clef_font = QFont("Segoe UI Symbol", 36 if is_treble else 30, QFont.Weight.Bold)
+        clef_symbol = CLEF_TREBLE if is_treble else CLEF_BASS
+        clef_font = get_smufl_font(36 if is_treble else 34)
         clef_item = self._scene.addText(clef_symbol, clef_font)
         clef_item.setDefaultTextColor(QColor("#38bdf8"))
-        clef_item.setPos(22, 60 if is_treble else 70)
+        clef_item.setPos(18 if is_treble else 20, 48 if is_treble else 60)
 
-        # 3. Dibujar la Métrica de Compás (Time Signature e.g. 4/4, 3/4)
-        ts_font = QFont("Segoe UI", 13, QFont.Weight.Bold)
-        
-        num_item = self._scene.addText(str(ts_num), ts_font)
+        # 3. Dibujar la Métrica de Compás con Glifos SMuFL (timeSig0..timeSig9)
+        smufl_num = TIME_SIG_DIGITS.get(str(ts_num), str(ts_num))
+        smufl_den = TIME_SIG_DIGITS.get(str(ts_den), str(ts_den))
+        ts_smufl_font = get_smufl_font(26)
+
+        num_item = self._scene.addText(smufl_num, ts_smufl_font)
         num_item.setDefaultTextColor(QColor("#0284c7"))
-        num_item.setPos(72, 75)
+        num_item.setPos(72, 62)
 
-        den_item = self._scene.addText(str(ts_den), ts_font)
+        den_item = self._scene.addText(smufl_den, ts_smufl_font)
         den_item.setDefaultTextColor(QColor("#0284c7"))
-        den_item.setPos(72, 103)
+        den_item.setPos(72, 90)
 
         # Título de la lección y clave
         clef_title = "Clave de Sol (Mano Derecha)" if is_treble else "Clave de Fa (Mano Izquierda)"
@@ -169,7 +183,7 @@ class SheetView(QGraphicsView):
                 t_b.setDefaultTextColor(QColor("#38bdf8"))
                 t_b.setPos(x_b - 16, 38)
 
-        # 4. Dibujar notas musicales y líneas divisoras de compás
+        # 4. Dibujar notas musicales SMuFL y líneas divisoras de compás
         cumulative_beats = 0.0
         pen_barline = QPen(QColor("#64748b"), 2)
 
@@ -184,7 +198,7 @@ class SheetView(QGraphicsView):
             else:
                 y_center = 94 - (diatonic_val - 24) * half_spacing
 
-            y_oval = y_center - 7  # Centrar óvalo de 14px
+            y_oval = y_center - 7  # Centrar para elementos overlay
 
             is_current = (idx == self._current_step)
             is_past = (idx < self._current_step)
@@ -237,41 +251,33 @@ class SheetView(QGraphicsView):
                 color_note = QColor("#94a3b8")  # Gris claro para futuras
                 pen_note = QPen(QColor("#475569"), 1)
 
-            # Relleno y trazo de cabeza de nota según duración (Redonda/Blanca = contorno nítido 2px)
-            duration = getattr(note, "duration_quarter", 1.0)
-            is_hollow = (duration >= 2.0)
-            if is_hollow:
-                if is_past:
-                    pen_note = QPen(QColor("#22c55e") if not has_error else QColor("#f59e0b"), 2)
-                    brush_note = QBrush(QColor(34, 197, 94, 120) if not has_error else QColor(245, 158, 11, 120))
-                elif is_current:
-                    pen_note = QPen(QColor("#ef4444") if has_error else QColor("#38bdf8"), 2)
-                    brush_note = QBrush(QColor(239, 68, 68, 120) if has_error else QColor(56, 189, 248, 120))
-                else:
-                    pen_note = QPen(QColor("#e2e8f0"), 2)  # Contorno nítido gris plateado de 2px
-                    brush_note = QBrush(QColor("#0f172a"))  # Fondo oscuro para contraste impecable
-            else:
-                brush_note = QBrush(color_note)
-
             # A. Líneas Adicionales (Ledger Lines)
             if y_center >= 150:
                 y_ledger = 150
                 while y_ledger <= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 5, y_ledger, x + 19, y_ledger, pen_ledger)
+                    self._scene.addLine(x - 6, y_ledger, x + 18, y_ledger, pen_ledger)
                     y_ledger += 14
             elif y_center <= 66:
                 y_ledger = 66
                 while y_ledger >= y_center:
                     pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 5, y_ledger, x + 19, y_ledger, pen_ledger)
+                    self._scene.addLine(x - 6, y_ledger, x + 18, y_ledger, pen_ledger)
                     y_ledger -= 14
 
-            # B. Cabeza de la nota (Óvalo nítido 15x13 para blanca, 16x12 para redonda, 14x14 para negra)
+            # B. Renderizado de Cabeza de Nota SMuFL Vectorial (Bravura.otf)
+            duration = getattr(note, "duration_quarter", 1.0)
             if duration >= 4.0:
-                self._scene.addEllipse(x - 1, y_oval + 1, 16, 12, pen_note, brush_note)
+                head_glyph = NOTEHEAD_WHOLE
+            elif duration >= 2.0:
+                head_glyph = NOTEHEAD_HALF
             else:
-                self._scene.addEllipse(x, y_oval, 14, 14, pen_note, brush_note)
+                head_glyph = NOTEHEAD_BLACK
+
+            head_font = get_smufl_font(28)
+            head_item = self._scene.addText(head_glyph, head_font)
+            head_item.setDefaultTextColor(color_note)
+            head_item.setPos(x - 6, y_center - 24)
 
             # C. Plica (Stem) y Corchete (Flag)
             # Redonda (>= 4.0 tiempos) no lleva plica
@@ -281,16 +287,16 @@ class SheetView(QGraphicsView):
                 pen_stem = QPen(color_note, 2)
 
                 if stem_up:
-                    stem_x = x + 13
-                    stem_y1 = y_center
+                    stem_x = x + 8
+                    stem_y1 = y_center - 2
                     stem_y2 = y_center - 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
                     # Corchete para corcheas (0.5)
                     if duration <= 0.5:
                         self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 + 10, pen_stem)
                 else:
-                    stem_x = x + 1
-                    stem_y1 = y_center
+                    stem_x = x - 4
+                    stem_y1 = y_center + 2
                     stem_y2 = y_center + 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
                     # Corchete para corcheas (0.5)

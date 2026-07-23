@@ -170,7 +170,7 @@ class SheetView(QGraphicsView):
         clef_title = "Clave de Sol (Mano Derecha)" if is_treble else "Clave de Fa (Mano Izquierda)"
         title_text = self._scene.addText(f"{clef_title} — {self._lesson.title} [{ts_str}]", QFont("Segoe UI", 10, QFont.Weight.Bold))
         title_text.setDefaultTextColor(QColor("#94a3b8"))
-        title_text.setPos(75, 18)
+        title_text.setPos(75, 6)
 
         # Dibujar Cuadro Traslúcido de Rango Seleccionado A-B
         total_notes = len(self._lesson.notes)
@@ -218,14 +218,14 @@ class SheetView(QGraphicsView):
                 # Flecha + X a la izquierda indicando que tocó antes del pulso
                 badge = self._scene.addText("🡠 ✗", QFont("Segoe UI", 9, QFont.Weight.Bold))
                 badge.setDefaultTextColor(QColor("#ef4444"))
-                badge.setPos(x - 14, 24)
+                badge.setPos(x - 14, 28)
             elif status_key == "LATE":
                 color_note = QColor("#ef4444")  # Rojo carmesí para golpe retrasado
                 pen_note = QPen(QColor("#b91c1c"), 2)
                 # X + Flecha a la derecha indicando que tocó después del pulso
                 badge = self._scene.addText("✗ 🡢", QFont("Segoe UI", 9, QFont.Weight.Bold))
                 badge.setDefaultTextColor(QColor("#ef4444"))
-                badge.setPos(x + 10, 24)
+                badge.setPos(x + 10, 28)
             elif status_key == "WRONG_NOTE" or (is_current and has_error):
                 color_note = QColor("#ef4444")  # Rojo carmesí para nota equivocada
                 pen_note = QPen(QColor("#b91c1c"), 2)
@@ -233,7 +233,7 @@ class SheetView(QGraphicsView):
                     self._scene.addEllipse(x - 5, y_oval - 5, 24, 24, QPen(QColor("#ef4444"), 2, Qt.PenStyle.DashLine), QBrush(QColor(239, 68, 68, 50)))
                 cross_item = self._scene.addText("✗", QFont("Segoe UI", 10, QFont.Weight.Bold))
                 cross_item.setDefaultTextColor(QColor("#ef4444"))
-                cross_item.setPos(x, 24)
+                cross_item.setPos(x, 28)
             elif is_current:
                 color_note = QColor("#38bdf8")  # Azul cian brillante para nota activa
                 pen_note = QPen(QColor("#0284c7"), 2)
@@ -244,13 +244,13 @@ class SheetView(QGraphicsView):
                     pen_note = QPen(QColor("#d97706"), 2)
                     check_item = self._scene.addText("✓", QFont("Segoe UI", 9, QFont.Weight.Bold))
                     check_item.setDefaultTextColor(QColor("#f59e0b"))
-                    check_item.setPos(x, 26)
+                    check_item.setPos(x, 28)
                 else:
                     color_note = QColor("#22c55e")  # Verde esmeralda para completadas impecables
                     pen_note = QPen(QColor("#16a34a"), 2)
                     check_item = self._scene.addText("✓", QFont("Segoe UI", 9, QFont.Weight.Bold))
                     check_item.setDefaultTextColor(QColor("#22c55e"))
-                    check_item.setPos(x, 26)
+                    check_item.setPos(x, 28)
             else:
                 color_note = QColor("#94a3b8")  # Gris claro para futuras
                 pen_note = QPen(QColor("#475569"), 1)
@@ -300,7 +300,7 @@ class SheetView(QGraphicsView):
                     if duration <= 0.5:
                         self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 + 10, pen_stem)
                 else:
-                    stem_x = x - 4
+                    stem_x = x - 5
                     stem_y1 = y_center + 2
                     stem_y2 = y_center + 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
@@ -308,7 +308,7 @@ class SheetView(QGraphicsView):
                     if duration <= 0.5:
                         self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 - 10, pen_stem)
 
-            # D. Digitación (1 al 5)
+            # D. Digitación (1 al 5) - Normas de Notación Pianística Clásica
             if is_current:
                 finger_color = QColor("#38bdf8")
             elif is_past:
@@ -319,8 +319,11 @@ class SheetView(QGraphicsView):
 
             finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
             finger_text.setDefaultTextColor(finger_color)
-            # Posicionar digitación sobre o debajo de la nota para no colisionar con plica
-            finger_y = y_oval - 28 if (y_center > 108 or duration >= 4.0) else y_oval + 18
+            
+            # Mano Derecha (Clave de Sol): Digitación SOBRE el pentagrama (y = 50)
+            # Mano Izquierda (Clave de Fa): Digitación DEBAJO del pentagrama (y = 152)
+            is_right_hand = (getattr(note, "hand", "R").upper() == "R") or is_treble
+            finger_y = 48 if is_right_hand else 152
             finger_text.setPos(x - 2, finger_y)
 
             # E. Nombre / Lírica debajo del pentagrama

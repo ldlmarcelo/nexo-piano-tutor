@@ -41,13 +41,26 @@ class RealtimeEvaluator:
         self.correct_attempts: int = 0
         self.wrong_attempts: int = 0
 
-        # Sistema de Bucle xN
-        self.repeat_target: int = 1  # 1, 3, 5, o -1 para bucle infinito
-        self.current_rep: int = 1     # Repetición activa (1-indexed)
+        # Rango de Práctica A-B (Fila/Paso de inicio y fin)
+        self.range_start: int = 0
+        self.range_end: int = 0
 
     def load_lesson(self, lesson: Lesson):
         """Carga una lección pedagógica y reinicia el índice de progreso y repeticiones."""
         self.current_lesson = lesson
+        self.range_start = 0
+        self.range_end = max(0, len(lesson.notes) - 1) if lesson else 0
+        self.reset()
+
+    def set_range(self, start_step: int, end_step: int):
+        """Define un rango de práctica específico (A-B) dentro de la lección."""
+        if not self.current_lesson or not self.current_lesson.notes:
+            return
+        total = len(self.current_lesson.notes)
+        start = max(0, min(start_step, total - 1))
+        end = max(start, min(end_step, total - 1))
+        self.range_start = start
+        self.range_end = end
         self.reset()
 
     def set_repeat_mode(self, mode_str: str):
@@ -62,12 +75,14 @@ class RealtimeEvaluator:
             return True
         if self.repeat_target == -1:
             return False  # El bucle infinito nunca termina por conteo
-        return (self.current_rep > self.repeat_target) or (self.current_step >= len(self.current_lesson.notes) and self.current_rep == self.repeat_target)
+        return (self.current_rep > self.repeat_target) or (self.current_step > self.range_end and self.current_rep == self.repeat_target)
 
     def get_current_target(self) -> Optional[TargetNote]:
         if not self.current_lesson or self.is_finished:
             return None
-        return self.current_lesson.notes[self.current_step]
+        if 0 <= self.current_step < len(self.current_lesson.notes):
+            return self.current_lesson.notes[self.current_step]
+        return None
 
     def evaluate_note_on(self, played_note: int, velocity: int, timestamp_ms: float = 0.0) -> EvaluationResult:
         """
@@ -95,15 +110,15 @@ class RealtimeEvaluator:
 
         if is_exact_correct:
             self.correct_attempts += 1
-            # Si tocamos la última nota de la lección
-            if self.current_step == len(self.current_lesson.notes) - 1:
+            # Si tocamos la última nota del rango seleccionado
+            if self.current_step == self.range_end:
                 is_rep_complete = True
                 # Si estamos en bucle infinito o aún quedan repeticiones por cumplir
                 if self.repeat_target == -1 or self.current_rep < self.repeat_target:
                     completed_rep = self.current_rep
                     self.current_rep += 1
-                    self.current_step = 0
-                    rep_str = f"🔄 Repetición {completed_rep} lista. Arrancando repetición {self.current_rep}..."
+                    self.current_step = self.range_start
+                    rep_str = f"🔄 Rango A-B completado (Serie {completed_rep}). Reabriendo en nota {self.range_start + 1}..."
                     if self.repeat_target != -1:
                         rep_str = f"🔄 Repetición {completed_rep} de {self.repeat_target} completada. ¡Vas por la {self.current_rep}!"
                     return EvaluationResult(
@@ -176,8 +191,8 @@ class RealtimeEvaluator:
         )
 
     def reset(self):
-        """Reinicia el paso actual, repeticiones e intentos acumulados al inicio de la lección."""
-        self.current_step = 0
+        """Reinicia el paso actual al inicio del rango de práctica, repeticiones e intentos acumulados."""
+        self.current_step = self.range_start
         self.current_rep = 1
         self.total_attempts = 0
         self.correct_attempts = 0

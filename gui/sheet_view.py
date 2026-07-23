@@ -43,10 +43,19 @@ class SheetView(QGraphicsView):
 
         self._lesson: Lesson = None
         self._current_step: int = 0
+        self._range_start: int = 0
+        self._range_end: int = -1
 
     def load_lesson(self, lesson: Lesson, step: int = 0):
         self._lesson = lesson
         self._current_step = step
+        self._range_start = 0
+        self._range_end = len(lesson.notes) - 1 if lesson and lesson.notes else -1
+        self.redraw()
+
+    def set_range(self, start_step: int, end_step: int):
+        self._range_start = start_step
+        self._range_end = end_step
         self.redraw()
 
     def set_step(self, step: int):
@@ -110,6 +119,21 @@ class SheetView(QGraphicsView):
         title_text = self._scene.addText(f"{clef_title} — {self._lesson.title} [{ts_str}]", QFont("Segoe UI", 10, QFont.Weight.Bold))
         title_text.setDefaultTextColor(QColor("#94a3b8"))
         title_text.setPos(75, 18)
+
+        # Dibujar Cuadro Traslúcido de Rango Seleccionado A-B
+        total_notes = len(self._lesson.notes)
+        if 0 <= self._range_start <= self._range_end < total_notes:
+            if not (self._range_start == 0 and self._range_end == total_notes - 1):
+                x_a = x_start + self._range_start * x_step - 8
+                x_b = x_start + self._range_end * x_step + 22
+                w_box = x_b - x_a
+                self._scene.addRect(x_a, 40, w_box, 140, QPen(QColor("#38bdf8"), 2, Qt.PenStyle.DashLine), QBrush(QColor(56, 189, 248, 30)))
+                t_a = self._scene.addText("[A]", QFont("Consolas", 10, QFont.Weight.Bold))
+                t_a.setDefaultTextColor(QColor("#38bdf8"))
+                t_a.setPos(x_a - 4, 38)
+                t_b = self._scene.addText("[B]", QFont("Consolas", 10, QFont.Weight.Bold))
+                t_b.setDefaultTextColor(QColor("#38bdf8"))
+                t_b.setPos(x_b - 16, 38)
 
         # 4. Dibujar notas musicales y líneas divisoras de compás
         cumulative_beats = 0.0

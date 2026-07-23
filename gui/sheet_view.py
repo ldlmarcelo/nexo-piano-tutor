@@ -8,7 +8,7 @@ digitación (1-5 por mano) y cursor de avance en tiempo real.
 from typing import Any, Dict
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QFont, QPen, QBrush, QPainter
+from PySide6.QtGui import QColor, QFont, QFontMetrics, QPen, QBrush, QPainter
 
 from core.lesson import Lesson
 from gui.smufl import (
@@ -145,22 +145,26 @@ class SheetView(QGraphicsView):
         is_treble = (self._lesson.clef == "treble")
         clef_symbol = CLEF_TREBLE if is_treble else CLEF_BASS
         clef_font = get_smufl_font(36 if is_treble else 34)
+        fm_clef = QFontMetrics(clef_font)
         clef_item = self._scene.addText(clef_symbol, clef_font)
         clef_item.setDefaultTextColor(QColor("#38bdf8"))
-        clef_item.setPos(18 if is_treble else 20, 48 if is_treble else 60)
+        # En SMuFL, la clave de Sol se origina en Línea 2 (122) y la de Fa en Línea 4 (94)
+        clef_y_origin = 122 if is_treble else 94
+        clef_item.setPos(18 if is_treble else 20, clef_y_origin - fm_clef.ascent())
 
         # 3. Dibujar la Métrica de Compás con Glifos SMuFL (timeSig0..timeSig9)
         smufl_num = TIME_SIG_DIGITS.get(str(ts_num), str(ts_num))
         smufl_den = TIME_SIG_DIGITS.get(str(ts_den), str(ts_den))
         ts_smufl_font = get_smufl_font(26)
+        fm_ts = QFontMetrics(ts_smufl_font)
 
         num_item = self._scene.addText(smufl_num, ts_smufl_font)
         num_item.setDefaultTextColor(QColor("#0284c7"))
-        num_item.setPos(72, 62)
+        num_item.setPos(70, 94 - fm_ts.ascent())
 
         den_item = self._scene.addText(smufl_den, ts_smufl_font)
         den_item.setDefaultTextColor(QColor("#0284c7"))
-        den_item.setPos(72, 90)
+        den_item.setPos(70, 122 - fm_ts.ascent())
 
         # Título de la lección y clave
         clef_title = "Clave de Sol (Mano Derecha)" if is_treble else "Clave de Fa (Mano Izquierda)"
@@ -275,9 +279,10 @@ class SheetView(QGraphicsView):
                 head_glyph = NOTEHEAD_BLACK
 
             head_font = get_smufl_font(28)
+            fm_head = QFontMetrics(head_font)
             head_item = self._scene.addText(head_glyph, head_font)
             head_item.setDefaultTextColor(color_note)
-            head_item.setPos(x - 6, y_center - 24)
+            head_item.setPos(x - 5, y_center - fm_head.ascent())
 
             # C. Plica (Stem) y Corchete (Flag)
             # Redonda (>= 4.0 tiempos) no lleva plica

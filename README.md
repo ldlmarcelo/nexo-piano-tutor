@@ -8,12 +8,17 @@ Tutor pedagógico científico, analítico y riguroso de piano clásico para estu
 
 ## 🏛️ Curriculum Clásico (Estado de Avance)
 
-### Capítulo I: Los Fundamentos de Beyer (Opus 101) — *Completado (v1.0.0)*
+### Capítulo I: Los Fundamentos de Beyer (Opus 101) — *Completado (Lecciones 1 a 10)*
 - **Lección 1 (`beyer_op101_01.json`):** Ejercicio N° 1 (Posición Fija de Do4 a Sol4, Mano Derecha, Clave de Sol).
 - **Lección 2 (`beyer_op101_02.json`):** Ejercicio N° 2 (Mano Izquierda, Clave de Fa, Do3 a Sol3, meñique a pulgar).
 - **Lección 3 (`beyer_op101_03.json`):** Saltos de terceras en Mano Derecha (dedos 1, 3, 5).
 - **Lección 4 (`beyer_op101_04.json`):** Saltos de terceras en Mano Izquierda (dedos 5, 3, 1).
 - **Lección 5 (`beyer_op101_05.json`):** Escala de Do Mayor completa (8 notas) e introducción al **paso del pulgar** (paso por debajo del dedo 3 en Fa4).
+- **Lección 6 (`beyer_op101_06.json`):** Ejercicio N° 6 (Alternancia de Manos - Diálogo Armónico en Clave de Fa).
+- **Lección 7 (`beyer_op101_07.json`):** Ejercicio N° 7 (Escala de Do Mayor completa en Mano Izquierda, Clave de Fa).
+- **Lección 8 (`beyer_op101_08.json`):** Ejercicio N° 8 (Estudio de Corcheas e Independencia Rítmica).
+- **Lección 9 (`beyer_op101_09.json`):** Ejercicio N° 9 (Vals en Métrica de 3/4).
+- **Lección 10 (`beyer_op101_10.json`):** Ejercicio N° 10 (Saltos de Cuartas y Articulación).
 
 ### Capítulo II: Polifonía e Independencia (J. S. Bach) — *En Roadmap*
 - Piezas del *Libro de Clavecin de Anna Magdalena Bach*.

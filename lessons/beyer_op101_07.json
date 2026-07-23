@@ -1,0 +1,28 @@
+{
+  "id": "beyer_op101_07",
+  "title": "Ejercicio N° 7 (Escala de Do Mayor en Mano Izquierda)",
+  "composer": "Ferdinand Beyer",
+  "opus": "Opus 101",
+  "description": "Paso del pulgar en Mano Izquierda (Clave de Fa): la mano izquierda recorre la escala completa de Do3 a Do4 (dedos 5-4-3-2-1, el dedo 3 pasa por encima del pulgar hacia Mi3 al descender, o el pulgar pasa por debajo del 3 hacia Fa3 al ascender).",
+  "clef": "bass",
+  "bpm_recommended": 54,
+  "time_signature": "4/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 48, "duration_quarter": 1.0, "finger": 5, "hand": "L", "lyric": "Do"},
+    {"midi_note": 50, "duration_quarter": 1.0, "finger": 4, "hand": "L", "lyric": "Re"},
+    {"midi_note": 52, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi"},
+    {"midi_note": 53, "duration_quarter": 1.0, "finger": 1, "hand": "L", "lyric": "Fa"},
+    {"midi_note": 55, "duration_quarter": 1.0, "finger": 2, "hand": "L", "lyric": "Sol"},
+    {"midi_note": 57, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "La"},
+    {"midi_note": 59, "duration_quarter": 1.0, "finger": 4, "hand": "L", "lyric": "Si"},
+    {"midi_note": 60, "duration_quarter": 2.0, "finger": 5, "hand": "L", "lyric": "Do"},
+    {"midi_note": 59, "duration_quarter": 1.0, "finger": 4, "hand": "L", "lyric": "Si"},
+    {"midi_note": 57, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "La"},
+    {"midi_note": 55, "duration_quarter": 1.0, "finger": 2, "hand": "L", "lyric": "Sol"},
+    {"midi_note": 53, "duration_quarter": 1.0, "finger": 1, "hand": "L", "lyric": "Fa"},
+    {"midi_note": 52, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi"},
+    {"midi_note": 50, "duration_quarter": 1.0, "finger": 4, "hand": "L", "lyric": "Re"},
+    {"midi_note": 48, "duration_quarter": 2.0, "finger": 5, "hand": "L", "lyric": "Do"}
+  ]
+}

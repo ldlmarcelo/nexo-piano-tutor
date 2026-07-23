@@ -6,19 +6,21 @@
       "username": "Marcelo",
       "pin": "1273",
       "created_at": "2026-07-21T14:34:46.962422",
-      "active_lesson_id": "beyer_op101_03",
+      "active_lesson_id": "beyer_op101_09",
       "completed_lessons": [
         "beyer_op101_01",
         "beyer_op101_02",
         "beyer_op101_03",
         "beyer_op101_04",
-        "beyer_op101_05"
+        "beyer_op101_05",
+        "beyer_op101_10",
+        "beyer_op101_09"
       ],
       "stats": {
-        "total_notes_played": 1950,
-        "correct_notes": 1423,
-        "completed_reps": 54,
-        "accuracy_pct": 73.0
+        "total_notes_played": 2370,
+        "correct_notes": 1541,
+        "completed_reps": 63,
+        "accuracy_pct": 65.0
       },
       "history": [
         {
@@ -132,6 +134,69 @@
           "mode": "tempo",
           "notes_played": 199,
           "accuracy_pct": 16.6
+        },
+        {
+          "timestamp": "2026-07-23T15:07:57.235564",
+          "lesson_id": "beyer_op101_01",
+          "mode": "tempo",
+          "notes_played": 11,
+          "accuracy_pct": 90.9
+        },
+        {
+          "timestamp": "2026-07-23T15:08:34.034243",
+          "lesson_id": "beyer_op101_01",
+          "mode": "tempo",
+          "notes_played": 10,
+          "accuracy_pct": 100.0
+        },
+        {
+          "timestamp": "2026-07-23T15:37:30.744094",
+          "lesson_id": "beyer_op101_01",
+          "mode": "tempo",
+          "notes_played": 10,
+          "accuracy_pct": 100.0
+        },
+        {
+          "timestamp": "2026-07-23T15:37:53.642456",
+          "lesson_id": "beyer_op101_01",
+          "mode": "tempo",
+          "notes_played": 10,
+          "accuracy_pct": 100.0
+        },
+        {
+          "timestamp": "2026-07-23T15:41:33.479534",
+          "lesson_id": "beyer_op101_01",
+          "mode": "read",
+          "notes_played": 10,
+          "accuracy_pct": 100.0
+        },
+        {
+          "timestamp": "2026-07-23T16:04:10.074995",
+          "lesson_id": "beyer_op101_10",
+          "mode": "read",
+          "notes_played": 12,
+          "accuracy_pct": 66.7
+        },
+        {
+          "timestamp": "2026-07-23T16:05:03.935991",
+          "lesson_id": "beyer_op101_10",
+          "mode": "read",
+          "notes_played": 8,
+          "accuracy_pct": 100.0
+        },
+        {
+          "timestamp": "2026-07-23T16:06:23.154177",
+          "lesson_id": "beyer_op101_09",
+          "mode": "read",
+          "notes_played": 9,
+          "accuracy_pct": 88.9
+        },
+        {
+          "timestamp": "2026-07-23T16:07:14.142925",
+          "lesson_id": "beyer_op101_09",
+          "mode": "full",
+          "notes_played": 9,
+          "accuracy_pct": 88.9
         }
       ]
     }

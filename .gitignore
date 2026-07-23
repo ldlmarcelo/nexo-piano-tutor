@@ -23,3 +23,7 @@ Desktop.ini
 
 # Local DB & Progress
 *.db
+
+# Temporary test renders
+assets/test_*.png
+assets/smufl_palette_test.png

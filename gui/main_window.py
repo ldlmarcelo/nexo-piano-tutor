@@ -459,14 +459,8 @@ class MainWindow(QMainWindow):
         self.play_btn.setText("▶ EN EJECUCIÓN")
         self.play_btn.setStyleSheet("background-color: #16a34a; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
 
-        mode = self.evaluator.mode
-        if mode in ("tempo", "full"):
-            self._start_metronome_and_countdown()
-        else:
-            self._is_countdown = False
-            self._in_countdown_evaluation_paused = False
-            self.feedback_val.setText("📖 Modo Lectura: Toca la tecla indicada")
-            self.feedback_val.setStyleSheet("color: #38bdf8; font-weight: bold;")
+        # SIEMPRE arrancar la cuenta regresiva de 4 pulsos al iniciar lección
+        self._start_metronome_and_countdown()
 
     def _on_pause_clicked(self):
         """Pausa el metrónomo y detiene la evaluación sin reiniciar el paso."""

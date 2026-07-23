@@ -182,32 +182,24 @@ class SoundEngine:
 
     def play_metronome_click(self, is_downbeat: bool = False):
         """
-        Reproduce un pulso auditivo de metrónomo.
-        is_downbeat=True: Acento de compás (nota más aguda / golpe fuerte).
-        is_downbeat=False: Golpe secundario de pulso.
+        Reproduce un pulso auditivo de metrónomo en el canal de piano principal (Canal 0).
+        is_downbeat=True: Acento de compás (C6 / Note 84 agudo).
+        is_downbeat=False: Golpe secundario de pulso (C5 / Note 72).
         """
-        velocity = 115 if is_downbeat else 85
-        note_downbeat = 76  # High Woodblock
-        note_upbeat = 77    # Low Woodblock
+        click_note = 84 if is_downbeat else 72
+        velocity = 115 if is_downbeat else 80
 
         if self._fluidsynth:
             try:
-                # Intentar canal 9 (Percusión General MIDI) o canal 0 con nota de percusión/piano agudo
-                click_note = note_downbeat if is_downbeat else note_upbeat
-                self._fluidsynth.noteon(9, click_note, velocity)
-            except Exception:
-                try:
-                    self._fluidsynth.noteon(0, 84 if is_downbeat else 72, velocity)
-                except Exception:
-                    pass
+                self._fluidsynth.noteon(0, click_note, velocity)
+            except Exception as e:
+                print(f"[METRONOME ERROR] FluidSynth click: {e}")
         elif self._hwinmm:
-            # Canal de Percusión MIDI (Channel 10 en WinMM -> 0x99)
-            click_note = note_downbeat if is_downbeat else note_upbeat
-            msg = 0x99 | (click_note << 8) | (velocity << 16)
+            # Note ON canal 0 (0x90)
+            msg = 0x90 | (click_note << 8) | (velocity << 16)
             ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
         elif self._midiout and self._midiout.is_port_open():
-            click_note = note_downbeat if is_downbeat else note_upbeat
-            self._midiout.send_message([0x99, click_note, velocity])
+            self._midiout.send_message([0x90, click_note, velocity])
 
     def play_note(self, note: int, velocity: int = 100):
 

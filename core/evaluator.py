@@ -10,6 +10,13 @@ from core.lesson import Lesson, TargetNote
 
 
 @dataclass
+class NoteResult:
+    status: str  # "PERFECT", "WRONG_NOTE", "EARLY", "LATE"
+    time_delta_ms: float = 0.0
+    played_note: int = 0
+
+
+@dataclass
 class EvaluationResult:
     is_correct_note: bool
     expected_note: int
@@ -48,6 +55,10 @@ class RealtimeEvaluator:
         # Sistema de Bucle xN
         self.repeat_target: int = 1  # 1, 3, 5, o -1 para bucle infinito
         self.current_rep: int = 1     # Repetición activa (1-indexed)
+
+        # Registro de errores y resultados por nota para la partitura
+        self.steps_with_errors: set[int] = set()
+        self.note_results: dict[int, NoteResult] = {}
 
     def load_lesson(self, lesson: Lesson):
         """Carga una lección pedagógica y reinicia el índice de progreso y repeticiones."""
@@ -88,7 +99,7 @@ class RealtimeEvaluator:
             return self.current_lesson.notes[self.current_step]
         return None
 
-    def evaluate_note_on(self, played_note: int, velocity: int, timestamp_ms: float = 0.0) -> EvaluationResult:
+    def evaluate_note_on(self, played_note: int, velocity: int, time_delta_ms: float = 0.0) -> EvaluationResult:
         """
         Evalúa un evento NOTE_ON recibido del teclado MIDI.
         Retorna EvaluationResult con el veredicto pedagógico.
@@ -114,6 +125,23 @@ class RealtimeEvaluator:
 
         if is_exact_correct:
             self.correct_attempts += 1
+            if is_exact_correct:
+                if self.mode in ("tempo", "full") and time_delta_ms != 0.0:
+                    if time_delta_ms < -85.0:
+                        status_key = "EARLY"
+                    elif time_delta_ms > 85.0:
+                        status_key = "LATE"
+                    else:
+                        status_key = "PERFECT"
+                else:
+                    status_key = "PERFECT"
+
+                self.note_results[self.current_step] = NoteResult(
+                    status=status_key,
+                    time_delta_ms=time_delta_ms,
+                    played_note=played_note
+                )
+
             # Si tocamos la última nota del rango seleccionado
             if self.current_step == self.range_end:
                 is_rep_complete = True
@@ -164,13 +192,30 @@ class RealtimeEvaluator:
                     )
             else:
                 self.current_step += 1
+                rhythm_text = ""
+                if self.mode in ("tempo", "full") and time_delta_ms != 0.0:
+                    abs_delta = abs(time_delta_ms)
+                    if abs_delta <= 35:
+                        rhythm_text = f" | 🎯 Rítmica Exacta (±{int(abs_delta)}ms)"
+                    elif abs_delta <= 85:
+                        rhythm_text = f" | ⏱️ En Pulso (±{int(abs_delta)}ms)"
+                    else:
+                        direction = "Adelantado" if time_delta_ms < 0 else "Retrasado"
+                        rhythm_text = f" | ⚠️ Desfase ({int(abs_delta)}ms {direction})"
+
                 if self.wrong_attempts > 0:
-                    feedback = f"Bien: Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)}) [Errores: {self.wrong_attempts}]"
+                    feedback = f"Bien: Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)}){rhythm_text} [Errores: {self.wrong_attempts}]"
                 else:
-                    feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)})"
-                color = "#00e676"
+                    feedback = f"¡Excelente! Dedo {target.finger} ({target.lyric or ''} / {midi_to_note_name(target.midi_note)}){rhythm_text}"
+                color = "#00e676" if (self.mode == "read" or abs(time_delta_ms) <= 85) else "#ffb300"
         else:
             self.wrong_attempts += 1
+            self.steps_with_errors.add(self.current_step)
+            self.note_results[self.current_step] = NoteResult(
+                status="WRONG_NOTE",
+                time_delta_ms=time_delta_ms,
+                played_note=played_note
+            )
             if is_same_pitch:
                 played_name = midi_to_note_name(played_note)
                 target_name = midi_to_note_name(target.midi_note)
@@ -188,7 +233,7 @@ class RealtimeEvaluator:
             played_note=played_note,
             velocity=velocity,
             expected_finger=target.finger,
-            time_delta_ms=0.0,
+            time_delta_ms=time_delta_ms,
             feedback_text=feedback,
             feedback_color=color,
             is_rep_complete=is_rep_complete
@@ -201,6 +246,8 @@ class RealtimeEvaluator:
         self.total_attempts = 0
         self.correct_attempts = 0
         self.wrong_attempts = 0
+        self.steps_with_errors.clear()
+        self.note_results.clear()
 
 
 

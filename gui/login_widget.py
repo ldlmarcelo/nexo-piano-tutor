@@ -38,7 +38,7 @@ class LoginWidget(QWidget):
         title.setStyleSheet("color: #38bdf8;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        subtitle = QLabel("Plataforma Soberana de Formación Clásica — Selección de Estudiante")
+        subtitle = QLabel("Plataforma Soberana de Formación Clásica para Todas las Edades — Selección de Estudiante")
         subtitle.setFont(QFont("Segoe UI", 11))
         subtitle.setStyleSheet("color: #94a3b8;")
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)

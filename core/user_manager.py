@@ -15,6 +15,15 @@ USERS_FILE = os.path.join(CARPETA_RAIZ, "users.json")
 
 
 @dataclass
+class SessionLog:
+    timestamp: str
+    lesson_id: str
+    mode: str
+    notes_played: int
+    accuracy_pct: float
+
+
+@dataclass
 class UserStats:
     total_notes_played: int = 0
     correct_notes: int = 0
@@ -31,6 +40,7 @@ class User:
     active_lesson_id: str = "beyer_op101_01"
     completed_lessons: list[str] = field(default_factory=list)
     stats: UserStats = field(default_factory=UserStats)
+    history: list[SessionLog] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -40,13 +50,16 @@ class User:
             "created_at": self.created_at,
             "active_lesson_id": self.active_lesson_id,
             "completed_lessons": self.completed_lessons,
-            "stats": asdict(self.stats)
+            "stats": asdict(self.stats),
+            "history": [asdict(h) for h in self.history]
         }
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "User":
         stats_data = data.get("stats", {})
         stats = UserStats(**stats_data) if isinstance(stats_data, dict) else UserStats()
+        history_raw = data.get("history", [])
+        history = [SessionLog(**h) for h in history_raw] if isinstance(history_raw, list) else []
         return cls(
             id=data.get("id", str(uuid.uuid4())),
             username=data.get("username", "Estudiante"),
@@ -54,7 +67,8 @@ class User:
             created_at=data.get("created_at", datetime.now().isoformat()),
             active_lesson_id=data.get("active_lesson_id", "beyer_op101_01"),
             completed_lessons=data.get("completed_lessons", []),
-            stats=stats
+            stats=stats,
+            history=history
         )
 
 
@@ -159,4 +173,20 @@ class UserManager:
                 user.completed_lessons.append(lesson_id)
             user.stats.completed_reps += 1
 
+        self.save()
+
+    def record_session_log(self, lesson_id: str, mode: str, notes_played: int, accuracy_pct: float):
+        """Registra un log de sesión completada en el historial del usuario."""
+        user = self.get_active_user()
+        if not user:
+            return
+
+        log = SessionLog(
+            timestamp=datetime.now().isoformat(),
+            lesson_id=lesson_id,
+            mode=mode,
+            notes_played=notes_played,
+            accuracy_pct=accuracy_pct
+        )
+        user.history.append(log)
         self.save()

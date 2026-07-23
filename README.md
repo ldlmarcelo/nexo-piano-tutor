@@ -1,6 +1,6 @@
 # nexo-piano-tutor (v1.0.0)
 
-Tutor pedagógico científico, analítico y riguroso de piano clásico para niños.
+Tutor pedagógico científico, analítico y riguroso de piano clásico para estudiantes de todas las edades (niños, jóvenes y adultos).
 
 > **Pedagogía científica de precisión.** Sin barras cayendo estilo arcade. Basado en notación de pentagrama real (Clave de Sol y Fa), desacoplamiento de carga cognitiva (Lectura, Tiempo, Expresión), evaluación MIDI en tiempo real (<15ms), bucles de repetición adaptativos y perfiles soberanos de estudiantes.
 
@@ -30,14 +30,18 @@ Tutor pedagógico científico, analítico y riguroso de piano clásico para niñ
    - *Modo Lectura*: Evaluación de notas/dedos a ritmo del alumno (sin metrónomo).
    - *Modo Tiempo*: Evaluación con metrónomo y **cuenta regresiva previa de 4 pulsos** con indicación sonora de compás.
    - *Modo Expresión*: Integración completa de tempo y dinámica.
-2. **Evaluación en Tiempo Real (MIDI <15ms)**:
+2. **Evaluación en Tiempo Real y Análisis Rítmico Espacial (Estilo Drum Tutor)**:
    - Captura aislada vía `python-rtmidi` acoplada a audio sintético `pyfluidsynth` (driver MIDI IN desactivado en C para evitar conflictos WinMM en Windows).
-3. **Perfiles de Estudiantes & Bitácora de Progreso (`UserManager` / `DashboardDialog`)**:
+   - **Evaluación Rítmica Espacial**: Marcación de notas impecables con Círculo Verde (`✓`), errores de tono con Cruz Roja (`✗`), y desfases rítmicos con desplazamiento espacial: **`🡠 ✗`** (adelantado) a la izquierda y **`✗ 🡢`** (retrasado) a la derecha.
+   - Metrónomo dedicado en Canal 9 GM Percussion (Woodblock 76/77).
+3. **Perfiles de Estudiantes & Bitácora de Sesión (`UserManager` / `DashboardDialog`)**:
    - Registro de estudiantes con PIN opcional y guardado local en `users.json`.
-   - Medición de precisión acumulada (%), series completadas y total de notas ejecutadas con insignias de maestría (🌟).
+   - Medición de precisión acumulada (%), series completadas, total de notas ejecutadas e historial cronológico de sesiones (`SessionLog`).
 4. **Sistema de Repetición Adaptativa (Bucles xN)**:
    - Modos `1x`, `3x`, `5x` e `♾️ Bucle Infinito` con reinicio automático de series y evaluación final de desempeño.
-5. **Tarjetas Teóricas & "La Biblioteca de la Fragua" (`TheoryDialog` / `LibraryDialog`)**:
+5. **Partitura Vectorial Responsiva y Teclado Activo (`SheetView` / `PianoKeyboard`)**:
+   - Auto-seguimiento centrado (`centerOn`) de la nota activa en partitura con trazado de alto contraste (2px) para notas caladas (blancas y redondas) y destellos de error en rojo sobre el teclado virtual.
+6. **Tarjetas Teóricas & "La Biblioteca de la Fragua" (`TheoryDialog` / `LibraryDialog`)**:
    - Popups de teoría emergente por lección y glosario integral de notación y técnica.
 
 ---

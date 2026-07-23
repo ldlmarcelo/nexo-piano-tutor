@@ -188,24 +188,24 @@ class SoundEngine:
 
     def play_metronome_click(self, is_downbeat: bool = False):
         """
-        Reproduce un pulso auditivo de metrónomo en el canal de piano principal (Canal 0).
-        is_downbeat=True: Acento de compás (C6 / Note 84 agudo).
-        is_downbeat=False: Golpe secundario de pulso (C5 / Note 72).
+        Reproduce un pulso auditivo de metrónomo en el Canal 9 de percusión GM.
+        is_downbeat=True: Acento de compás (High Woodblock / Note 76).
+        is_downbeat=False: Golpe secundario (Low Woodblock / Note 77).
         """
-        click_note = 84 if is_downbeat else 72
-        velocity = 115 if is_downbeat else 80
+        click_note = 76 if is_downbeat else 77
+        velocity = 120 if is_downbeat else 85
 
         if self._fluidsynth:
             try:
-                self._fluidsynth.noteon(0, click_note, velocity)
+                self._fluidsynth.noteon(9, click_note, velocity)
             except Exception as e:
                 print(f"[METRONOME ERROR] FluidSynth click: {e}")
         elif self._hwinmm:
-            # Note ON canal 0 (0x90)
-            msg = 0x90 | (click_note << 8) | (velocity << 16)
+            # Note ON canal 9 (0x99)
+            msg = 0x99 | (click_note << 8) | (velocity << 16)
             ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
         elif self._midiout and self._midiout.is_port_open():
-            self._midiout.send_message([0x90, click_note, velocity])
+            self._midiout.send_message([0x99, click_note, velocity])
 
     def play_note(self, note: int, velocity: int = 100):
 

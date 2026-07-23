@@ -7,6 +7,11 @@ import sys
 import os
 import time
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 print("=" * 60)
 print(" NEXO Piano Tutor -- Script de Diagnostico Sistematico")
 print("=" * 60)

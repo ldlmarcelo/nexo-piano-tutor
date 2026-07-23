@@ -10,6 +10,7 @@ Integra:
 """
 
 import os
+import time
 import json
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
@@ -58,6 +59,8 @@ class MainWindow(QMainWindow):
         self._countdown_count = 4
         self._metronome_beat = 0
         self._in_countdown_evaluation_paused = False
+        self._is_finishing_lesson = False
+        self._last_beat_timestamp = 0.0
 
         self._build_ui()
         self._connect_signals()
@@ -451,7 +454,7 @@ class MainWindow(QMainWindow):
     # ── Lógica de Transporte y Metrónomo ──────────────────────────
 
     def _on_play_clicked(self):
-        """Inicia la lección activando la cuenta regresiva previa de 4 pulsos."""
+        """Inicia la lección evaluando el modo activo."""
         if not self.evaluator.current_lesson:
             return
 
@@ -459,8 +462,16 @@ class MainWindow(QMainWindow):
         self.play_btn.setText("▶ EN EJECUCIÓN")
         self.play_btn.setStyleSheet("background-color: #16a34a; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
 
-        # SIEMPRE arrancar la cuenta regresiva de 4 pulsos al iniciar lección
-        self._start_metronome_and_countdown()
+        # El metrónomo solo se activa en Modo Tiempo y Expresión (en Modo Lectura es cero presión)
+        if self.evaluator.mode in ("tempo", "full"):
+            self._start_metronome_and_countdown()
+        else:
+            self._stop_metronome()
+            self._in_countdown_evaluation_paused = False
+            target = self.evaluator.get_current_target()
+            target_name = midi_to_note_name(target.midi_note) if target else ""
+            self.feedback_val.setText(f"📖 Modo Lectura — Tocá la nota iluminada (Dedo {target.finger if target else '-'} / {target_name})")
+            self.feedback_val.setStyleSheet("color: #38bdf8; font-size: 14px; font-weight: bold;")
 
     def _on_pause_clicked(self):
         """Pausa el metrónomo y detiene la evaluación sin reiniciar el paso."""
@@ -474,9 +485,12 @@ class MainWindow(QMainWindow):
 
     def _on_stop_clicked(self):
         """Detiene el metrónomo y vuelve la posición al inicio del rango de práctica."""
+        self._is_finishing_lesson = False
         self._is_playing = False
         self._stop_metronome()
         self.evaluator.reset()
+        self.sheet_view.set_error_steps(self.evaluator.steps_with_errors)
+        self.sheet_view.set_note_results(self.evaluator.note_results)
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
         self.play_btn.setText("▶ INICIAR LECCIÓN")
@@ -485,13 +499,28 @@ class MainWindow(QMainWindow):
         self.feedback_val.setStyleSheet("color: #94a3b8;")
 
     def _on_reset_clicked(self):
+        """Reinicia la lección desde el inicio del rango y reactiva el estado de ejecución."""
+        self._is_finishing_lesson = False
         self.evaluator.reset()
+        self.sheet_view.set_error_steps(self.evaluator.steps_with_errors)
+        self.sheet_view.set_note_results(self.evaluator.note_results)
+        self._is_playing = True
+        self.play_btn.setText("▶ EN EJECUCIÓN")
+        self.play_btn.setStyleSheet("background-color: #16a34a; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+
         if self.evaluator.current_lesson:
             self.sheet_view.set_step(self.evaluator.range_start)
             self._update_target_display()
             self.statusBar().showMessage("Lección reiniciada al inicio del rango")
-            if self._is_playing and self.evaluator.mode in ("tempo", "full"):
+            if self.evaluator.mode in ("tempo", "full"):
                 self._start_metronome_and_countdown()
+            else:
+                self._stop_metronome()
+                self._in_countdown_evaluation_paused = False
+                target = self.evaluator.get_current_target()
+                target_name = midi_to_note_name(target.midi_note) if target else ""
+                self.feedback_val.setText(f"📖 Modo Lectura — Tocá la nota iluminada (Dedo {target.finger if target else '-'} / {target_name})")
+                self.feedback_val.setStyleSheet("color: #38bdf8; font-size: 14px; font-weight: bold;")
 
     def _on_step_prev_clicked(self):
         """Retrocede manualmente 1 nota."""
@@ -560,6 +589,7 @@ class MainWindow(QMainWindow):
         except Exception:
             beats_per_measure = 4
 
+        self._last_beat_timestamp = time.time() * 1000.0
         if self._is_countdown:
             is_downbeat = (self._countdown_count == 4)
             self.sound_engine.play_metronome_click(is_downbeat)
@@ -676,19 +706,45 @@ class MainWindow(QMainWindow):
     # ── Eventos de Notas MIDI ──────────────────────────────────────
 
     def _on_note_played(self, note: int, velocity: int):
-        if self.evaluator.is_finished:
+        # SIEMPRE emitir el sonido de la nota pulsada (Teclado siempre activo para audio)
+        self.sound_engine.play_note(note, velocity)
+
+        # Si la lección ya finalizó o está en proceso de cierre rítmico, no evaluar
+        if self.evaluator.is_finished or self._is_finishing_lesson:
             return
 
-        # Durante la cuenta regresiva previa, suena la tecla pero no avanza la evaluación
+        # Durante la cuenta regresiva previa, no evaluar avance
         if self._in_countdown_evaluation_paused:
-            self.sound_engine.play_note(note, velocity)
             return
 
-        result = self.evaluator.evaluate_note_on(note, velocity)
+        # Capturar la nota objetivo y su duración rítmica antes de avanzar el paso
+        target = self.evaluator.get_current_target()
+        duration_q = getattr(target, "duration_quarter", 1.0) if target else 1.0
+
+        # Calcular desvío rítmico en milisegundos respecto al pulso del metrónomo
+        time_delta_ms = 0.0
+        if self.evaluator.mode in ("tempo", "full") and self._last_beat_timestamp > 0:
+            now_ms = time.time() * 1000.0
+            bpm = self.bpm_spin.value()
+            interval_ms = (60.0 / max(30, min(240, bpm))) * 1000.0
+            elapsed = now_ms - self._last_beat_timestamp
+            rem = elapsed % interval_ms
+            if rem > (interval_ms / 2.0):
+                time_delta_ms = rem - interval_ms
+            else:
+                time_delta_ms = rem
+
+        result = self.evaluator.evaluate_note_on(note, velocity, time_delta_ms)
         self.feedback_val.setText(result.feedback_text)
         self.feedback_val.setStyleSheet(f"color: {result.feedback_color}; font-weight: bold;")
 
-        self.sound_engine.play_note(note, velocity)
+        # Si la nota fue incorrecta, iluminar la tecla equivocada en rojo carmesí en el teclado virtual
+        if not result.is_correct_note:
+            self.piano_keyboard.set_key_active(note, "#ef4444")
+            QTimer.singleShot(450, lambda: self.piano_keyboard.clear_key_active(note))
+
+        self.sheet_view.set_error_steps(self.evaluator.steps_with_errors)
+        self.sheet_view.set_note_results(self.evaluator.note_results)
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
 
@@ -701,12 +757,40 @@ class MainWindow(QMainWindow):
                 correct=result.is_correct_note
             )
 
+        # Si la lección o serie se completó en este golpe
         if self.evaluator.is_finished:
-            self._stop_metronome()
-            self._is_playing = False
-            self.play_btn.setText("▶ INICIAR LECCIÓN")
-            self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
-            self.statusBar().showMessage("¡Serie de repeticiones completada con éxito!")
+            self._is_finishing_lesson = True
+            bpm = self.bpm_spin.value()
+            duration_ms = int(duration_q * (60.0 / max(30, min(240, bpm))) * 1000)
+            duration_ms = max(500, min(6000, duration_ms))
+
+            # Respetar el tempo completo de la última nota antes de detener metrónomo y finalizar
+            QTimer.singleShot(duration_ms, lambda: self._finish_lesson(result))
+
+    def _finish_lesson(self, result):
+        """Finaliza limpiamente la lección tras cumplir la duración de la última nota."""
+        if not self._is_finishing_lesson:
+            return
+
+        self._stop_metronome()
+        self._is_playing = False
+        self._is_finishing_lesson = False
+        self.play_btn.setText("▶ INICIAR LECCIÓN")
+        self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+
+        self.feedback_val.setText(result.feedback_text)
+        self.feedback_val.setStyleSheet(f"color: {result.feedback_color}; font-weight: bold;")
+        self.statusBar().showMessage("¡Serie de repeticiones completada con éxito!")
+
+        user = self.user_manager.get_active_user()
+        if user and self.evaluator.current_lesson:
+            acc = round((self.evaluator.correct_attempts / max(1, self.evaluator.total_attempts)) * 100, 1)
+            self.user_manager.record_session_log(
+                lesson_id=self.evaluator.current_lesson.id,
+                mode=self.evaluator.mode,
+                notes_played=self.evaluator.total_attempts,
+                accuracy_pct=acc
+            )
 
     def _update_target_display(self):
         self.piano_keyboard.clear_all_active()

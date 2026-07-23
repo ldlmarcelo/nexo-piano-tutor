@@ -8,7 +8,7 @@ Este documento consolida la arquitectura pedagógica, científica y filosófica 
 
 ## 🏛️ 1. Declaración de Principios
 
-`nexo-piano-tutor` nace con un propósito claro: **brindar una formación de piano clásico científicamente rigurosa para niños**, distanciándose deliberadamente de las aplicaciones comerciales basadas en barras cayendo estilo arcade (*Guitar Hero*). 
+`nexo-piano-tutor` nace con un propósito claro: **brindar una formación de piano clásico científicamente rigurosa para estudiantes de todas las edades (niños, jóvenes y adultos)**, distanciándose deliberadamente de las aplicaciones comerciales basadas en barras cayendo estilo arcade (*Guitar Hero*). 
 
 Las interfaces tipo arcade generan adicción visual y reflejos oculares pasivos, pero **anulan la lectura de partitura real, destruyen la noción del pulso interno y no desarrollan memoria muscular ni control biomecánico**.
 

@@ -45,6 +45,10 @@ class RealtimeEvaluator:
         self.range_start: int = 0
         self.range_end: int = 0
 
+        # Sistema de Bucle xN
+        self.repeat_target: int = 1  # 1, 3, 5, o -1 para bucle infinito
+        self.current_rep: int = 1     # Repetición activa (1-indexed)
+
     def load_lesson(self, lesson: Lesson):
         """Carga una lección pedagógica y reinicia el índice de progreso y repeticiones."""
         self.current_lesson = lesson

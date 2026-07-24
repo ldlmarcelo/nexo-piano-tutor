@@ -125,6 +125,7 @@ class RealtimeEvaluator:
 
         if is_exact_correct:
             self.correct_attempts += 1
+            self.steps_with_errors.discard(self.current_step)
             if is_exact_correct:
                 if self.mode in ("tempo", "full") and time_delta_ms != 0.0:
                     if time_delta_ms < -85.0:
@@ -150,6 +151,8 @@ class RealtimeEvaluator:
                     completed_rep = self.current_rep
                     self.current_rep += 1
                     self.current_step = self.range_start
+                    self.steps_with_errors.clear()
+                    self.note_results.clear()
                     rep_str = f"🔄 Rango A-B completado (Serie {completed_rep}). Reabriendo en nota {self.range_start + 1}..."
                     if self.repeat_target != -1:
                         rep_str = f"🔄 Repetición {completed_rep} de {self.repeat_target} completada. ¡Vas por la {self.current_rep}!"

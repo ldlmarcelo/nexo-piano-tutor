@@ -20,6 +20,10 @@ from gui.smufl import (
     NOTEHEAD_HALF,
     NOTEHEAD_WHOLE,
     TIME_SIG_DIGITS,
+    FLAG_8TH_UP,
+    FLAG_8TH_DOWN,
+    FLAG_16TH_UP,
+    FLAG_16TH_DOWN,
 )
 
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -71,6 +75,7 @@ class SheetView(QGraphicsView):
         """Activa o desactiva la unión rítmica de corcheas y semicorcheas (Beaming)."""
         self._beaming_enabled = enabled
         self.redraw()
+        self.viewport().update()
 
     def set_beat(self, beat: int, total_beats: int = 4):
         """Actualiza el tiempo activo de la batuta pedagógica en el compás (1..total_beats)."""
@@ -469,18 +474,22 @@ class SheetView(QGraphicsView):
                     stem_y2 = y_center - 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
                     if duration <= 0.5:
-                        self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 + 10, pen_stem)
-                    if duration <= 0.25:
-                        self._scene.addLine(stem_x, stem_y2 + 6, stem_x + 8, stem_y2 + 16, pen_stem)
+                        flag_font = get_smufl_font(28)
+                        flag_symbol = FLAG_8TH_UP if duration > 0.25 else FLAG_16TH_UP
+                        flag_item = self._scene.addText(flag_symbol, flag_font)
+                        flag_item.setDefaultTextColor(color_note)
+                        flag_item.setPos(stem_x - 1, stem_y2 - 6)
                 else:
                     stem_x = x - 5
                     stem_y1 = y_center + 2
                     stem_y2 = y_center + 32
                     self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
                     if duration <= 0.5:
-                        self._scene.addLine(stem_x, stem_y2, stem_x + 8, stem_y2 - 10, pen_stem)
-                    if duration <= 0.25:
-                        self._scene.addLine(stem_x, stem_y2 - 6, stem_x + 8, stem_y2 - 16, pen_stem)
+                        flag_font = get_smufl_font(28)
+                        flag_symbol = FLAG_8TH_DOWN if duration > 0.25 else FLAG_16TH_DOWN
+                        flag_item = self._scene.addText(flag_symbol, flag_font)
+                        flag_item.setDefaultTextColor(color_note)
+                        flag_item.setPos(stem_x - 1, stem_y2 - 20)
 
             # D. Digitación (1 al 5)
             if is_grand_staff:

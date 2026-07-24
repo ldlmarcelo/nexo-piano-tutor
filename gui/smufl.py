@@ -24,6 +24,12 @@ REST_HALF = "\uE4E4"      # Silencio de blanca (restHalf)
 REST_QUARTER = "\uE4E5"   # Silencio de negra (restQuarter)
 REST_8TH = "\uE4E6"       # Silencio de corchea (rest8th)
 
+# Corchetes (Flags) Individuales SMuFL
+FLAG_8TH_UP = "\uE240"     # Corchete corchea plica arriba (flag8thUp)
+FLAG_8TH_DOWN = "\uE241"   # Corchete corchea plica abajo (flag8thDown)
+FLAG_16TH_UP = "\uE242"    # Corchete semicorchea plica arriba (flag16thUp)
+FLAG_16TH_DOWN = "\uE243"  # Corchete semicorchea plica abajo (flag16thDown)
+
 # Métrica de Compás SMuFL (timeSig0 .. timeSig9)
 TIME_SIG_DIGITS = {
     "0": "\uE080",

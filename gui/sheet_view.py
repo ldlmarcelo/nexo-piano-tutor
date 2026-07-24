@@ -498,13 +498,22 @@ class SheetView(QGraphicsView):
             finger_text.setDefaultTextColor(finger_color)
             finger_text.setPos(x - 2, finger_y)
 
-            # E. Nombre / Lírica debajo del pentagrama
+            # E. Nombre / Lírica debajo del pentagrama correspondiente
             name_str = note.lyric or midi_to_note_name(note.midi_note)
             lyric_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b"))
             lyric_weight = QFont.Weight.Bold if (is_current or is_past) else QFont.Weight.Normal
             lyric_text = self._scene.addText(name_str, QFont("Segoe UI", 9, lyric_weight))
             lyric_text.setDefaultTextColor(lyric_color)
-            lyric_text.setPos(x - 4, 172)
+
+            if is_grand_staff:
+                if hand == "L" or (hand is None and note.midi_note < 60):
+                    lyric_y = 262  # Debajo del pentagrama de Fa (y = 246)
+                else:
+                    lyric_y = 142  # Debajo del pentagrama de Sol (y = 126)
+            else:
+                lyric_y = 172
+
+            lyric_text.setPos(x - 4, lyric_y)
 
             # F. Línea Divisora de Compás
             cumulative_beats += duration

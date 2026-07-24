@@ -2,20 +2,89 @@
   "id": "beyer_op101_09",
   "title": "Ejercicio N° 9 (Vals en Métrica de 3/4)",
   "composer": "Ferdinand Beyer",
-  "opus": "Opus 101",
-  "description": "Estudio de notación y métrica en 3/4 (tres tiempos de negra por compás). Entrena la sensación del pulso ternario y la acentuación del primer tiempo.",
-  "clef": "treble",
+  "opus": "Opus 101 N° 9",
+  "description": "Estudio en tiempo de Vals (3/4). La mano izquierda marca el bajo en el tiempo 1 y los acordes/intervalos en los tiempos 2 y 3.",
+  "clef": "grand",
   "bpm_recommended": 80,
   "time_signature": "3/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 67, "duration_quarter": 3.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
-    {"midi_note": 60, "duration_quarter": 3.0, "finger": 1, "hand": "R", "lyric": "Do"}
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 3.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    }
   ]
 }

@@ -3,18 +3,144 @@
   "title": "Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 1 'Allegro')",
   "composer": "Muzio Clementi",
   "opus": "Opus 36 N° 1",
-  "description": "Inicio del Clasicismo Pianístico (Timbre de Piano de Cola de Concierto). Acompañamiento de Bajo Alberti en mano izquierda (Do-Sol-Mi-Sol) con fraseo cantabile en mano derecha.",
-  "clef": "treble",
-  "bpm_recommended": 110,
+  "description": "El pilar fundamental del repertorio clásico pianístico. Carácter brioso, escalas brillantes en la mano derecha y acompañamiento de Alberti en la mano izquierda.",
+  "clef": "grand",
+  "bpm_recommended": 112,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 72, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 71, "duration_quarter": 0.5, "finger": 4, "hand": "R", "lyric": "Si"},
-    {"midi_note": 69, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "La"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"}
+    {
+      "midi_note": 60,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi3"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Sol4"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Mi5"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    }
   ]
 }

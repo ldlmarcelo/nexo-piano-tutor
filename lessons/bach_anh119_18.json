@@ -1,19 +1,90 @@
 {
   "id": "bach_anh119_18",
   "title": "Polonesa en Sol Menor (BWV Anh. 119)",
-  "composer": "J. S. Bach / Cuaderno de Anna Magdalena",
+  "composer": "Johann Sebastian Bach",
   "opus": "BWV Anh. 119",
-  "description": "Danza noble polaca con ritmo de compás ternario y acentuación sincopada en el segundo tiempo. Exige independencia dinámica de ambas manos.",
-  "clef": "treble",
+  "description": "Danza señorial polaca en 3/4 con su característico ritmo sincopado e impulso en el segundo tiempo.",
+  "clef": "grand",
   "bpm_recommended": 80,
   "time_signature": "3/4",
   "instrument": 6,
   "notes": [
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 70, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si♭"},
-    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 66, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa#"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"}
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si♭"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Sol2"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si♭"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    }
   ]
 }

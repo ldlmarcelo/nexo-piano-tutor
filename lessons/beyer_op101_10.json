@@ -2,20 +2,82 @@
   "id": "beyer_op101_10",
   "title": "Ejercicio N° 10 (Saltos de Cuartas y Articulación)",
   "composer": "Ferdinand Beyer",
-  "opus": "Opus 101",
-  "description": "Estudio de intervalos de cuarta (Do4 a Fa4, Re4 a Sol4) para afinar la extensión de la mano sin tensión y consolidar el control independiente de los dedos 1, 2, 4 y 5.",
-  "clef": "treble",
-  "bpm_recommended": 66,
+  "opus": "Opus 101 N° 10",
+  "description": "Estudio de intervalos de cuarta (Do-Fa, Re-Sol) con articulación de ligadura y notas sueltas en Gran Pentagrama.",
+  "clef": "grand",
+  "bpm_recommended": 75,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 64, "duration_quarter": 2.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"}
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    }
   ]
 }

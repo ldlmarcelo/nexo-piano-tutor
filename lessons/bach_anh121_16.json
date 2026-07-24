@@ -1,19 +1,111 @@
 {
   "id": "bach_anh121_16",
   "title": "Minueto en Do Menor (BWV Anh. 121)",
-  "composer": "J. S. Bach / Cuaderno de Anna Magdalena",
+  "composer": "Johann Sebastian Bach",
   "opus": "BWV Anh. 121",
-  "description": "Línea de bajo caminante activa (walking bass en Clave de Fa) en compás de 3/4. La mano izquierda responde melódicamente a la mano derecha.",
-  "clef": "bass",
-  "bpm_recommended": 88,
+  "description": "Pieza de carácter sobrio y noble en Do menor. Destaca el movimiento del bajo en clave de Fa con contrapunto en la clave superior.",
+  "clef": "grand",
+  "bpm_recommended": 80,
   "time_signature": "3/4",
   "instrument": 6,
   "notes": [
-    {"midi_note": 48, "duration_quarter": 1.0, "finger": 5, "hand": "L", "lyric": "Do"},
-    {"midi_note": 51, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi♭"},
-    {"midi_note": 55, "duration_quarter": 1.0, "finger": 1, "hand": "L", "lyric": "Sol"},
-    {"midi_note": 53, "duration_quarter": 1.0, "finger": 2, "hand": "L", "lyric": "Fa"},
-    {"midi_note": 51, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi♭"},
-    {"midi_note": 48, "duration_quarter": 1.0, "finger": 5, "hand": "L", "lyric": "Do"}
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol4"
+    },
+    {
+      "midi_note": 51,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi♭3"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 51,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi♭3"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 0.5,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 47,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Si2"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa4"
+    },
+    {
+      "midi_note": 44,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "La♭2"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Sol2"
+    },
+    {
+      "midi_note": 44,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "La♭2"
+    },
+    {
+      "midi_note": 47,
+      "duration_quarter": 0.5,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Si2"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 3.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    }
   ]
 }

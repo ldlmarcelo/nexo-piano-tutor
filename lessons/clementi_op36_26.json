@@ -3,17 +3,95 @@
   "title": "Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 2 'Andante')",
   "composer": "Muzio Clementi",
   "opus": "Opus 36 N° 1",
-  "description": "Contraste dinámico e integración expresiva (Forte vs. Piano). Medición de Velocity dinámico exigiendo al menos 40 puntos de delta entre frases expresivas.",
-  "clef": "treble",
+  "description": "Segundo movimiento expresivo en Fa Mayor y métrica de 3/4. Melodía noble de carácter cantabile y acompañamiento lírico en clave de Fa.",
+  "clef": "grand",
   "bpm_recommended": 72,
   "time_signature": "3/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
-    {"midi_note": 72, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Do"},
-    {"midi_note": 70, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si♭"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"}
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Fa3"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 57,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "La3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Si♭"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 3.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Fa3"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 41,
+      "duration_quarter": 3.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Fa2"
+    }
   ]
 }

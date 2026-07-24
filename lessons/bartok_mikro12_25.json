@@ -3,17 +3,109 @@
   "title": "Béla Bartók — Mikrokosmos N° 12 (Acompañamiento Reflejado)",
   "composer": "Béla Bartók",
   "opus": "Mikrokosmos Vol. 1 N° 12",
-  "description": "Estudio de acompañamiento reflejado con métricas asimétricas. Desacoplamiento de patrones rítmicos cruzados sin apoyo en la armonía tonal clásica.",
-  "clef": "treble",
-  "bpm_recommended": 96,
+  "description": "Movimiento contrario simétrico (Inversión Reflejada). La mano derecha asciende en Clave de Sol mientras la mano izquierda desciende exactamente en espejo en Clave de Fa.",
+  "clef": "grand",
+  "bpm_recommended": 84,
   "time_signature": "3/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re4"
+    },
+    {
+      "midi_note": 47,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Si2"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi4"
+    },
+    {
+      "midi_note": 45,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "La2"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa4"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Sol2"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol4"
+    },
+    {
+      "midi_note": 41,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Fa2"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa4"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Sol2"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Do3"
+    }
   ]
 }

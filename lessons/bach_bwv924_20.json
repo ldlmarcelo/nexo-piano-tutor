@@ -1,21 +1,76 @@
 {
   "id": "bach_bwv924_20",
   "title": "Pequeño Preludio N° 1 en Do Mayor (BWV 924)",
-  "composer": "J. S. Bach",
+  "composer": "Johann Sebastian Bach",
   "opus": "BWV 924",
-  "description": "Obra cumbre de la polifonía barroca del Capítulo II. Examen integrador de notación contrapuntística, tiempo y timbre de Clavecín (GM Program 6).",
-  "clef": "treble",
-  "bpm_recommended": 80,
+  "description": "Preludio polifónico de los Nueve Pequeños Preludios para el Klavierbüchlein de Wilhelm Friedemann Bach. Diseñado para la independencia digital y la conducción de voces.",
+  "clef": "grand",
+  "bpm_recommended": 72,
   "time_signature": "4/4",
   "instrument": 6,
   "notes": [
-    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 72, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 71, "duration_quarter": 0.5, "finger": 4, "hand": "R", "lyric": "Si"},
-    {"midi_note": 69, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "La"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"}
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi4"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol4"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 4.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi3"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 36,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do2"
+    }
   ]
 }

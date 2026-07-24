@@ -1,19 +1,83 @@
 {
   "id": "bach_anh122_15",
   "title": "Marcha en Re Mayor (BWV Anh. 122)",
-  "composer": "C. P. E. Bach / Cuaderno de Anna Magdalena",
+  "composer": "Carl Philipp Emanuel Bach / J. S. Bach",
   "opus": "BWV Anh. 122",
-  "description": "Marcha marcial en compás de 2/4. Desacoplamiento articular: la mano derecha ejecuta legato mientras la mano izquierda marca el acompañamiento en staccato picado.",
-  "clef": "treble",
-  "bpm_recommended": 100,
+  "description": "Marcha majestuosa en métrica de 2/4. Ritmo incisivo de corcheas y semicorcheas con acompañamiento armónico firme en clave de Fa.",
+  "clef": "grand",
+  "bpm_recommended": 90,
   "time_signature": "2/4",
   "instrument": 6,
   "notes": [
-    {"midi_note": 62, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Re"},
-    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
-    {"midi_note": 69, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "La"},
-    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
-    {"midi_note": 69, "duration_quarter": 0.5, "finger": 5, "hand": "R", "lyric": "La"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"}
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 45,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "La2"
+    },
+    {
+      "midi_note": 78,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Fa#5"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Mi5"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 2.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Re3"
+    }
   ]
 }

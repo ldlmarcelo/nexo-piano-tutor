@@ -1,22 +1,153 @@
 {
   "id": "bach_anh114b_13",
   "title": "Minueto en Sol Mayor (BWV Anh. 114) — Parte B",
-  "composer": "J. S. Bach / Christian Petzold",
+  "composer": "Johann Sebastian Bach / Christian Petzold",
   "opus": "BWV Anh. 114",
-  "description": "Segunda mitad del Minueto en Sol Mayor. Introducción de imitación melódica, saltos interválicos y pasajes de corcheas continuas exigiendo mantener el tiempo del metrónomo sin acelerar.",
-  "clef": "treble",
-  "bpm_recommended": 90,
+  "description": "Segunda sección de la obra. Modula temporalmente y presenta escalas descendentes en corcheas con respuesta polifónica del bajo en Clave de Fa.",
+  "clef": "grand",
+  "bpm_recommended": 84,
   "time_signature": "3/4",
   "instrument": 6,
   "notes": [
-    {"midi_note": 71, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Si"},
-    {"midi_note": 67, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 69, "duration_quarter": 0.5, "finger": 4, "hand": "R", "lyric": "La"},
-    {"midi_note": 71, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Si"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"},
-    {"midi_note": 64, "duration_quarter": 0.5, "finger": 2, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Sol"}
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 45,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "La2"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Sol2"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 66,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Fa#"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 3.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 43,
+      "duration_quarter": 3.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Sol2"
+    }
   ]
 }

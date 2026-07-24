@@ -3,19 +3,137 @@
   "title": "Béla Bartók — Mikrokosmos N° 1 (Estudio Modal de 6 Notas)",
   "composer": "Béla Bartók",
   "opus": "Mikrokosmos Vol. 1 N° 1",
-  "description": "Estudio modal moderno a manos en espejo a distancias amplias. Entrena la lectura no tonal de la música del siglo XX y la simetría auditiva.",
-  "clef": "treble",
+  "description": "Estudio unisono bimanual en modo Dorian/Eolio. Ambas manos tocan la misma línea melódica separadas por dos octavas, cimentando la concentración y simetría kinestésica.",
+  "clef": "grand",
   "bpm_recommended": 88,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
-    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"},
-    {"midi_note": 64, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Mi"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 69, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "La"},
-    {"midi_note": 67, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Sol"},
-    {"midi_note": 65, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa"},
-    {"midi_note": 62, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Re"}
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re4"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi4"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi3"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa4"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa3"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol4"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa4"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa3"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi4"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi3"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re4"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re3"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    }
   ]
 }

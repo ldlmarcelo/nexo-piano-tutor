@@ -125,11 +125,12 @@ class SheetView(QGraphicsView):
         if not self._lesson:
             return
 
-        # Geometría del pentagrama (5 líneas)
-        # Línea 5 (80), Línea 4 (94), Línea 3 (108 - centro), Línea 2 (122), Línea 1 (136)
-        staff_y_start = 80
+        # Geometría del pentagrama (Clave Única vs Gran Pentagrama a Dos Manos)
+        is_grand_staff = (self._lesson.clef == "grand" or self._lesson.clef == "both")
+
+        staff_y_treble = 70 if is_grand_staff else 80
+        staff_y_bass = 190 if is_grand_staff else 80
         line_spacing = 14
-        staff_y_end = staff_y_start + 4 * line_spacing  # 136
         half_spacing = line_spacing / 2  # 7px por paso diatónico
 
         # Métrica / Compás (ej: "4/4" -> 4 tiempos de negra por compás)
@@ -146,41 +147,101 @@ class SheetView(QGraphicsView):
         x_start = 135  # Espacio tras clave + métrica
         x_step = 54
         width = max(600, len(self._lesson.notes) * x_step + x_start + 60)
-        self._scene.setSceneRect(0, 0, width, 220)
+        scene_h = 320 if is_grand_staff else 220
+        self._scene.setSceneRect(0, 0, width, scene_h)
 
-        # 1. Dibujar las 5 líneas principales del pentagrama
         pen_staff = QPen(QColor("#475569"), 2)
-        for i in range(5):
-            y = staff_y_start + i * line_spacing
-            self._scene.addLine(20, y, width - 20, y, pen_staff)
 
-        # 2. Dibujar el Signo de Clave SMuFL sobre el pentagrama
-        is_treble = (self._lesson.clef == "treble")
-        clef_symbol = CLEF_TREBLE if is_treble else CLEF_BASS
-        clef_font = get_smufl_font(36 if is_treble else 34)
-        fm_clef = QFontMetrics(clef_font)
-        clef_item = self._scene.addText(clef_symbol, clef_font)
-        clef_item.setDefaultTextColor(QColor("#38bdf8"))
-        # En SMuFL, la clave de Sol se origina en Línea 2 (122) y la de Fa en Línea 4 (94)
-        clef_y_origin = 122 if is_treble else 94
-        clef_item.setPos(18 if is_treble else 20, clef_y_origin - fm_clef.ascent())
+        if is_grand_staff:
+            # 1. DIBUJAR PENTAGRAMA SUPERIOR (Clave de Sol - Mano Derecha)
+            for i in range(5):
+                y = staff_y_treble + i * line_spacing
+                self._scene.addLine(20, y, width - 20, y, pen_staff)
 
-        # 3. Dibujar la Métrica de Compás con Glifos SMuFL (timeSig0..timeSig9)
-        smufl_num = TIME_SIG_DIGITS.get(str(ts_num), str(ts_num))
-        smufl_den = TIME_SIG_DIGITS.get(str(ts_den), str(ts_den))
-        ts_smufl_font = get_smufl_font(26)
-        fm_ts = QFontMetrics(ts_smufl_font)
+            # 2. DIBUJAR PENTAGRAMA INFERIOR (Clave de Fa - Mano Izquierda)
+            for i in range(5):
+                y = staff_y_bass + i * line_spacing
+                self._scene.addLine(20, y, width - 20, y, pen_staff)
 
-        num_item = self._scene.addText(smufl_num, ts_smufl_font)
-        num_item.setDefaultTextColor(QColor("#0284c7"))
-        num_item.setPos(70, 94 - fm_ts.ascent())
+            # 3. LLAVE DE SISTEMA DE PIANO (System Brace & Barra Conectora Izquierda)
+            # Linea vertical izquierda uniendo ambos pentagramas
+            self._scene.addLine(16, staff_y_treble, 16, staff_y_bass + 4 * line_spacing, pen_staff)
+            
+            # Llave curva SMuFL (Brace \uE000 / \uE003)
+            brace_font = get_smufl_font(52)
+            brace_item = self._scene.addText("\uE000", brace_font)
+            brace_item.setDefaultTextColor(QColor("#0284c7"))
+            brace_item.setPos(4, staff_y_treble - 10)
 
-        den_item = self._scene.addText(smufl_den, ts_smufl_font)
-        den_item.setDefaultTextColor(QColor("#0284c7"))
-        den_item.setPos(70, 122 - fm_ts.ascent())
+            # 4. SIGNOS DE CLAVE EN AMBOS PENTAGRAMAS
+            clef_font_sol = get_smufl_font(36)
+            fm_sol = QFontMetrics(clef_font_sol)
+            item_sol = self._scene.addText(CLEF_TREBLE, clef_font_sol)
+            item_sol.setDefaultTextColor(QColor("#38bdf8"))
+            item_sol.setPos(18, (staff_y_treble + 3 * line_spacing) - fm_sol.ascent())
+
+            clef_font_fa = get_smufl_font(34)
+            fm_fa = QFontMetrics(clef_font_fa)
+            item_fa = self._scene.addText(CLEF_BASS, clef_font_fa)
+            item_fa.setDefaultTextColor(QColor("#38bdf8"))
+            item_fa.setPos(20, (staff_y_bass + 1 * line_spacing) - fm_fa.ascent())
+
+            # 5. MÉTRICA DE COMPÁS EN AMBOS PENTAGRAMAS
+            smufl_num = TIME_SIG_DIGITS.get(str(ts_num), str(ts_num))
+            smufl_den = TIME_SIG_DIGITS.get(str(ts_den), str(ts_den))
+            ts_smufl_font = get_smufl_font(26)
+            fm_ts = QFontMetrics(ts_smufl_font)
+
+            # Métrica en Pentagrama Superior
+            num_item1 = self._scene.addText(smufl_num, ts_smufl_font)
+            num_item1.setDefaultTextColor(QColor("#0284c7"))
+            num_item1.setPos(70, (staff_y_treble + 1 * line_spacing) - fm_ts.ascent())
+            den_item1 = self._scene.addText(smufl_den, ts_smufl_font)
+            den_item1.setDefaultTextColor(QColor("#0284c7"))
+            den_item1.setPos(70, (staff_y_treble + 3 * line_spacing) - fm_ts.ascent())
+
+            # Métrica en Pentagrama Inferior
+            num_item2 = self._scene.addText(smufl_num, ts_smufl_font)
+            num_item2.setDefaultTextColor(QColor("#0284c7"))
+            num_item2.setPos(70, (staff_y_bass + 1 * line_spacing) - fm_ts.ascent())
+            den_item2 = self._scene.addText(smufl_den, ts_smufl_font)
+            den_item2.setDefaultTextColor(QColor("#0284c7"))
+            den_item2.setPos(70, (staff_y_bass + 3 * line_spacing) - fm_ts.ascent())
+
+        else:
+            # PENTAGRAMA ÚNICO (Clave de Sol o Clave de Fa)
+            for i in range(5):
+                y = staff_y_treble + i * line_spacing
+                self._scene.addLine(20, y, width - 20, y, pen_staff)
+
+            is_treble = (self._lesson.clef == "treble")
+            clef_symbol = CLEF_TREBLE if is_treble else CLEF_BASS
+            clef_font = get_smufl_font(36 if is_treble else 34)
+            fm_clef = QFontMetrics(clef_font)
+            clef_item = self._scene.addText(clef_symbol, clef_font)
+            clef_item.setDefaultTextColor(QColor("#38bdf8"))
+            clef_y_origin = 122 if is_treble else 94
+            clef_item.setPos(18 if is_treble else 20, clef_y_origin - fm_clef.ascent())
+
+            smufl_num = TIME_SIG_DIGITS.get(str(ts_num), str(ts_num))
+            smufl_den = TIME_SIG_DIGITS.get(str(ts_den), str(ts_den))
+            ts_smufl_font = get_smufl_font(26)
+            fm_ts = QFontMetrics(ts_smufl_font)
+
+            num_item = self._scene.addText(smufl_num, ts_smufl_font)
+            num_item.setDefaultTextColor(QColor("#0284c7"))
+            num_item.setPos(70, 94 - fm_ts.ascent())
+
+            den_item = self._scene.addText(smufl_den, ts_smufl_font)
+            den_item.setDefaultTextColor(QColor("#0284c7"))
+            den_item.setPos(70, 122 - fm_ts.ascent())
 
         # Título de la lección y clave
-        clef_title = "Clave de Sol (Mano Derecha)" if is_treble else "Clave de Fa (Mano Izquierda)"
+        if is_grand_staff:
+            clef_title = "Gran Pentagrama de Piano (Doble Clave: Sol & Fa)"
+        else:
+            clef_title = "Clave de Sol (Mano Derecha)" if self._lesson.clef == "treble" else "Clave de Fa (Mano Izquierda)"
+
         beaming_title_suffix = " [Barras Unidas]" if self._beaming_enabled else " [Corchetes Separados]"
         title_text = self._scene.addText(f"{clef_title} — {self._lesson.title} [{ts_str}]{beaming_title_suffix}", QFont("Segoe UI", 10, QFont.Weight.Bold))
         title_text.setDefaultTextColor(QColor("#94a3b8"))
@@ -193,13 +254,14 @@ class SheetView(QGraphicsView):
                 x_a = x_start + self._range_start * x_step - 8
                 x_b = x_start + self._range_end * x_step + 22
                 w_box = x_b - x_a
-                self._scene.addRect(x_a, 40, w_box, 140, QPen(QColor("#38bdf8"), 2, Qt.PenStyle.DashLine), QBrush(QColor(56, 189, 248, 30)))
+                box_h = 240 if is_grand_staff else 140
+                self._scene.addRect(x_a, 35, w_box, box_h, QPen(QColor("#38bdf8"), 2, Qt.PenStyle.DashLine), QBrush(QColor(56, 189, 248, 30)))
                 t_a = self._scene.addText("[A]", QFont("Consolas", 10, QFont.Weight.Bold))
                 t_a.setDefaultTextColor(QColor("#38bdf8"))
-                t_a.setPos(x_a - 4, 38)
+                t_a.setPos(x_a - 4, 33)
                 t_b = self._scene.addText("[B]", QFont("Consolas", 10, QFont.Weight.Bold))
                 t_b.setDefaultTextColor(QColor("#38bdf8"))
-                t_b.setPos(x_b - 16, 38)
+                t_b.setPos(x_b - 16, 33)
 
         # Pre-procesamiento de posiciones, compases y tiempos para Beaming y Batuta
         note_data: List[Dict[str, Any]] = []
@@ -208,7 +270,21 @@ class SheetView(QGraphicsView):
         for idx, note in enumerate(self._lesson.notes):
             x = x_start + idx * x_step
             diatonic_val = midi_to_diatonic_step(note.midi_note)
-            y_center = 122 - (diatonic_val - 32) * half_spacing if is_treble else 94 - (diatonic_val - 24) * half_spacing
+            hand = getattr(note, "hand", None)
+
+            if is_grand_staff:
+                if hand == "L" or (hand is None and note.midi_note < 60):
+                    # Pentagrama Inferior (Clave de Fa) -> Línea 4 Fa3 es 204
+                    y_center = 204 - (diatonic_val - 24) * half_spacing
+                    stem_up = (y_center > 218)
+                else:
+                    # Pentagrama Superior (Clave de Sol) -> Línea 2 Sol4 es 112
+                    y_center = 112 - (diatonic_val - 32) * half_spacing
+                    stem_up = (y_center > 98)
+            else:
+                is_tr = (self._lesson.clef == "treble")
+                y_center = 122 - (diatonic_val - 32) * half_spacing if is_tr else 94 - (diatonic_val - 24) * half_spacing
+                stem_up = (y_center > (108 if is_tr else 94))
 
             duration = getattr(note, "duration_quarter", 1.0)
             measure_idx = int(cumulative_beats // beats_per_measure)
@@ -224,9 +300,10 @@ class SheetView(QGraphicsView):
                 "beat_in_measure": beat_in_measure,
                 "is_current": (idx == self._current_step),
                 "is_past": (idx < self._current_step),
-                "stem_up": (y_center > 108),
+                "stem_up": stem_up,
                 "beamed": False
             })
+            cumulative_beats += duration
             cumulative_beats += duration
 
         # Identificar y agrupar corcheas/semicorcheas para Beaming por Tiempo
@@ -374,10 +451,11 @@ class SheetView(QGraphicsView):
                         self._scene.addLine(stem_x, stem_y2 - 6, stem_x + 8, stem_y2 - 16, pen_stem)
 
             # D. Digitación (1 al 5)
-            finger_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#38bdf8" if (getattr(note, "hand", "R").upper() == "R" or is_treble) else "#22c55e"))
+            is_r_hand = (getattr(note, "hand", "R").upper() == "R") if is_grand_staff else (self._lesson.clef == "treble")
+            finger_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else (QColor("#38bdf8") if is_r_hand else QColor("#22c55e")))
             finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
             finger_text.setDefaultTextColor(finger_color)
-            finger_y = 48 if ((getattr(note, "hand", "R").upper() == "R") or is_treble) else 152
+            finger_y = 48 if is_r_hand else 152
             finger_text.setPos(x - 2, finger_y)
 
             # E. Nombre / Lírica debajo del pentagrama
@@ -392,7 +470,9 @@ class SheetView(QGraphicsView):
             cumulative_beats += duration
             if cumulative_beats >= beats_per_measure and idx < len(self._lesson.notes) - 1:
                 x_bar = x + (x_step / 2) + 6
-                self._scene.addLine(x_bar, staff_y_start, x_bar, staff_y_end, pen_barline)
+                y_bar_top = staff_y_treble
+                y_bar_bottom = (staff_y_bass + 4 * line_spacing) if is_grand_staff else (staff_y_treble + 4 * line_spacing)
+                self._scene.addLine(x_bar, y_bar_top, x_bar, y_bar_bottom, pen_barline)
                 cumulative_beats = 0.0
 
         # Draw Beams for grouped corcheas / semicorcheas
@@ -427,5 +507,7 @@ class SheetView(QGraphicsView):
 
         # Línea final de cierre del pentagrama (Doble barra de compás final)
         x_final = x_start + len(self._lesson.notes) * x_step - 15
-        self._scene.addLine(x_final - 4, staff_y_start, x_final - 4, staff_y_end, QPen(QColor("#64748b"), 1))
-        self._scene.addLine(x_final, staff_y_start, x_final, staff_y_end, QPen(QColor("#cbd5e1"), 3))
+        y_bar_top = staff_y_treble
+        y_bar_bottom = (staff_y_bass + 4 * line_spacing) if is_grand_staff else (staff_y_treble + 4 * line_spacing)
+        self._scene.addLine(x_final - 4, y_bar_top, x_final - 4, y_bar_bottom, QPen(QColor("#64748b"), 1))
+        self._scene.addLine(x_final, y_bar_top, x_final, y_bar_bottom, QPen(QColor("#cbd5e1"), 3))

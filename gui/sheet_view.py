@@ -362,6 +362,7 @@ class SheetView(QGraphicsView):
             is_current = nd["is_current"]
             is_past = nd["is_past"]
             duration = nd["duration"]
+            hand = getattr(note, "hand", None)
 
             has_error = (idx in self._error_steps)
             note_res = self._note_results.get(idx)

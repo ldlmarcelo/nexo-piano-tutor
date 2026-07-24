@@ -1,0 +1,21 @@
+{
+  "id": "bach_anh114a_12",
+  "title": "Minueto en Sol Mayor (BWV Anh. 114) — Parte A",
+  "composer": "J. S. Bach / Christian Petzold",
+  "opus": "BWV Anh. 114",
+  "description": "El célebre Minueto del Libro de Anna Magdalena Bach en ritmo ternario (3/4). La mano derecha ejecuta la frase melódica con arpegios y corcheas mientras la mano izquierda marca el compás en Clave de Fa.",
+  "clef": "treble",
+  "bpm_recommended": 90,
+  "time_signature": "3/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 60, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 62, "duration_quarter": 0.5, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 64, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 65, "duration_quarter": 0.5, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

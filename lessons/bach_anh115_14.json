@@ -1,0 +1,19 @@
+{
+  "id": "bach_anh115_14",
+  "title": "Minueto en Sol Menor (BWV Anh. 115)",
+  "composer": "J. S. Bach / Christian Petzold",
+  "opus": "BWV Anh. 115",
+  "description": "Contraparte dramática del Anh. 114 en tonalidad menor (Sol Menor, armadura de 2 bemoles: Si♭ y Mi♭). Práctica del toque legato expresivo y articulación barroca.",
+  "clef": "treble",
+  "bpm_recommended": 84,
+  "time_signature": "3/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 70, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si♭"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"}
+  ]
+}

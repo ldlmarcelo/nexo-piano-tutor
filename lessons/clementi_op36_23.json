@@ -1,0 +1,19 @@
+{
+  "id": "clementi_op36_23",
+  "title": "Muzio Clementi — Agilidad en Staccato de Muñeca",
+  "composer": "Muzio Clementi",
+  "opus": "Opus 36 N° 1",
+  "description": "Estudio de agilidad en staccato picado de muñeca en compás de 2/4. Exige rebote elástico de la articulación sin tensión en el antebrazo.",
+  "clef": "treble",
+  "bpm_recommended": 115,
+  "time_signature": "2/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 72, "duration_quarter": 0.5, "finger": 5, "hand": "R", "lyric": "Do"},
+    {"midi_note": 67, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 64, "duration_quarter": 0.5, "finger": 2, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 60, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

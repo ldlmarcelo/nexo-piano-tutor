@@ -1,0 +1,20 @@
+{
+  "id": "bartok_mikro22_28",
+  "title": "Béla Bartók — Mikrokosmos N° 22 (Canon a la Octava)",
+  "composer": "Béla Bartók",
+  "opus": "Mikrokosmos Vol. 1 N° 22",
+  "description": " Canon a la octava en polifonía moderna. La mano izquierda imita el motivo melódico de la mano derecha a 2 compases de distancia.",
+  "clef": "treble",
+  "bpm_recommended": 92,
+  "time_signature": "4/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

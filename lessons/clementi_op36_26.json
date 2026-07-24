@@ -1,0 +1,19 @@
+{
+  "id": "clementi_op36_26",
+  "title": "Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 2 'Andante')",
+  "composer": "Muzio Clementi",
+  "opus": "Opus 36 N° 1",
+  "description": "Contraste dinámico e integración expresiva (Forte vs. Piano). Medición de Velocity dinámico exigiendo al menos 40 puntos de delta entre frases expresivas.",
+  "clef": "treble",
+  "bpm_recommended": 72,
+  "time_signature": "3/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "La"},
+    {"midi_note": 72, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Do"},
+    {"midi_note": 70, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Si♭"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Fa"}
+  ]
+}

@@ -59,133 +59,98 @@ Cuando el estudiante falla en un pasaje:
 
 ---
 
-### Pillar IV: Notación Musical Interactiva en Pentagrama Real
+### Pillar IV: Notación Musical Interactiva en Pentagrama Real (Estándar SMuFL)
 - Partitura real en **Clave de Sol** (mano derecha) y **Clave de Fa** (mano izquierda).
+- Renderizado de glifos con la fuente vectorial **Bravura.otf** (W3C SMuFL Standard).
 - Indicación clara de digitación recomendada (dedos 1-Pulgar al 5-Meñique).
 - Renderizado adaptativo que responde iluminando las notas a medida que se ejecutan.
 
 ---
 
-## 📚 3. Curriculum Clásico de Dominio Público
+## 📚 3. Curriculum Clásico de Dominio Público (Programa Completo)
 
-El plan de estudios prescinde de notas aleatorias sin sentido armónico y se basa 100% en las obras maestras pedagógicas de la historia:
+### Capítulo I: Los Fundamentos de Beyer (Opus 101) — *Completado (Lecciones 1 a 10)*
+1. `beyer_op101_01.json`: Posición Fija de Do Mayor — Mano Derecha (Clave de Sol).
+2. `beyer_op101_02.json`: Posición Fija de Do Mayor — Mano Izquierda (Clave de Fa).
+3. `beyer_op101_03.json`: Saltos de Terceras (3as) — Mano Derecha.
+4. `beyer_op101_04.json`: Saltos de Terceras (3as) — Mano Izquierda.
+5. `beyer_op101_05.json`: Escala de Do Mayor Completa (El Paso del Pulgar).
+6. `beyer_op101_06.json`: Alternancia y Diálogo en Clave de Fa (MI).
+7. `beyer_op101_07.json`: Escala de Do Mayor en Mano Izquierda con paso de pulgar.
+8. `beyer_op101_08.json`: Saltos de Terceras en Mano Izquierda.
+9. `beyer_op101_09.json`: Primer Unísono Bimanual Simultáneo (Manos Juntas a Octava).
+10. `beyer_op101_10.json`: Saltos de Cuartas y Articulación interdigital.
 
-### Nivel 1: Los Fundamentos de Beyer
-- **Obra**: Ferdinand Beyer — *Opus 101 (Escuela Preparatoria de Piano)*.
-- **Enfoque**: Posición fija de 5 dedos (Do a Sol). Independencia mano a mano.
+### Capítulo II: Polifonía e Independencia Barroca (J. S. Bach) — *Completado (Lecciones 11 a 20)*
+11. `bach_anh126_11.json`: La Musette en Re Mayor (BWV Anh. 126) — Bajo continuo de gaita y timbre de Clavecín.
+12. `bach_anh114a_12.json`: Minueto en Sol Mayor (BWV Anh. 114) — Parte A (Independencia rítmica en 3/4).
+13. `bach_anh114b_13.json`: Minueto en Sol Mayor (BWV Anh. 114) — Parte B (Imitación melódica).
+14. `bach_anh115_14.json`: Minueto en Sol Menor (BWV Anh. 115) — Tonalidad menor y armadura de clave (2 bemoles).
+15. `bach_anh122_15.json`: Marcha en Re Mayor (BWV Anh. 122 - C. P. E. Bach) — Legato vs. Staccato.
+16. `bach_anh121_16.json`: Minueto en Do Menor (BWV Anh. 121) — Walking bass en mano izquierda.
+17. `bach_anh132_17.json`: Aria en Re Menor (BWV Anh. 132) — Canto barroco expressivo.
+18. `bach_anh119_18.json`: Polonesa en Sol Menor (BWV Anh. 119) — Síncopa y danza.
+19. `bach_bwv939_19.json`: Preludio en Do Mayor (BWV 939 - Pequeños Preludios) — Arpegiado contrapuntístico.
+20. `bach_bwv924_20.json`: Pequeño Preludio N° 1 en Do Mayor (BWV 924) — Obra cumbre barroca.
 
-### Nivel 2: Polifonía e Independencia Barroca
-- **Obra**: J. S. Bach — *El Libro de Clavecin de Anna Magdalena Bach* (Minuetos Anh. 114, Anh. 115, Musettes).
-- **Enfoque**: Contrapunto inicial bimanual (ambas manos llevan líneas melódicas con igual jerarquía).
-
-### Nivel 3: Agilidad y Fraseo Clásico
-- **Obras**: 
-  - Muzio Clementi — *Sonatinas Opus 36*.
-  - Béla Bartók — *Mikrokosmos (Vol. 1 y 2)*.
-- **Enfoque**: Paso del pulgar, escalas completas, *staccato*, *legato* y ritmos folclóricos europeos.
+### Capítulo III: Claridad y Agilidad Clásica (Muzio Clementi & Béla Bartók) — *Completado (Lecciones 21 a 30)*
+21. `clementi_op36_21.json`: Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 1 'Allegro' con Bajo Alberti).
+22. `beyer_op101_22.json`: Escala de Sol Mayor completa con alteración fija (Fa#) y paso de pulgar.
+23. `clementi_op36_23.json`: Muzio Clementi — Agilidad en Staccato de muñeca.
+24. `bartok_mikro1_24.json`: Béla Bartók — Mikrokosmos N° 1 (Estudio Modal de 6 notas a manos en espejo).
+25. `bartok_mikro12_25.json`: Béla Bartók — Mikrokosmos N° 12 (Acompañamiento reflejado y ritmo asimétrico).
+26. `clementi_op36_26.json`: Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 2 'Andante') y contraste dinámico (Forte vs. Piano).
+27. `beyer_op101_27.json`: Escala de Fa Mayor completa con armadura de 1 bemol (Si♭).
+28. `bartok_mikro22_28.json`: Béla Bartók — Mikrokosmos N° 22 (Canon a la Octava).
+29. `clementi_op36_29.json`: Muzio Clementi — Sonatina Op. 36 N° 1 (Mov. 3 'Vivace' en 3/8).
+30. `bartok_mikro32_30.json`: Béla Bartók — Mikrokosmos N° 32 (Ritmo Búlgaro) / Finale de Maestría Clásica.
 
 ---
 
-## 🎭 4. Gamificación y Rigor Narrativo
+## 🚀 4. El Horizonte de Expansión Futuro (Roadmap de NEXO Piano Tutor)
 
-Para mantener la motivación infantil sin caer en trivialidades:
+1. **Módulo A: Capítulo IV — *La Tempestad Romántica y el Expresionismo***
+   - *Obras master:* Frédéric Chopin (*Preludio Op. 28 N° 4 en Mi menor*), Robert Schumann (*Álbum para la Juventud Op. 68*), Pyotr I. Tchaikovsky (*Álbum de la Juventud Op. 39*).
+   - *Física motor:* Control del **Pedal de Resonancia** (Sustain CC64), el tiempo *Rubato* y la polirritmia ($3 \text{ contra } 2$).
+2. **Módulo B: "La Fragua Abierta" (Motor Importer Soberano MusicXML / MIDI)**
+   - Motor de arrastrar y soltar que convierte cualquier archivo `.musicxml` o `.mid` de cualquier compositor en una lección interactiva vectorial con digitación y evaluación en vivo.
+3. **Módulo C: "El Maestro Socrático de la Fragua" (Mente DeepSeek API)**
+   - Integración de IA socrática a demanda que analiza los logs de errores rítmicos y de octava, devolviendo un consejo pedagógico en tono humano y biomecánico.
+
+---
+
+## 🎭 5. Gamificación y Rigor Narrativo
 
 1. **Viaje Timbrico Histórico**:
-   - Las piezas de Bach suenan automáticamente a **Clavecín Barroco** u **Órgano de Catedral**.
-   - Las piezas de Mozart y Beethoven suenan a **Piano de Cola de Concierto**.
+   - Las piezas de Beyer y Clementi/Bartók suenan a **Piano de Cola de Concierto** (`Program GM 0`).
+   - Las piezas de Bach suenan automáticamente a **Clavecín Barroco** (`Program GM 6`) u **Órgano de Catedral** (`Program GM 19`).
 2. **Contexto Histórico Dramático**:
    - Tarjetas breves antes de cada obra narrando la historia humana detrás del compositor.
 3. **Capítulos Épicos**:
-   - Capítulo I: *Los Secretos del Barroco*
-   - Capítulo II: *La Claridad Clásica*
-   - Capítulo III: *La Tempestad Romántica*
+   - Capítulo I: *Los Fundamentos de Beyer*
+   - Capítulo II: *Los Secretos del Barroco (J. S. Bach)*
+   - Capítulo III: *La Claridad Clásica y la Agilidad (Clementi & Bartók)*
 
 ---
 
-## 🔐 5. Blueprint de Autenticación y Gestión de Perfiles Soberanos
+## 🔐 6. Blueprint de Autenticación y Gestión de Perfiles Soberanos
 
-### 5.1. Fundamentación y Ley de Universalidad Semántica
+### 6.1. Fundamentación y Ley de Universalidad Semántica
 El diseño del sistema de perfiles se rige de forma estricta por la **Ley de Universalidad Semántica (Ley VI de NEXO)**:
 
 > **"El código opera sobre abstracciones de sistema (User, Session, Progress, Auth), nunca sobre nombres customizados o constantes mágicas hardcodeadas."**
 
-Prohibimos explícitamente la presencia de cadenas de texto de nombres de usuario dentro del código fuente. La aplicación trata a los estudiantes como entidades dinámicas desacopladas, garantizando que el sistema sea 100% extensible, reutilizable y soberano.
-
 ---
 
-### 5.2. Justificación Neuro-Pedagógica de la Sesión Aislada
-Para un entorno multitutor familiar:
-1. **Aislamiento de Muestras Rítmicas y Progreso**: Cada estudiante posee su propia velocidad de mielenización, racha de días consecutivos y curva de precisión tonal (tolerancia en ms). La mezcla de perfiles contaminaría la curva de aprendizaje del evaluador en tiempo real (`RealtimeEvaluator`).
-2. **Foco e Inmunidad Visual**: Una vez autenticado el estudiante, la interfaz principal de estudio **debe quedar libre de ruido administrativo**. Se elimina cualquier widget o selector permanente de la pantalla de la partitura. En el cabezal solo se exhibe la insignia del estudiante activo y el botón **`[ 🚪 Cerrar Sesión ]`**.
+## 📈 7. Blueprint de Evaluación Realista, Tarjetas Teóricas y Bitácora
 
----
-
-### 5.3. Modelo de Entidades y Lógica de Negocio
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      ESTRUCTURA USER                        │
-├─────────────────────────────────────────────────────────────┤
-│ - id: str (UUIDv4)                                          │
-│ - username: str (Nombre de pantalla universal)              │
-│ - pin: str (PIN opcional de 4 dígitos para privacidad)      │
-│ - created_at: str (ISO-8601)                                │
-│ - active_lesson_id: str                                     │
-│ - completed_lessons: list[str]                              │
-│ - stats: UserStats (total_notes, accuracy_pct, streak_days) │
-│ - history: list[SessionLog]                                 │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-### 5.4. Flujo de Navegación de Sesión
-
-1. **Arranque de Aplicación (Estado Desconectado)**:
-   - Al iniciar `main.py`, se verifica la persistencia en `users.json`.
-   - Si no hay sesión activa guardada, la ventana presenta el **Panel de Bienvenida y Autenticación** (`LoginWidget`), permitiendo:
-     - Seleccionar un perfil existente (e ingresar PIN si fuere requerido).
-     - Registrar un nuevo perfil de estudiante.
-
-2. **Transición a Pantalla de Estudio (Estado Autenticado)**:
-   - Al autenticarse con éxito, el `LoginWidget` se retira y se despliega la interfaz de Partitura, Teclado e Indicadores.
-   - Se cargan automáticamente las lecciones aprobadas y la última lección activa del perfil.
-
-3. **Cierre de Sesión (Logout)**:
-   - Al presionar **`[ 🚪 Cerrar Sesión ]`**, la aplicación guarda el progreso pendiente en `users.json`, limpia el estado del evaluador y retorna limpiamente a la pantalla de Autenticación.
-
----
-
-## 📈 6. Blueprint de Evaluación Realista, Tarjetas Teóricas y Bitácora
-
-### 6.1. Evaluación Realista e Inmunidad a las Felicitaciones Ciegas
-En concordancia con el Pilar II (Realimentación Inmediata de Baja Latencia), el evaluador no debe emitir mensajes de "Excelente" si el estudiante cometió desvíos tonales o de octava:
+### 7.1. Evaluación Realista e Inmunidad a las Felicitaciones Ciegas
 - **Cálculo de Precisión (%)**: $(N_{correctas} / N_{totales}) \times 100$.
 - **Criterio de Maestría por Tramo**:
   - **90% – 100%**: 🌟 *Ejecución Impecable* (Desbloquea la lección y suma insignia).
   - **75% – 89%**: 👍 *Buena Técnica* (Consejo: "Notas logradas. Realizá una serie de repeticiones x3 para afinar la fluidez").
-  - **< 75%**: 💡 *Revisión Requerida* (Sin felicitaciones vacías. Consejo: "Atención con el dedo indicado. Revisá la posición y reintentá").
+  - **< 75%**: 💡 *Revisión Requerida* (Sin felicitaciones vacías).
 
 ---
 
-### 6.2. Tarjetas Teóricas Contextuales y Biblioteca Consultable
-Para desacoplar la teoría árida de la práctica activa:
-1. **Tarjetas Introductivas por Lección (Popups)**:
-   - *Lección 1*: ¿Qué es el Pentagrama?, ¿Qué es la Clave de Sol?, Digitación de la Mano Derecha (1 a 5).
-   - *Lección 2*: ¿Qué es la Clave de Fa?, Digitación de la Mano Izquierda (5 a 1).
-2. **La Biblioteca de la Fragua (Glosario Consultable)**:
-   - Panel accesible desde la interfaz principal para releer las tarjetas teóricas y la historia del piano (*De Cristofori al Piano Moderno*).
-
----
-
-### 6.3. Bitácora del Estudiante (Dashboard de Progreso)
-- Panel de visualización de estadísticas individuales por perfil (`UserStats`):
-  - Total de notas ejecutadas y porcentaje de precisión acumulada %.
-  - Racha de repeticiones completadas y lecciones aprobadas.
-  - Ficha personalizada por estudiante.
-
----
-
-*Documento de diseño pedagógico consolidado y actualizado el 2026-07-21 en el Terroir de Marcelo y NEXO.*
-
-
+*Documento de diseño pedagógico consolidado y actualizado el 2026-07-23 en el Terroir de Marcelo y NEXO.*

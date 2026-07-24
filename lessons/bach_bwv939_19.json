@@ -1,0 +1,20 @@
+{
+  "id": "bach_bwv939_19",
+  "title": "Pequeño Preludio en Do Mayor (BWV 939)",
+  "composer": "J. S. Bach",
+  "opus": "BWV 939",
+  "description": "Arpegiado contrapuntístico rápido en Clave de Sol. Exige agilidad de los dedos 1, 3 y 5 con paso de pulgar fluido sobre la armonía barroca.",
+  "clef": "treble",
+  "bpm_recommended": 92,
+  "time_signature": "4/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 60, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 64, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 67, "duration_quarter": 0.5, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 72, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 76, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 79, "duration_quarter": 0.5, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 72, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

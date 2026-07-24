@@ -1,0 +1,21 @@
+{
+  "id": "bartok_mikro1_24",
+  "title": "Béla Bartók — Mikrokosmos N° 1 (Estudio Modal de 6 Notas)",
+  "composer": "Béla Bartók",
+  "opus": "Mikrokosmos Vol. 1 N° 1",
+  "description": "Estudio modal moderno a manos en espejo a distancias amplias. Entrena la lectura no tonal de la música del siglo XX y la simetría auditiva.",
+  "clef": "treble",
+  "bpm_recommended": 88,
+  "time_signature": "4/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 69, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "La"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 62, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Re"}
+  ]
+}

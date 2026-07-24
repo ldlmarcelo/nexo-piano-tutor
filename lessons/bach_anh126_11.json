@@ -1,0 +1,22 @@
+{
+  "id": "bach_anh126_11",
+  "title": "La Musette en Re Mayor (BWV Anh. 126)",
+  "composer": "J. S. Bach / Cuaderno de Anna Magdalena",
+  "opus": "BWV Anh. 126",
+  "description": "Introducción al estilo Barroco con timbre de Clavecín. La mano izquierda sostiene un bajo pedal continuo de gaita (Re3 a La3) mientras la mano derecha despliega una melodía vivaz en Clave de Sol.",
+  "clef": "treble",
+  "bpm_recommended": 80,
+  "time_signature": "2/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"},
+    {"midi_note": 66, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "La"},
+    {"midi_note": 66, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 62, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Re"},
+    {"midi_note": 64, "duration_quarter": 0.5, "finger": 2, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 67, "duration_quarter": 0.5, "finger": 4, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 69, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "La"}
+  ]
+}

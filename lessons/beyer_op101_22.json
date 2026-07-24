@@ -1,0 +1,21 @@
+{
+  "id": "beyer_op101_22",
+  "title": "Escala de Sol Mayor y Paso de Pulgar",
+  "composer": "Ferdinand Beyer",
+  "opus": "Opus 101 N° 60",
+  "description": "Escala completa de Sol Mayor con alteración fija (Fa# en Clave de Sol). Práctica del paso por debajo del pulgar (Dedo 1 a Do5) y digitación 4 sobre Fa#.",
+  "clef": "treble",
+  "bpm_recommended": 80,
+  "time_signature": "4/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "La"},
+    {"midi_note": 71, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Si"},
+    {"midi_note": 72, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 74, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 76, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 78, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 79, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "Sol"}
+  ]
+}

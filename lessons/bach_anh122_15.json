@@ -1,0 +1,19 @@
+{
+  "id": "bach_anh122_15",
+  "title": "Marcha en Re Mayor (BWV Anh. 122)",
+  "composer": "C. P. E. Bach / Cuaderno de Anna Magdalena",
+  "opus": "BWV Anh. 122",
+  "description": "Marcha marcial en compás de 2/4. Desacoplamiento articular: la mano derecha ejecuta legato mientras la mano izquierda marca el acompañamiento en staccato picado.",
+  "clef": "treble",
+  "bpm_recommended": 100,
+  "time_signature": "2/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 62, "duration_quarter": 0.5, "finger": 1, "hand": "R", "lyric": "Re"},
+    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 69, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "La"},
+    {"midi_note": 66, "duration_quarter": 0.5, "finger": 3, "hand": "R", "lyric": "Fa#"},
+    {"midi_note": 69, "duration_quarter": 0.5, "finger": 5, "hand": "R", "lyric": "La"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Re"}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "bach_anh121_16",
+  "title": "Minueto en Do Menor (BWV Anh. 121)",
+  "composer": "J. S. Bach / Cuaderno de Anna Magdalena",
+  "opus": "BWV Anh. 121",
+  "description": "Línea de bajo caminante activa (walking bass en Clave de Fa) en compás de 3/4. La mano izquierda responde melódicamente a la mano derecha.",
+  "clef": "bass",
+  "bpm_recommended": 88,
+  "time_signature": "3/4",
+  "instrument": 6,
+  "notes": [
+    {"midi_note": 48, "duration_quarter": 1.0, "finger": 5, "hand": "L", "lyric": "Do"},
+    {"midi_note": 51, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi♭"},
+    {"midi_note": 55, "duration_quarter": 1.0, "finger": 1, "hand": "L", "lyric": "Sol"},
+    {"midi_note": 53, "duration_quarter": 1.0, "finger": 2, "hand": "L", "lyric": "Fa"},
+    {"midi_note": 51, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi♭"},
+    {"midi_note": 48, "duration_quarter": 1.0, "finger": 5, "hand": "L", "lyric": "Do"}
+  ]
+}

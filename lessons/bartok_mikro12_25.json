@@ -1,0 +1,19 @@
+{
+  "id": "bartok_mikro12_25",
+  "title": "Béla Bartók — Mikrokosmos N° 12 (Acompañamiento Reflejado)",
+  "composer": "Béla Bartók",
+  "opus": "Mikrokosmos Vol. 1 N° 12",
+  "description": "Estudio de acompañamiento reflejado con métricas asimétricas. Desacoplamiento de patrones rítmicos cruzados sin apoyo en la armonía tonal clásica.",
+  "clef": "treble",
+  "bpm_recommended": 96,
+  "time_signature": "3/4",
+  "instrument": 0,
+  "notes": [
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    {"midi_note": 60, "duration_quarter": 1.0, "finger": 1, "hand": "R", "lyric": "Do"}
+  ]
+}

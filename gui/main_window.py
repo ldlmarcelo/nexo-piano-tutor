@@ -18,7 +18,7 @@ from PySide6.QtWidgets import (
     QStackedWidget, QStatusBar, QSpinBox
 )
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QColor, QStandardItemModel, QStandardItem
 
 from core.lesson import Lesson, TargetNote
 from core.evaluator import RealtimeEvaluator
@@ -120,19 +120,11 @@ class MainWindow(QMainWindow):
         header_group = QGroupBox("PANEL PEDAGÓGICO & NAVEGACIÓN DE LECCIONES")
         header_layout = QHBoxLayout(header_group)
         header_layout.setContentsMargins(8, 4, 8, 4)
-        header_layout.setSpacing(6)
-
-        header_layout.addWidget(QLabel("Capítulo:"))
-        self.chapter_combo = QComboBox()
-        self.chapter_combo.addItem("📘 Cap. I: Fundamentos", userData="capitulo_1")
-        self.chapter_combo.addItem("📗 Cap. II: Polifonía", userData="capitulo_2")
-        self.chapter_combo.addItem("📙 Cap. III: Sonatinas", userData="capitulo_3")
-        self.chapter_combo.addItem("📁 Todos los Capítulos", userData="all")
-        header_layout.addWidget(self.chapter_combo, stretch=2)
+        header_layout.setSpacing(8)
 
         header_layout.addWidget(QLabel("Lección:"))
         self.lesson_combo = QComboBox()
-        header_layout.addWidget(self.lesson_combo, stretch=3)
+        header_layout.addWidget(self.lesson_combo, stretch=4)
 
         header_layout.addWidget(QLabel("Modo:"))
         self.mode_combo = QComboBox()
@@ -448,20 +440,46 @@ class MainWindow(QMainWindow):
         self.midi_badge.setStyleSheet("color: #38bdf8; font-size: 11px; font-weight: bold; background-color: #0c4a6e; padding: 4px 8px; border-radius: 4px;")
 
     def _load_available_lessons(self):
-        self.lesson_combo.clear()
-        if not os.path.exists(LESSONS_DIR):
-            return
+        """Carga las 30 lecciones del repertorio clásico anidadas bajo sus Capítulos Pedagógicos I, II y III."""
+        self.lesson_combo.blockSignals(True)
+        model = QStandardItemModel(self)
 
-        for fname in sorted(os.listdir(LESSONS_DIR)):
-            if fname.endswith(".json"):
-                fpath = os.path.join(LESSONS_DIR, fname)
-                try:
-                    with open(fpath, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        label = f"{data.get('composer', '')} - {data.get('title', '')} ({data.get('opus', '')})"
-                        self.lesson_combo.addItem(label, userData=fpath)
-                except (json.JSONDecodeError, OSError):
-                    pass
+        for ch in CHAPTERS:
+            # 1. Cabezal de Capítulo (Negrita, cian, no seleccionable)
+            header = QStandardItem(f"{ch.icon} {ch.title.upper()}")
+            header.setFlags(Qt.ItemFlag.NoItemFlags)
+            header.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+            header.setForeground(QColor("#38bdf8"))
+            header.setBackground(QColor("#0f172a"))
+            model.appendRow(header)
+
+            # 2. Lecciones anidadas bajo este Capítulo
+            for lid in ch.lesson_ids:
+                fpath = os.path.join(LESSONS_DIR, f"{lid}.json")
+                if os.path.exists(fpath):
+                    try:
+                        with open(fpath, "r", encoding="utf-8") as f:
+                            data = json.load(f)
+                            num = lid.split("_")[-1]
+                            composer = data.get("composer", "")
+                            title = data.get("title", "")
+                            label = f"   └─ L.{num}: {composer} — {title}"
+
+                            item = QStandardItem(label)
+                            item.setData(fpath, Qt.ItemDataRole.UserRole)
+                            item.setFont(QFont("Segoe UI", 9))
+                            item.setForeground(QColor("#f8fafc"))
+                            model.appendRow(item)
+                    except (json.JSONDecodeError, OSError):
+                        pass
+
+        self.lesson_combo.setModel(model)
+        self.lesson_combo.blockSignals(False)
+
+        # Seleccionar la primera lección válida (Fila 1, ya que Fila 0 es el Cabezal del Capítulo I)
+        if model.rowCount() > 1:
+            self.lesson_combo.setCurrentIndex(1)
+            self._on_lesson_changed(1)
 
     # ── Lógica de Transporte y Metrónomo ──────────────────────────
 

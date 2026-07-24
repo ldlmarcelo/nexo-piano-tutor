@@ -88,22 +88,23 @@ class MainWindow(QMainWindow):
         # PÁGINA 1: Interfaz Principal de Aprendizaje (Estudio)
         self.study_widget = QWidget()
         study_layout = QVBoxLayout(self.study_widget)
-        study_layout.setSpacing(6)
-        study_layout.setContentsMargins(14, 10, 14, 10)
+        study_layout.setSpacing(4)
+        study_layout.setContentsMargins(10, 8, 10, 8)
 
-        # Cabezal: Título + Usuario Activo + Insignia MIDI + Cerrar Sesión
+        # Cabezal Superior: Título + Usuario Activo + Insignia MIDI + Cerrar Sesión
         head_row = QHBoxLayout()
+        head_row.setContentsMargins(2, 0, 2, 0)
         title = QLabel("🎼 NEXO Piano Tutor")
         title.setObjectName("titleLabel")
 
         self.user_badge = QLabel("👤 Estudiante: —")
-        self.user_badge.setStyleSheet("color: #38bdf8; font-weight: bold; font-size: 13px; background-color: #0f172a; padding: 4px 10px; border-radius: 6px; border: 1px solid #0284c7;")
+        self.user_badge.setStyleSheet("color: #38bdf8; font-weight: bold; font-size: 12px; background-color: #0f172a; padding: 3px 8px; border-radius: 5px; border: 1px solid #0284c7;")
 
         self.midi_badge = QLabel("🔌 Escaneando MIDI...")
-        self.midi_badge.setStyleSheet("color: #94a3b8; font-size: 11px; font-weight: bold; background-color: #1e293b; padding: 4px 8px; border-radius: 4px;")
+        self.midi_badge.setStyleSheet("color: #94a3b8; font-size: 11px; font-weight: bold; background-color: #1e293b; padding: 3px 6px; border-radius: 4px;")
 
         self.logout_btn = QPushButton("🚪 Cerrar Sesión")
-        self.logout_btn.setStyleSheet("background-color: #334155; color: #f8fafc; font-size: 11px; padding: 4px 8px; border-radius: 4px;")
+        self.logout_btn.setStyleSheet("background-color: #334155; color: #f8fafc; font-size: 11px; padding: 3px 8px; border-radius: 4px;")
 
         head_row.addWidget(title)
         head_row.addWidget(self.user_badge)
@@ -113,186 +114,177 @@ class MainWindow(QMainWindow):
 
         study_layout.addLayout(head_row)
 
-        # Separador
-        sep = QFrame()
-        sep.setStyleSheet("background-color: #2d3b54;")
-        sep.setFixedHeight(1)
-        study_layout.addWidget(sep)
+        # Barra Superior 1: SELECCIÓN DE LECCIÓN, MODO Y BIBLIOTECA
+        header_group = QGroupBox("PANEL PEDAGÓGICO & NAVEGACIÓN DE LECCIONES")
+        header_layout = QHBoxLayout(header_group)
+        header_layout.setContentsMargins(8, 4, 8, 4)
+        header_layout.setSpacing(8)
 
-        # Panel 1: LECCIÓN, MODO Y BIBLIOTECA
-        lesson_group = QGroupBox("LECCIÓN, MODO Y BIBLIOTECA")
-        lesson_layout = QHBoxLayout(lesson_group)
-        lesson_layout.setContentsMargins(10, 6, 10, 6)
-
-        lesson_layout.addWidget(QLabel("Lección:"))
+        header_layout.addWidget(QLabel("Lección:"))
         self.lesson_combo = QComboBox()
-        lesson_layout.addWidget(self.lesson_combo, stretch=2)
+        header_layout.addWidget(self.lesson_combo, stretch=3)
 
-        lesson_layout.addWidget(QLabel("Modo:"))
+        header_layout.addWidget(QLabel("Modo:"))
         self.mode_combo = QComboBox()
         self.mode_combo.addItems([
             "📖 Lectura (Sin tiempo)",
             "⏱️ Tiempo (Metrónomo)",
             "🎭 Expresión (Integración)"
         ])
-        lesson_layout.addWidget(self.mode_combo, stretch=1)
+        header_layout.addWidget(self.mode_combo, stretch=1)
 
-        lesson_layout.addWidget(QLabel("Bucle:"))
+        header_layout.addWidget(QLabel("Serie:"))
         self.repeat_combo = QComboBox()
         self.repeat_combo.addItems(["1x (Normal)", "3x (Serie x3)", "5x (Serie x5)", "♾️ Bucle Infinito"])
-        lesson_layout.addWidget(self.repeat_combo, stretch=1)
+        header_layout.addWidget(self.repeat_combo, stretch=1)
 
         self.dashboard_btn = QPushButton("📊 Bitácora")
-        self.dashboard_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;")
-        lesson_layout.addWidget(self.dashboard_btn)
+        self.dashboard_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        header_layout.addWidget(self.dashboard_btn)
 
         self.theory_btn = QPushButton("📖 Teoría")
-        self.theory_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;")
-        lesson_layout.addWidget(self.theory_btn)
+        self.theory_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        header_layout.addWidget(self.theory_btn)
 
         self.library_btn = QPushButton("🏛️ Biblioteca")
-        self.library_btn.setStyleSheet("background-color: #1e293b; color: #38bdf8; font-weight: bold; border: 1px solid #0284c7; padding: 5px 10px; border-radius: 4px;")
-        lesson_layout.addWidget(self.library_btn)
+        self.library_btn.setStyleSheet("background-color: #1e293b; color: #38bdf8; font-weight: bold; border: 1px solid #0284c7; padding: 4px 8px; border-radius: 4px;")
+        header_layout.addWidget(self.library_btn)
 
-        study_layout.addWidget(lesson_group)
+        study_layout.addWidget(header_group)
 
-        # Panel 2: CONTROL DE TRANSPORTE, METRÓNOMO VISUAL Y SECCIÓN A-B
-        control_group = QGroupBox("CONTROL DE REPRODUCCIÓN, METRÓNOMO VISUAL Y PRÁCTICA SECCIÓN (A-B)")
-        control_layout = QVBoxLayout(control_group)
-        control_layout.setContentsMargins(10, 6, 10, 6)
+        # Barra Superior 2: HERRAMIENTAS DE TRANSPORTE Y PRÁCTICA
+        control_group = QGroupBox("TRANSPORTE, METRÓNOMO & SECCIÓN (A-B)")
+        control_layout = QHBoxLayout(control_group)
+        control_layout.setContentsMargins(8, 4, 8, 4)
         control_layout.setSpacing(6)
 
-        # Fila A: Botonera de Transporte (Play, Pause, Stop, Reset, Prev, Next)
-        transport_row = QHBoxLayout()
+        # A. Botonera de Transporte Icónica Limpia (Play, Pause, Stop, Reset, Step Prev, Step Next)
+        self.play_btn = QPushButton("▶")
+        self.play_btn.setObjectName("transportPlayBtn")
+        self.play_btn.setToolTip("Iniciar Lección / Continuar [Espacio]")
 
-        self.play_btn = QPushButton("▶ INICIAR LECCIÓN")
-        self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+        self.pause_btn = QPushButton("⏸")
+        self.pause_btn.setObjectName("transportPauseBtn")
+        self.pause_btn.setToolTip("Pausar Lección [Espacio]")
 
-        self.pause_btn = QPushButton("⏸ Pausar")
-        self.pause_btn.setStyleSheet("background-color: #d97706; color: white; font-weight: bold; padding: 6px 12px; border-radius: 6px;")
+        self.stop_btn = QPushButton("⏹")
+        self.stop_btn.setObjectName("transportStopBtn")
+        self.stop_btn.setToolTip("Detener Lección")
 
-        self.stop_btn = QPushButton("⏹ Detener")
-        self.stop_btn.setStyleSheet("background-color: #dc2626; color: white; font-weight: bold; padding: 6px 12px; border-radius: 6px;")
+        self.reset_btn = QPushButton("🔄")
+        self.reset_btn.setObjectName("transportIconBtn")
+        self.reset_btn.setToolTip("Reiniciar Lección al inicio de rango")
 
-        self.reset_btn = QPushButton("🔄 Reiniciar")
-        self.reset_btn.setStyleSheet("background-color: #475569; color: white; font-weight: bold; padding: 6px 12px; border-radius: 6px;")
+        self.step_prev_btn = QPushButton("⏮")
+        self.step_prev_btn.setObjectName("transportIconBtn")
+        self.step_prev_btn.setToolTip("Retroceder 1 nota")
 
-        self.step_prev_btn = QPushButton("⏮ Nota Anterior")
-        self.step_prev_btn.setStyleSheet("background-color: #1e293b; color: #cbd5e1; font-weight: bold; padding: 6px 10px; border-radius: 6px; border: 1px solid #334155;")
+        self.step_next_btn = QPushButton("⏭")
+        self.step_next_btn.setObjectName("transportIconBtn")
+        self.step_next_btn.setToolTip("Avanzar 1 nota")
 
-        self.step_next_btn = QPushButton("⏭ Nota Siguiente")
-        self.step_next_btn.setStyleSheet("background-color: #1e293b; color: #cbd5e1; font-weight: bold; padding: 6px 10px; border-radius: 6px; border: 1px solid #334155;")
+        control_layout.addWidget(self.play_btn)
+        control_layout.addWidget(self.pause_btn)
+        control_layout.addWidget(self.stop_btn)
+        control_layout.addWidget(self.reset_btn)
+        control_layout.addSpacing(4)
+        control_layout.addWidget(self.step_prev_btn)
+        control_layout.addWidget(self.step_next_btn)
 
-        transport_row.addWidget(self.play_btn)
-        transport_row.addWidget(self.pause_btn)
-        transport_row.addWidget(self.stop_btn)
-        transport_row.addWidget(self.reset_btn)
-        transport_row.addSpacing(10)
-        transport_row.addWidget(self.step_prev_btn)
-        transport_row.addWidget(self.step_next_btn)
-        transport_row.addStretch()
+        # Separador Vertical
+        vsep1 = QFrame()
+        vsep1.setFrameShape(QFrame.Shape.VLine)
+        vsep1.setStyleSheet("background-color: #1f293d;")
+        control_layout.addWidget(vsep1)
 
-        control_layout.addLayout(transport_row)
-
-        # Fila B: Metrónomo Visual & BPM + Selección de Rango A-B
-        tools_row = QHBoxLayout()
-
-        # Metrónomo & BPM Selector
-        bpm_box = QHBoxLayout()
-        bpm_label = QLabel("⏱️ Metrónomo BPM:")
+        # B. Metrónomo BPM & LEDs de Pulso
+        bpm_label = QLabel("⏱️ BPM:")
         bpm_label.setStyleSheet("color: #38bdf8; font-weight: bold;")
-        bpm_box.addWidget(bpm_label)
+        control_layout.addWidget(bpm_label)
 
         self.bpm_spin = QSpinBox()
         self.bpm_spin.setRange(30, 240)
         self.bpm_spin.setValue(60)
-        self.bpm_spin.setFixedWidth(65)
-        self.bpm_spin.setStyleSheet("background-color: #0f172a; color: #00e676; font-size: 13px; font-weight: bold; padding: 3px; border: 1px solid #0284c7; border-radius: 4px;")
-        bpm_box.addWidget(self.bpm_spin)
+        self.bpm_spin.setFixedWidth(55)
+        self.bpm_spin.setStyleSheet("background-color: #0f172a; color: #00e676; font-size: 12px; font-weight: bold; padding: 2px; border: 1px solid #0284c7; border-radius: 4px;")
+        control_layout.addWidget(self.bpm_spin)
 
         btn_minus5 = QPushButton("-5")
-        btn_minus5.setFixedWidth(30)
-        btn_minus5.setStyleSheet("background-color: #334155; color: white; font-weight: bold;")
+        btn_minus5.setFixedWidth(28)
+        btn_minus5.setStyleSheet("background-color: #1e293b; color: white; font-weight: bold; padding: 2px;")
         btn_minus5.clicked.connect(lambda: self.bpm_spin.setValue(self.bpm_spin.value() - 5))
 
         btn_plus5 = QPushButton("+5")
-        btn_plus5.setFixedWidth(30)
-        btn_plus5.setStyleSheet("background-color: #334155; color: white; font-weight: bold;")
+        btn_plus5.setFixedWidth(28)
+        btn_plus5.setStyleSheet("background-color: #1e293b; color: white; font-weight: bold; padding: 2px;")
         btn_plus5.clicked.connect(lambda: self.bpm_spin.setValue(self.bpm_spin.value() + 5))
 
-        bpm_box.addWidget(btn_minus5)
-        bpm_box.addWidget(btn_plus5)
+        control_layout.addWidget(btn_minus5)
+        control_layout.addWidget(btn_plus5)
 
-        # Indicadores Visuales de Pulso (LEDs / Cajas de Beat 1, 2, 3, 4)
-        bpm_box.addSpacing(10)
-        self.beat_indicators_layout = QHBoxLayout()
         self.beat_boxes: list[QLabel] = []
         for i in range(4):
-            lbl = QLabel(f" {i+1} ")
+            lbl = QLabel(f"{i+1}")
             lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            lbl.setFixedSize(26, 26)
-            lbl.setFont(QFont("Consolas", 10, QFont.Weight.Bold))
-            lbl.setStyleSheet("background-color: #0f172a; color: #64748b; border: 1px solid #334155; border-radius: 4px;")
+            lbl.setFixedSize(22, 22)
+            lbl.setFont(QFont("Consolas", 9, QFont.Weight.Bold))
+            lbl.setStyleSheet("background-color: #0f172a; color: #64748b; border: 1px solid #334155; border-radius: 3px;")
             self.beat_boxes.append(lbl)
-            self.beat_indicators_layout.addWidget(lbl)
+            control_layout.addWidget(lbl)
 
-        bpm_box.addLayout(self.beat_indicators_layout)
-        tools_row.addLayout(bpm_box)
+        # Separador Vertical
+        vsep2 = QFrame()
+        vsep2.setFrameShape(QFrame.Shape.VLine)
+        vsep2.setStyleSheet("background-color: #1f293d;")
+        control_layout.addWidget(vsep2)
 
-        # Separador vertical
-        vsep_tools = QFrame()
-        vsep_tools.setFrameShape(QFrame.Shape.VLine)
-        vsep_tools.setStyleSheet("background-color: #334155;")
-        tools_row.addWidget(vsep_tools)
-
-        # Práctica de Sección (Rango A-B)
-        range_box = QHBoxLayout()
-        r_label = QLabel("🎯 Rango A-B:")
+        # C. Sección A-B y Unión Rítmica (Beaming)
+        r_label = QLabel("🎯 A-B:")
         r_label.setStyleSheet("color: #fbbf24; font-weight: bold;")
-        range_box.addWidget(r_label)
+        control_layout.addWidget(r_label)
 
-        range_box.addWidget(QLabel("Desde (A):"))
         self.range_start_spin = QSpinBox()
         self.range_start_spin.setRange(1, 99)
         self.range_start_spin.setValue(1)
-        self.range_start_spin.setFixedWidth(50)
+        self.range_start_spin.setFixedWidth(45)
         self.range_start_spin.setStyleSheet("background-color: #0f172a; color: #f8fafc; font-weight: bold; border: 1px solid #d97706; border-radius: 4px;")
-        range_box.addWidget(self.range_start_spin)
+        control_layout.addWidget(self.range_start_spin)
 
-        range_box.addWidget(QLabel("Hasta (B):"))
+        control_layout.addWidget(QLabel("-"))
+
         self.range_end_spin = QSpinBox()
         self.range_end_spin.setRange(1, 99)
         self.range_end_spin.setValue(10)
-        self.range_end_spin.setFixedWidth(50)
+        self.range_end_spin.setFixedWidth(45)
         self.range_end_spin.setStyleSheet("background-color: #0f172a; color: #f8fafc; font-weight: bold; border: 1px solid #d97706; border-radius: 4px;")
-        range_box.addWidget(self.range_end_spin)
+        control_layout.addWidget(self.range_end_spin)
 
-        self.apply_range_btn = QPushButton("🎯 Fijar Rango")
-        self.apply_range_btn.setStyleSheet("background-color: #d97706; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        self.apply_range_btn = QPushButton("🎯 Fijar")
+        self.apply_range_btn.setStyleSheet("background-color: #d97706; color: white; font-weight: bold; padding: 3px 6px; border-radius: 4px;")
 
-        self.reset_range_btn = QPushButton("🔄 Toda la Partitura")
-        self.reset_range_btn.setStyleSheet("background-color: #1e293b; color: #fbbf24; font-weight: bold; border: 1px solid #d97706; padding: 4px 8px; border-radius: 4px;")
+        self.reset_range_btn = QPushButton("🔄 Toda")
+        self.reset_range_btn.setStyleSheet("background-color: #1e293b; color: #fbbf24; font-weight: bold; border: 1px solid #d97706; padding: 3px 6px; border-radius: 4px;")
 
-        range_box.addWidget(self.apply_range_btn)
-        range_box.addWidget(self.reset_range_btn)
+        control_layout.addWidget(self.apply_range_btn)
+        control_layout.addWidget(self.reset_range_btn)
 
-        tools_row.addLayout(range_box)
+        self.beaming_btn = QPushButton("🔗 Beams")
+        self.beaming_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 3px 8px; border-radius: 4px;")
+        self.beaming_btn.setToolTip("Alternar unión de corcheas/semicorcheas por tiempo")
+        control_layout.addWidget(self.beaming_btn)
 
-        # Separador vertical y Botón de Unión Rítmica (Beaming)
-        vsep_beam = QFrame()
-        vsep_beam.setFrameShape(QFrame.Shape.VLine)
-        vsep_beam.setStyleSheet("background-color: #334155;")
-        tools_row.addWidget(vsep_beam)
-
-        self.beaming_btn = QPushButton("🔗 Unidas (Beams)")
-        self.beaming_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
-        tools_row.addWidget(self.beaming_btn)
-
-        control_layout.addLayout(tools_row)
-
+        control_layout.addStretch()
         study_layout.addWidget(control_group)
 
-        # Partitura Gráfica Interactiva
+        # Partitura Gráfica Interactiva (Dominante en 16:9 y 3:4)
+        sheet_group = QGroupBox("PARTITURA & GUÍA DE LECTURA DE ALTA NITIDEZ")
+        sheet_layout = QVBoxLayout(sheet_group)
+        sheet_layout.setContentsMargins(6, 4, 6, 4)
+
+        self.sheet_view = SheetView()
+        sheet_layout.addWidget(self.sheet_view)
+
+        study_layout.addWidget(sheet_group, stretch=6)
         sheet_group = QGroupBox("PARTITURA & GUÍA DE LECTURA")
         sheet_layout = QVBoxLayout(sheet_group)
 

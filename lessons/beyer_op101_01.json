@@ -3,7 +3,7 @@
   "title": "Ejercicio N° 1 (Posición Fija de Do)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 1",
-  "description": "Estudio preparatorio bimanual en Posición Fija de Do. La mano derecha ejecuta el motivo diatónico (Do4-Sol4) en clave de Sol mientras la izquierda sostiene la tónica en clave de Fa.",
+  "description": "Estudio preparatorio exclusivo para Mano Derecha en Clave de Sol. Posición fija de 5 notas (Do4 a Sol4) con digitación 1 al 5. Mantener la mano relajada y curvar los dedos mientras la mano izquierda descansa.",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
@@ -14,13 +14,6 @@
       "duration_quarter": 1.0,
       "finger": 1,
       "hand": "R",
-      "lyric": "Do"
-    },
-    {
-      "midi_note": 48,
-      "duration_quarter": 1.0,
-      "finger": 5,
-      "hand": "L",
       "lyric": "Do"
     },
     {
@@ -52,10 +45,10 @@
       "lyric": "Sol"
     },
     {
-      "midi_note": 55,
+      "midi_note": 67,
       "duration_quarter": 2.0,
-      "finger": 1,
-      "hand": "L",
+      "finger": 5,
+      "hand": "R",
       "lyric": "Sol"
     },
     {
@@ -87,24 +80,10 @@
       "lyric": "Do"
     },
     {
-      "midi_note": 52,
-      "duration_quarter": 2.0,
-      "finger": 3,
-      "hand": "L",
-      "lyric": "Mi"
-    },
-    {
       "midi_note": 60,
       "duration_quarter": 4.0,
       "finger": 1,
       "hand": "R",
-      "lyric": "Do"
-    },
-    {
-      "midi_note": 48,
-      "duration_quarter": 4.0,
-      "finger": 5,
-      "hand": "L",
       "lyric": "Do"
     }
   ]

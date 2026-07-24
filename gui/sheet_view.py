@@ -400,18 +400,49 @@ class SheetView(QGraphicsView):
                 color_note = QColor("#94a3b8")
 
             # A. Líneas Adicionales (Ledger Lines)
-            if y_center >= 150:
-                y_ledger = 150
-                while y_ledger <= y_center:
-                    pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                    y_ledger += 14
-            elif y_center <= 66:
-                y_ledger = 66
-                while y_ledger >= y_center:
-                    pen_ledger = QPen(QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b")), 2)
-                    self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                    y_ledger -= 14
+            if is_grand_staff:
+                if hand == "L" or (hand is None and note.midi_note < 60):
+                    # Pentagrama Inferior (Clave de Fa): líneas en 190 (A3), 204 (F3), 218 (D3), 232 (B2), 246 (G2)
+                    if y_center <= 176:  # C4 (176) o superior (entre pentagramas)
+                        y_ledger = 176
+                        while y_ledger >= y_center:
+                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                            y_ledger -= 14
+                    elif y_center >= 260:  # E2 (260) o inferior
+                        y_ledger = 260
+                        while y_ledger <= y_center:
+                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                            y_ledger += 14
+                else:
+                    # Pentagrama Superior (Clave de Sol): líneas en 70 (F5), 84 (D5), 98 (B4), 112 (G4), 126 (E4)
+                    if y_center >= 140:  # C4 (140) o inferior (entre pentagramas)
+                        y_ledger = 140
+                        while y_ledger <= y_center:
+                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                            y_ledger += 14
+                    elif y_center <= 56:  # A5 (56) o superior
+                        y_ledger = 56
+                        while y_ledger >= y_center:
+                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                            y_ledger -= 14
+            else:
+                # Pentagrama Único
+                if y_center >= 150:
+                    y_ledger = 150
+                    while y_ledger <= y_center:
+                        pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                        self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                        y_ledger += 14
+                elif y_center <= 66:
+                    y_ledger = 66
+                    while y_ledger >= y_center:
+                        pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                        self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                        y_ledger -= 14
 
             # B. Renderizado de Cabeza de Nota SMuFL Vectorial
             if duration >= 4.0:
@@ -451,11 +482,19 @@ class SheetView(QGraphicsView):
                         self._scene.addLine(stem_x, stem_y2 - 6, stem_x + 8, stem_y2 - 16, pen_stem)
 
             # D. Digitación (1 al 5)
-            is_r_hand = (getattr(note, "hand", "R").upper() == "R") if is_grand_staff else (self._lesson.clef == "treble")
+            if is_grand_staff:
+                if hand == "L" or (hand is None and note.midi_note < 60):
+                    finger_y = 168
+                else:
+                    finger_y = 48
+                is_r_hand = (hand == "R" or (hand is None and note.midi_note >= 60))
+            else:
+                is_r_hand = (self._lesson.clef == "treble")
+                finger_y = 48 if is_r_hand else 152
+
             finger_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else (QColor("#38bdf8") if is_r_hand else QColor("#22c55e")))
             finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
             finger_text.setDefaultTextColor(finger_color)
-            finger_y = 48 if is_r_hand else 152
             finger_text.setPos(x - 2, finger_y)
 
             # E. Nombre / Lírica debajo del pentagrama

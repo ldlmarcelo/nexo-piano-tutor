@@ -1,9 +1,9 @@
 {
   "id": "beyer_op101_06",
-  "title": "Ejercicio N° 6 (Alternancia de Manos - Diálogo Armónico en Gran Pentagrama)",
+  "title": "Ejercicio N° 6 (Alternancia de Manos - Diálogo Armónico Completo)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 6",
-  "description": "Primer estudio bimanual en Gran Pentagrama (Clave de Sol y Clave de Fa). La mano izquierda (Do3 a Sol3) responde de forma coordinada a la mano derecha (Do4 a Sol4), entrenando la lectura simultánea en doble clave.",
+  "description": "Estudio bimanual completo de 8 compases en Gran Pentagrama. Alterna frases diatónicas de la mano derecha en Clave de Sol con respuestas armónicas de la mano izquierda en Clave de Fa, culminando en la resolución tonal en Do Mayor.",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
@@ -23,6 +23,22 @@
     {"midi_note": 55, "duration_quarter": 2.0, "finger": 1, "hand": "L", "lyric": "Sol"},
     
     {"midi_note": 60, "duration_quarter": 2.0, "finger": 1, "hand": "R", "lyric": "Do"},
-    {"midi_note": 48, "duration_quarter": 2.0, "finger": 5, "hand": "L", "lyric": "Do"}
+    {"midi_note": 48, "duration_quarter": 2.0, "finger": 5, "hand": "L", "lyric": "Do"},
+    
+    {"midi_note": 67, "duration_quarter": 1.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    {"midi_note": 65, "duration_quarter": 1.0, "finger": 4, "hand": "R", "lyric": "Fa"},
+    {"midi_note": 64, "duration_quarter": 1.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 62, "duration_quarter": 1.0, "finger": 2, "hand": "R", "lyric": "Re"},
+    
+    {"midi_note": 55, "duration_quarter": 1.0, "finger": 1, "hand": "L", "lyric": "Sol"},
+    {"midi_note": 53, "duration_quarter": 1.0, "finger": 2, "hand": "L", "lyric": "Fa"},
+    {"midi_note": 52, "duration_quarter": 1.0, "finger": 3, "hand": "L", "lyric": "Mi"},
+    {"midi_note": 50, "duration_quarter": 1.0, "finger": 4, "hand": "L", "lyric": "Re"},
+    
+    {"midi_note": 64, "duration_quarter": 2.0, "finger": 3, "hand": "R", "lyric": "Mi"},
+    {"midi_note": 67, "duration_quarter": 2.0, "finger": 5, "hand": "R", "lyric": "Sol"},
+    
+    {"midi_note": 60, "duration_quarter": 4.0, "finger": 1, "hand": "R", "lyric": "Do"},
+    {"midi_note": 48, "duration_quarter": 4.0, "finger": 5, "hand": "L", "lyric": "Do"}
   ]
 }

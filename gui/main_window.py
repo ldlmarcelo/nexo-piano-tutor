@@ -128,10 +128,12 @@ class MainWindow(QMainWindow):
         self.chapter_combo.addItem("📗 Cap. II: Polifonía", userData="capitulo_2")
         self.chapter_combo.addItem("📙 Cap. III: Sonatinas", userData="capitulo_3")
         self.chapter_combo.addItem("📁 Todos los Capítulos", userData="all")
+        self.chapter_combo.currentIndexChanged.connect(self._on_chapter_changed)
         header_layout.addWidget(self.chapter_combo, stretch=2)
 
         header_layout.addWidget(QLabel("Lección:"))
         self.lesson_combo = QComboBox()
+        self.lesson_combo.currentIndexChanged.connect(self._on_lesson_changed)
         header_layout.addWidget(self.lesson_combo, stretch=3)
 
         header_layout.addWidget(QLabel("Modo:"))

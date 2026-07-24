@@ -31,6 +31,8 @@ from gui.piano_keyboard import PianoKeyboard
 from gui.login_widget import LoginWidget
 from gui.theory_dialog import TheoryDialog, LibraryDialog
 from gui.dashboard_dialog import DashboardDialog
+from core.chapters import CHAPTERS, ChapterInfo, get_chapter_for_lesson
+from gui.chapter_dialog import ChapterDialog
 
 CARPETA_SCRIPT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LESSONS_DIR = os.path.join(CARPETA_SCRIPT, "lessons")
@@ -118,7 +120,15 @@ class MainWindow(QMainWindow):
         header_group = QGroupBox("PANEL PEDAGÓGICO & NAVEGACIÓN DE LECCIONES")
         header_layout = QHBoxLayout(header_group)
         header_layout.setContentsMargins(8, 4, 8, 4)
-        header_layout.setSpacing(8)
+        header_layout.setSpacing(6)
+
+        header_layout.addWidget(QLabel("Capítulo:"))
+        self.chapter_combo = QComboBox()
+        self.chapter_combo.addItem("📘 Cap. I: Fundamentos", userData="capitulo_1")
+        self.chapter_combo.addItem("📗 Cap. II: Polifonía", userData="capitulo_2")
+        self.chapter_combo.addItem("📙 Cap. III: Sonatinas", userData="capitulo_3")
+        self.chapter_combo.addItem("📁 Todos los Capítulos", userData="all")
+        header_layout.addWidget(self.chapter_combo, stretch=2)
 
         header_layout.addWidget(QLabel("Lección:"))
         self.lesson_combo = QComboBox()
@@ -138,12 +148,17 @@ class MainWindow(QMainWindow):
         self.repeat_combo.addItems(["1x (Normal)", "3x (Serie x3)", "5x (Serie x5)", "♾️ Bucle Infinito"])
         header_layout.addWidget(self.repeat_combo, stretch=1)
 
+        self.chapters_btn = QPushButton("📚 Capítulos")
+        self.chapters_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        self.chapters_btn.setToolTip("Abrir Navegador Visual de Capítulos y Fichas Pedagógicas")
+        header_layout.addWidget(self.chapters_btn)
+
         self.dashboard_btn = QPushButton("📊 Bitácora")
         self.dashboard_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
         header_layout.addWidget(self.dashboard_btn)
 
         self.theory_btn = QPushButton("📖 Teoría")
-        self.theory_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        self.theory_btn.setStyleSheet("background-color: #334155; color: #f8fafc; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
         header_layout.addWidget(self.theory_btn)
 
         self.library_btn = QPushButton("🏛️ Biblioteca")

@@ -285,13 +285,6 @@ class MainWindow(QMainWindow):
         sheet_layout.addWidget(self.sheet_view)
 
         study_layout.addWidget(sheet_group, stretch=6)
-        sheet_group = QGroupBox("PARTITURA & GUÍA DE LECTURA")
-        sheet_layout = QVBoxLayout(sheet_group)
-
-        self.sheet_view = SheetView()
-        sheet_layout.addWidget(self.sheet_view)
-
-        study_layout.addWidget(sheet_group, stretch=3)
 
         # Teclado Virtual Interactivo (Piano Roll)
         piano_group = QGroupBox("TECLADO DE PIANO INTERACTIVO")

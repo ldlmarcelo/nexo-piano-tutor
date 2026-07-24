@@ -277,6 +277,17 @@ class MainWindow(QMainWindow):
         range_box.addWidget(self.reset_range_btn)
 
         tools_row.addLayout(range_box)
+
+        # Separador vertical y Botón de Unión Rítmica (Beaming)
+        vsep_beam = QFrame()
+        vsep_beam.setFrameShape(QFrame.Shape.VLine)
+        vsep_beam.setStyleSheet("background-color: #334155;")
+        tools_row.addWidget(vsep_beam)
+
+        self.beaming_btn = QPushButton("🔗 Unidas (Beams)")
+        self.beaming_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+        tools_row.addWidget(self.beaming_btn)
+
         control_layout.addLayout(tools_row)
 
         study_layout.addWidget(control_group)
@@ -358,10 +369,11 @@ class MainWindow(QMainWindow):
         self.step_prev_btn.clicked.connect(self._on_step_prev_clicked)
         self.step_next_btn.clicked.connect(self._on_step_next_clicked)
 
-        # Metrónomo & Rango A-B
+        # Metrónomo & Rango A-B & Unión Rítmica (Beaming)
         self.bpm_spin.valueChanged.connect(self._on_bpm_changed)
         self.apply_range_btn.clicked.connect(self._on_apply_range_clicked)
         self.reset_range_btn.clicked.connect(self._on_reset_range_clicked)
+        self.beaming_btn.clicked.connect(self._on_toggle_beaming)
 
         self.dashboard_btn.clicked.connect(self._show_dashboard_dialog)
         self.theory_btn.clicked.connect(self._show_theory_dialog)
@@ -624,6 +636,19 @@ class MainWindow(QMainWindow):
                 lbl.setStyleSheet("background-color: #00e676; color: #09090b; border: 2px solid #22c55e; border-radius: 4px; font-weight: bold;")
             else:
                 lbl.setStyleSheet("background-color: #38bdf8; color: #09090b; border: 2px solid #0284c7; border-radius: 4px; font-weight: bold;")
+
+    def _on_toggle_beaming(self):
+        """Alterna el modo de unión de notas rítmicas (Beaming vs. Flags)."""
+        new_state = not self.sheet_view._beaming_enabled
+        self.sheet_view.set_beaming_enabled(new_state)
+        if new_state:
+            self.beaming_btn.setText("🔗 Unidas (Beams)")
+            self.beaming_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+            self.statusBar().showMessage("Barras de unión rítmicas (Beaming por tiempo) activadas")
+        else:
+            self.beaming_btn.setText("🚩 Separadas (Flags)")
+            self.beaming_btn.setStyleSheet("background-color: #334155; color: #94a3b8; font-weight: bold; padding: 4px 8px; border-radius: 4px;")
+            self.statusBar().showMessage("Corchetes individuales (Flags) activados")
 
     # ── Lógica de Rango A-B (Sección de Práctica) ───────────────────
 

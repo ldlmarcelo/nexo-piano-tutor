@@ -1,26 +1,26 @@
 {
   "id": "beyer_op101_27",
-  "title": "Escala de Fa Mayor (Paso del Dedo 4 sobre Si♭)",
+  "title": "Escala de Fa Mayor con Armadura de 1 Bemol (Si♭)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 27",
-  "description": "Estudio de la escala de Fa Mayor. Requiere el cruce del dedo 4 sobre la tecla negra Si♭4.",
+  "description": "Estudio completo de la escala de Fa Mayor con armadura de 1 bemol (Si♭) y digitación clásica específica con paso de pulgar en dedo 4 (8 compases completos Urtext).",
   "clef": "grand",
   "bpm_recommended": 75,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
     {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
       "midi_note": 65,
       "duration_quarter": 1.0,
       "finger": 1,
       "hand": "R",
-      "lyric": "Fa"
-    },
-    {
-      "midi_note": 53,
-      "duration_quarter": 1.0,
-      "finger": 5,
-      "hand": "L",
       "lyric": "Fa"
     },
     {
@@ -45,25 +45,32 @@
       "lyric": "Si♭"
     },
     {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
       "midi_note": 72,
       "duration_quarter": 1.0,
       "finger": 1,
       "hand": "R",
-      "lyric": "Do"
+      "lyric": "Do5"
     },
     {
       "midi_note": 74,
       "duration_quarter": 1.0,
       "finger": 2,
       "hand": "R",
-      "lyric": "Re"
+      "lyric": "Re5"
     },
     {
       "midi_note": 76,
       "duration_quarter": 1.0,
       "finger": 3,
       "hand": "R",
-      "lyric": "Mi"
+      "lyric": "Mi5"
     },
     {
       "midi_note": 77,
@@ -73,17 +80,185 @@
       "lyric": "Fa5"
     },
     {
-      "midi_note": 65,
+      "midi_note": 48,
       "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi5"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Si♭"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 2.0,
       "finger": 1,
       "hand": "R",
       "lyric": "Fa"
     },
     {
-      "midi_note": 53,
+      "midi_note": 48,
       "duration_quarter": 4.0,
       "finger": 5,
       "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Si♭"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi5"
+    },
+    {
+      "midi_note": 77,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa5"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi5"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re5"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
       "lyric": "Fa"
     }
   ]

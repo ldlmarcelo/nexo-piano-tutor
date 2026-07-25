@@ -6,7 +6,7 @@
       "username": "Marcelo",
       "pin": "1273",
       "created_at": "2026-07-21T14:34:46.962422",
-      "active_lesson_id": "bach_anh114b_13",
+      "active_lesson_id": "clementi_op36_23",
       "completed_lessons": [
         "beyer_op101_01",
         "beyer_op101_02",
@@ -17,10 +17,10 @@
         "beyer_op101_09"
       ],
       "stats": {
-        "total_notes_played": 2676,
-        "correct_notes": 1717,
-        "completed_reps": 72,
-        "accuracy_pct": 64.2
+        "total_notes_played": 2785,
+        "correct_notes": 1805,
+        "completed_reps": 74,
+        "accuracy_pct": 64.8
       },
       "history": [
         {
@@ -260,6 +260,20 @@
           "mode": "read",
           "notes_played": 30,
           "accuracy_pct": 86.7
+        },
+        {
+          "timestamp": "2026-07-24T23:16:55.659313",
+          "lesson_id": "beyer_op101_01",
+          "mode": "read",
+          "notes_played": 41,
+          "accuracy_pct": 78.0
+        },
+        {
+          "timestamp": "2026-07-24T23:18:20.676726",
+          "lesson_id": "beyer_op101_03",
+          "mode": "read",
+          "notes_played": 39,
+          "accuracy_pct": 89.7
         }
       ]
     }

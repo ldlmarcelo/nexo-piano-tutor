@@ -1,14 +1,21 @@
 {
   "id": "beyer_op101_02",
-  "title": "Ejercicio N° 2 (Mano Izquierda - Clave de Fa)",
+  "title": "Ejercicio N° 2 (Mano Izquierda Líder en Clave de Fa)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 2",
-  "description": "Estudio preparatorio exclusivo para Mano Izquierda en Clave de Fa. Posición fija de 5 notas (Do3 a Sol3) con digitación 5 al 1 (Do3 meñique, Sol3 pulgar). La mano derecha descansa.",
+  "description": "Desarrollo de la mano izquierda en Clave de Fa (Do3-Sol3) con respuesta de pedal armónico de la mano derecha en Clave de Sol (8 compases completos Urtext).",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
     {
       "midi_note": 48,
       "duration_quarter": 1.0,
@@ -38,10 +45,10 @@
       "lyric": "Fa"
     },
     {
-      "midi_note": 55,
-      "duration_quarter": 2.0,
-      "finger": 1,
-      "hand": "L",
+      "midi_note": 67,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "R",
       "lyric": "Sol"
     },
     {
@@ -66,6 +73,13 @@
       "lyric": "Mi"
     },
     {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
       "midi_note": 50,
       "duration_quarter": 1.0,
       "finger": 4,
@@ -77,6 +91,139 @@
       "duration_quarter": 1.0,
       "finger": 5,
       "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 4.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
       "lyric": "Do"
     },
     {

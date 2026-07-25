@@ -57,6 +57,7 @@ class MainWindow(QMainWindow):
         self.metronome_timer = QTimer(self)
         self.metronome_timer.timeout.connect(self._on_metronome_tick)
         self._is_playing = False
+        self._is_demo_playing = False
         self._is_countdown = False
         self._countdown_count = 4
         self._metronome_beat = 0
@@ -175,33 +176,39 @@ class MainWindow(QMainWindow):
         control_layout.setContentsMargins(8, 4, 8, 4)
         control_layout.setSpacing(6)
 
-        # A. Botonera de Transporte Icónica Limpia (Play, Pause, Stop, Reset, Step Prev, Step Next)
-        self.play_btn = QPushButton("▶")
-        self.play_btn.setObjectName("transportPlayBtn")
-        self.play_btn.setToolTip("Iniciar Lección / Continuar [Espacio]")
+        # A. Botonera de Transporte Limpia y Unificada (Práctica, Demo, Stop, Reset, Step Prev, Step Next)
+        self.play_pause_btn = QPushButton("▶ Práctica")
+        self.play_pause_btn.setObjectName("transportPlayPauseBtn")
+        self.play_pause_btn.setToolTip("Iniciar/Pausar Práctica de la Lección [Espacio]")
+        self.play_pause_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
 
-        self.pause_btn = QPushButton("⏸")
-        self.pause_btn.setObjectName("transportPauseBtn")
-        self.pause_btn.setToolTip("Pausar Lección [Espacio]")
+        self.demo_btn = QPushButton("🎧 Escuchar")
+        self.demo_btn.setObjectName("transportDemoBtn")
+        self.demo_btn.setToolTip("Escuchar demostración guiada por audio de la lección completa")
+        self.demo_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
 
-        self.stop_btn = QPushButton("⏹")
+        self.stop_btn = QPushButton("⏹ Detener")
         self.stop_btn.setObjectName("transportStopBtn")
-        self.stop_btn.setToolTip("Detener Lección")
+        self.stop_btn.setToolTip("Detener Práctica / Demostración")
+        self.stop_btn.setStyleSheet("background-color: #334155; color: white; font-weight: bold; padding: 4px 8px; border-radius: 4px; outline: none;")
 
-        self.reset_btn = QPushButton("🔄")
-        self.reset_btn.setObjectName("transportIconBtn")
-        self.reset_btn.setToolTip("Reiniciar Lección al inicio de rango")
+        self.reset_btn = QPushButton("🔄 Reiniciar")
+        self.reset_btn.setObjectName("transportResetBtn")
+        self.reset_btn.setToolTip("Reiniciar la lección al primer paso")
+        self.reset_btn.setStyleSheet("background-color: #1e293b; color: #fbbf24; font-weight: bold; border: 1px solid #d97706; padding: 4px 8px; border-radius: 4px; outline: none;")
 
         self.step_prev_btn = QPushButton("⏮")
-        self.step_prev_btn.setObjectName("transportIconBtn")
+        self.step_prev_btn.setFixedWidth(32)
         self.step_prev_btn.setToolTip("Retroceder 1 nota")
+        self.step_prev_btn.setStyleSheet("background-color: #1e293b; color: white; font-weight: bold; padding: 4px; border-radius: 4px; outline: none;")
 
         self.step_next_btn = QPushButton("⏭")
-        self.step_next_btn.setObjectName("transportIconBtn")
+        self.step_next_btn.setFixedWidth(32)
         self.step_next_btn.setToolTip("Avanzar 1 nota")
+        self.step_next_btn.setStyleSheet("background-color: #1e293b; color: white; font-weight: bold; padding: 4px; border-radius: 4px; outline: none;")
 
-        control_layout.addWidget(self.play_btn)
-        control_layout.addWidget(self.pause_btn)
+        control_layout.addWidget(self.play_pause_btn)
+        control_layout.addWidget(self.demo_btn)
         control_layout.addWidget(self.stop_btn)
         control_layout.addWidget(self.reset_btn)
         control_layout.addSpacing(4)
@@ -364,8 +371,8 @@ class MainWindow(QMainWindow):
         self.repeat_combo.currentIndexChanged.connect(self._on_repeat_mode_changed)
 
         # Botonera de Transporte
-        self.play_btn.clicked.connect(self._on_play_clicked)
-        self.pause_btn.clicked.connect(self._on_pause_clicked)
+        self.play_pause_btn.clicked.connect(self._on_play_pause_toggle)
+        self.demo_btn.clicked.connect(self._on_demo_toggle)
         self.stop_btn.clicked.connect(self._on_stop_clicked)
         self.reset_btn.clicked.connect(self._on_reset_clicked)
         self.step_prev_btn.clicked.connect(self._on_step_prev_clicked)
@@ -433,6 +440,8 @@ class MainWindow(QMainWindow):
 
     def _on_logout_clicked(self):
         self._stop_metronome()
+        if getattr(self, "_is_demo_playing", False):
+            self._stop_demo_playback()
         self.user_manager.logout()
         self.user_badge.setText("👤 Estudiante: —")
         self.login_widget.refresh_user_list()
@@ -500,18 +509,30 @@ class MainWindow(QMainWindow):
             self.lesson_combo.setCurrentIndex(0)
             self._on_lesson_changed(0)
 
-    # ── Lógica de Transporte y Metrónomo ──────────────────────────
+    # ── Lógica de Transporte, Metrónomo y Reproducción de Audio ───────────
+
+    def _on_play_pause_toggle(self):
+        """Conmuta entre Iniciar Práctica y Pausar."""
+        if getattr(self, "_is_demo_playing", False):
+            self._stop_demo_playback()
+
+        if self._is_playing:
+            self._on_pause_clicked()
+        else:
+            self._on_play_clicked()
 
     def _on_play_clicked(self):
         """Inicia la lección evaluando el modo activo."""
         if not self.evaluator.current_lesson:
             return
 
-        self._is_playing = True
-        self.play_btn.setText("▶ EN EJECUCIÓN")
-        self.play_btn.setStyleSheet("background-color: #16a34a; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+        if getattr(self, "_is_demo_playing", False):
+            self._stop_demo_playback()
 
-        # El metrónomo solo se activa en Modo Tiempo y Expresión (en Modo Lectura es cero presión)
+        self._is_playing = True
+        self.play_pause_btn.setText("⏸ Pausar")
+        self.play_pause_btn.setStyleSheet("background-color: #d97706; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
+
         if self.evaluator.mode in ("tempo", "full"):
             self._start_metronome_and_countdown()
         else:
@@ -526,14 +547,17 @@ class MainWindow(QMainWindow):
         """Pausa el metrónomo y detiene la evaluación sin reiniciar el paso."""
         self._is_playing = False
         self.metronome_timer.stop()
-        self.play_btn.setText("▶ CONTINUAR")
-        self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+        self.play_pause_btn.setText("▶ Práctica")
+        self.play_pause_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
         self.feedback_val.setText("⏸ Lección Pausada")
         self.feedback_val.setStyleSheet("color: #fbbf24; font-weight: bold;")
         self._clear_beat_highlights()
 
     def _on_stop_clicked(self):
-        """Detiene el metrónomo y vuelve la posición al inicio del rango de práctica."""
+        """Detiene el metrónomo y la demostración, volviendo la posición al inicio."""
+        if getattr(self, "_is_demo_playing", False):
+            self._stop_demo_playback()
+
         self._is_finishing_lesson = False
         self._is_playing = False
         self._stop_metronome()
@@ -542,10 +566,97 @@ class MainWindow(QMainWindow):
         self.sheet_view.set_note_results(self.evaluator.note_results)
         self.sheet_view.set_step(self.evaluator.current_step)
         self._update_target_display()
-        self.play_btn.setText("▶ INICIAR LECCIÓN")
-        self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+        self.play_pause_btn.setText("▶ Práctica")
+        self.play_pause_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
         self.feedback_val.setText("⏹ Lección Detenida — Listo para Iniciar")
         self.feedback_val.setStyleSheet("color: #94a3b8;")
+
+    def _on_demo_toggle(self):
+        """Alterna la reproducción de demostración guiada por audio de la lección."""
+        if getattr(self, "_is_demo_playing", False):
+            self._stop_demo_playback()
+            self.feedback_val.setText("⏹ Demostración de audio detenida")
+            self.feedback_val.setStyleSheet("color: #94a3b8;")
+        else:
+            self._start_demo_playback()
+
+    def _start_demo_playback(self):
+        """Inicia la reproducción de audio guiada nota por nota de la lección."""
+        if not self.evaluator.current_lesson:
+            return
+
+        if self._is_playing:
+            self._on_pause_clicked()
+
+        self._is_demo_playing = True
+        self.demo_btn.setText("⏹ Detener Demo")
+        self.demo_btn.setStyleSheet("background-color: #dc2626; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
+        self.play_pause_btn.setEnabled(False)
+
+        # Configurar instrumento de la lección
+        inst = getattr(self.evaluator.current_lesson, "instrument", 0)
+        self.sound_engine.set_instrument(inst)
+
+        # Reiniciar al inicio del rango A-B
+        self.evaluator.current_step = self.evaluator.range_start
+        self.sheet_view.set_step(self.evaluator.current_step)
+        self._update_target_display()
+
+        self.feedback_val.setText("🎧 Reproduciendo demostración de la lección (Audio & Partitura)...")
+        self.feedback_val.setStyleSheet("color: #38bdf8; font-size: 14px; font-weight: bold;")
+
+        QTimer.singleShot(150, self._on_demo_tick)
+
+    def _on_demo_tick(self):
+        """Procesa cada nota de la demostración en tiempo real."""
+        if not getattr(self, "_is_demo_playing", False) or not self.evaluator.current_lesson:
+            return
+
+        notes = self.evaluator.current_lesson.notes
+        if self.evaluator.current_step > self.evaluator.range_end or self.evaluator.current_step >= len(notes):
+            self._stop_demo_playback()
+            self.feedback_val.setText("🎧 Demostración finalizada. ¡Presioná ▶ Práctica para comenzar!")
+            self.feedback_val.setStyleSheet("color: #00e676; font-size: 14px; font-weight: bold;")
+            return
+
+        target = self.evaluator.get_current_target()
+        if target:
+            self.sound_engine.play_note(target.midi_note, velocity=95)
+            color = "#38bdf8" if getattr(target, "hand", "R") == "R" else "#22c55e"
+            self.piano_keyboard.set_key_active(target.midi_note, color)
+
+            bpm = max(30, min(240, self.bpm_spin.value()))
+            beat_ms = (60.0 / bpm) * 1000.0
+            dur_ms = int(target.duration_quarter * beat_ms)
+
+            QTimer.singleShot(max(80, dur_ms - 20), lambda n=target.midi_note: self._on_demo_note_off(n))
+
+            self.sheet_view.set_step(self.evaluator.current_step)
+            self._update_target_display()
+
+            self.evaluator.current_step += 1
+            next_delay = max(120, dur_ms)
+            QTimer.singleShot(next_delay, self._on_demo_tick)
+
+    def _on_demo_note_off(self, midi_note: int):
+        self.sound_engine.stop_note(midi_note)
+        self.piano_keyboard.clear_key_active(midi_note)
+
+    def _stop_demo_playback(self):
+        """Detiene la demostración y libera recursos."""
+        self._is_demo_playing = False
+        self.demo_btn.setText("🎧 Escuchar")
+        self.demo_btn.setStyleSheet("background-color: #0284c7; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
+        self.play_pause_btn.setEnabled(True)
+
+        if self.evaluator.current_lesson:
+            for n in self.evaluator.current_lesson.notes:
+                self.piano_keyboard.clear_key_active(n.midi_note)
+                self.sound_engine.stop_note(n.midi_note)
+
+        self.evaluator.current_step = self.evaluator.range_start
+        self.sheet_view.set_step(self.evaluator.current_step)
+        self._update_target_display()
 
     def _on_reset_clicked(self):
         """Reinicia la lección desde el inicio del rango y reactiva el estado de ejecución."""
@@ -837,8 +948,8 @@ class MainWindow(QMainWindow):
         self._stop_metronome()
         self._is_playing = False
         self._is_finishing_lesson = False
-        self.play_btn.setText("▶ INICIAR LECCIÓN")
-        self.play_btn.setStyleSheet("background-color: #0284c7; color: white; font-size: 13px; font-weight: bold; padding: 6px 16px; border-radius: 6px;")
+        self.play_pause_btn.setText("▶ Práctica")
+        self.play_pause_btn.setStyleSheet("background-color: #16a34a; color: white; font-weight: bold; padding: 4px 10px; border-radius: 4px; outline: none;")
 
         self.feedback_val.setText(result.feedback_text)
         self.feedback_val.setStyleSheet(f"color: {result.feedback_color}; font-weight: bold;")

@@ -3,13 +3,20 @@
   "title": "Ejercicio N° 1 (Posición Fija de Do)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 1",
-  "description": "Estudio preparatorio exclusivo para Mano Derecha en Clave de Sol. Posición fija de 5 notas (Do4 a Sol4) con digitación 1 al 5. Mantener la mano relajada y curvar los dedos mientras la mano izquierda descansa.",
+  "description": "Estudio preparatorio bimanual íntegro en Posición Fija de Do (8 compases completos Urtext).",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
     {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Tónica"
+    },
+    {
       "midi_note": 60,
       "duration_quarter": 1.0,
       "finger": 1,
@@ -38,11 +45,11 @@
       "lyric": "Fa"
     },
     {
-      "midi_note": 67,
-      "duration_quarter": 2.0,
-      "finger": 5,
-      "hand": "R",
-      "lyric": "Sol"
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Dominante"
     },
     {
       "midi_note": 67,
@@ -66,6 +73,13 @@
       "lyric": "Mi"
     },
     {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Tónica"
+    },
+    {
       "midi_note": 62,
       "duration_quarter": 1.0,
       "finger": 2,
@@ -78,6 +92,139 @@
       "finger": 1,
       "hand": "R",
       "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Dominante"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 4.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Tónica"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Dominante"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Dominante"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Tónica"
     },
     {
       "midi_note": 60,

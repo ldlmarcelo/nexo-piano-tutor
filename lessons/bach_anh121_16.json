@@ -2,8 +2,8 @@
   "id": "bach_anh121_16",
   "title": "Minueto en Do Menor (BWV Anh. 121)",
   "composer": "Johann Sebastian Bach",
-  "opus": "BWV Anh. 121",
-  "description": "Pieza de carácter sobrio y noble en Do menor. Destaca el movimiento del bajo en clave de Fa con contrapunto en la clave superior.",
+  "opus": "BWV Anh. 121 (16 Compases Integros)",
+  "description": "Minueto en Do menor completo de 16 compases con bajo caminante en Clave de Fa.",
   "clef": "grand",
   "bpm_recommended": 80,
   "time_signature": "3/4",
@@ -17,95 +17,669 @@
       "lyric": "Do3"
     },
     {
-      "midi_note": 67,
+      "midi_note": 52,
       "duration_quarter": 1.0,
-      "finger": 5,
-      "hand": "R",
-      "lyric": "Sol4"
-    },
-    {
-      "midi_note": 51,
-      "duration_quarter": 0.5,
       "finger": 3,
       "hand": "L",
-      "lyric": "Mi♭3"
+      "lyric": "Mib3"
     },
     {
-      "midi_note": 50,
-      "duration_quarter": 0.5,
-      "finger": 4,
-      "hand": "L",
-      "lyric": "Re3"
-    },
-    {
-      "midi_note": 51,
-      "duration_quarter": 0.5,
-      "finger": 3,
-      "hand": "L",
-      "lyric": "Mi♭3"
-    },
-    {
-      "midi_note": 48,
-      "duration_quarter": 0.5,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Do3"
-    },
-    {
-      "midi_note": 47,
+      "midi_note": 55,
       "duration_quarter": 1.0,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Si2"
-    },
-    {
-      "midi_note": 65,
-      "duration_quarter": 1.0,
-      "finger": 4,
-      "hand": "R",
-      "lyric": "Fa4"
-    },
-    {
-      "midi_note": 44,
-      "duration_quarter": 0.5,
-      "finger": 2,
-      "hand": "L",
-      "lyric": "La♭2"
-    },
-    {
-      "midi_note": 43,
-      "duration_quarter": 0.5,
-      "finger": 3,
-      "hand": "L",
-      "lyric": "Sol2"
-    },
-    {
-      "midi_note": 44,
-      "duration_quarter": 0.5,
-      "finger": 2,
-      "hand": "L",
-      "lyric": "La♭2"
-    },
-    {
-      "midi_note": 47,
-      "duration_quarter": 0.5,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Si2"
-    },
-    {
-      "midi_note": 48,
-      "duration_quarter": 3.0,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Do3"
-    },
-    {
-      "midi_note": 60,
-      "duration_quarter": 3.0,
       "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
       "hand": "R",
-      "lyric": "Do4"
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do3"
+    },
+    {
+      "midi_note": 52,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "L",
+      "lyric": "Mib3"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol3"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Do5"
+    },
+    {
+      "midi_note": 70,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Sib4"
+    },
+    {
+      "midi_note": 68,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Lab4"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
   "id": "beyer_op101_03",
-  "title": "Ejercicio N° 3 (Saltos de Terceras en Ambos Pentagramas)",
+  "title": "Ejercicio N° 3 (Alternancia de Manos por Compás)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 3",
-  "description": "Estudio de intervalos de tercera (Do-Mi, Re-Fa, Mi-Sol) alternando mano derecha e izquierda en Gran Pentagrama.",
+  "description": "Primer ejercicio de alternancia bimanual en Gran Pentagrama. Combina la posición fija de Do en Mano Derecha (Clave de Sol) y Mano Izquierda (Clave de Fa) respondiendo compás a compás.",
   "clef": "grand",
-  "bpm_recommended": 65,
+  "bpm_recommended": 60,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
@@ -17,11 +17,39 @@
       "lyric": "Do"
     },
     {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
       "midi_note": 64,
       "duration_quarter": 1.0,
       "finger": 3,
       "hand": "R",
       "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
     },
     {
       "midi_note": 48,
@@ -31,10 +59,52 @@
       "lyric": "Do"
     },
     {
+      "midi_note": 50,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "L",
+      "lyric": "Re"
+    },
+    {
       "midi_note": 52,
       "duration_quarter": 1.0,
       "finger": 3,
       "hand": "L",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 53,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "L",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 2.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
       "lyric": "Mi"
     },
     {
@@ -45,18 +115,11 @@
       "lyric": "Re"
     },
     {
-      "midi_note": 65,
+      "midi_note": 60,
       "duration_quarter": 1.0,
-      "finger": 4,
+      "finger": 1,
       "hand": "R",
-      "lyric": "Fa"
-    },
-    {
-      "midi_note": 50,
-      "duration_quarter": 1.0,
-      "finger": 4,
-      "hand": "L",
-      "lyric": "Re"
+      "lyric": "Do"
     },
     {
       "midi_note": 53,
@@ -66,20 +129,6 @@
       "lyric": "Fa"
     },
     {
-      "midi_note": 64,
-      "duration_quarter": 1.0,
-      "finger": 3,
-      "hand": "R",
-      "lyric": "Mi"
-    },
-    {
-      "midi_note": 67,
-      "duration_quarter": 1.0,
-      "finger": 5,
-      "hand": "R",
-      "lyric": "Sol"
-    },
-    {
       "midi_note": 52,
       "duration_quarter": 1.0,
       "finger": 3,
@@ -87,11 +136,18 @@
       "lyric": "Mi"
     },
     {
-      "midi_note": 55,
+      "midi_note": 50,
       "duration_quarter": 1.0,
-      "finger": 1,
+      "finger": 4,
       "hand": "L",
-      "lyric": "Sol"
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
     },
     {
       "midi_note": 60,
@@ -101,8 +157,15 @@
       "lyric": "Do"
     },
     {
-      "midi_note": 48,
+      "midi_note": 64,
       "duration_quarter": 2.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
       "finger": 5,
       "hand": "L",
       "lyric": "Do"

@@ -9,7 +9,7 @@ digitación (1-5 por mano) y cursor de avance en tiempo real.
 from typing import Any, Dict, List
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QFont, QFontMetrics, QPen, QBrush, QPainter
+from PySide6.QtGui import QColor, QFont, QFontMetrics, QPen, QBrush, QPainter, QPainterPath
 
 from core.lesson import Lesson
 from gui.smufl import (
@@ -476,9 +476,11 @@ class SheetView(QGraphicsView):
                     if duration <= 0.5:
                         flag_font = get_smufl_font(28)
                         flag_symbol = FLAG_8TH_UP if duration > 0.25 else FLAG_16TH_UP
-                        flag_item = self._scene.addText(flag_symbol, flag_font)
-                        flag_item.setDefaultTextColor(color_note)
-                        flag_item.setPos(stem_x - 1, stem_y2 - 6)
+                        path = QPainterPath()
+                        path.addText(0, 0, flag_font, flag_symbol)
+                        rect = path.boundingRect()
+                        path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
+                        path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.top())
                 else:
                     stem_x = x - 5
                     stem_y1 = y_center + 2
@@ -487,9 +489,11 @@ class SheetView(QGraphicsView):
                     if duration <= 0.5:
                         flag_font = get_smufl_font(28)
                         flag_symbol = FLAG_8TH_DOWN if duration > 0.25 else FLAG_16TH_DOWN
-                        flag_item = self._scene.addText(flag_symbol, flag_font)
-                        flag_item.setDefaultTextColor(color_note)
-                        flag_item.setPos(stem_x - 1, stem_y2 - 20)
+                        path = QPainterPath()
+                        path.addText(0, 0, flag_font, flag_symbol)
+                        rect = path.boundingRect()
+                        path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
+                        path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.bottom())
 
             # D. Digitación (1 al 5)
             if is_grand_staff:

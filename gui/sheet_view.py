@@ -58,6 +58,8 @@ class SheetView(QGraphicsView):
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
+        self.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+        self.setBackgroundBrush(QBrush(QColor("#080d1a")))
 
         self._lesson: Lesson = None
         self._current_step: int = 0
@@ -95,7 +97,8 @@ class SheetView(QGraphicsView):
         self._lesson = lesson
         self._current_step = step
         self._range_start = 0
-        self._range_end = len(lesson.notes) - 1 if lesson and lesson.notes else -1
+        steps = lesson.get_steps() if lesson else []
+        self._range_end = len(steps) - 1 if steps else -1
         self._error_steps.clear()
         self._note_results.clear()
         self.redraw()
@@ -113,13 +116,26 @@ class SheetView(QGraphicsView):
         self.center_on_active_step()
 
     def center_on_active_step(self):
-        """Centra automáticamente la vista sobre la nota activa para evitar scroll manual."""
-        if not self._lesson or not self._lesson.notes:
+        """Centra automáticamente la vista sobre el paso activo para evitar scroll manual."""
+        if not self._lesson or not self._lesson.get_steps():
             return
         x_start = 135
         x_step = 54
         x_active = x_start + self._current_step * x_step
-        self.centerOn(x_active, 110)
+
+        is_grand_staff = (self._lesson.clef == "grand" or self._lesson.clef == "both")
+        center_y = 160 if is_grand_staff else 110
+
+        view_w = self.viewport().width()
+        if view_w > 0 and x_active < (view_w / 2.0):
+            self.centerOn(view_w / 2.0, center_y)
+        else:
+            self.centerOn(x_active, center_y)
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self.redraw()
+        self.center_on_active_step()
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -252,10 +268,12 @@ class SheetView(QGraphicsView):
         title_text.setDefaultTextColor(QColor("#94a3b8"))
         title_text.setPos(75, 6)
 
+        steps = self._lesson.get_steps() if self._lesson else []
+        total_steps = len(steps)
+
         # Dibujar Cuadro Traslúcido de Rango Seleccionado A-B
-        total_notes = len(self._lesson.notes)
-        if 0 <= self._range_start <= self._range_end < total_notes:
-            if not (self._range_start == 0 and self._range_end == total_notes - 1):
+        if 0 <= self._range_start <= self._range_end < total_steps:
+            if not (self._range_start == 0 and self._range_end == total_steps - 1):
                 x_a = x_start + self._range_start * x_step - 8
                 x_b = x_start + self._range_end * x_step + 22
                 w_box = x_b - x_a
@@ -268,53 +286,66 @@ class SheetView(QGraphicsView):
                 t_b.setDefaultTextColor(QColor("#38bdf8"))
                 t_b.setPos(x_b - 16, 33)
 
-        # Pre-procesamiento de posiciones, compases y tiempos para Beaming y Batuta
-        note_data: List[Dict[str, Any]] = []
+        # Pre-procesamiento de posiciones polifónicas y datos planos para Beaming
+        step_data: List[Dict[str, Any]] = []
+        note_data_flat: List[Dict[str, Any]] = []
         cumulative_beats = 0.0
 
-        for idx, note in enumerate(self._lesson.notes):
-            x = x_start + idx * x_step
-            diatonic_val = midi_to_diatonic_step(note.midi_note)
-            hand = getattr(note, "hand", None)
-
-            if is_grand_staff:
-                if hand == "L" or (hand is None and note.midi_note < 60):
-                    # Pentagrama Inferior (Clave de Fa) -> Línea 4 Fa3 es 204
-                    y_center = 204 - (diatonic_val - 24) * half_spacing
-                    stem_up = (y_center > 218)
-                else:
-                    # Pentagrama Superior (Clave de Sol) -> Línea 2 Sol4 es 112
-                    y_center = 112 - (diatonic_val - 32) * half_spacing
-                    stem_up = (y_center > 98)
-            else:
-                is_tr = (self._lesson.clef == "treble")
-                y_center = 122 - (diatonic_val - 32) * half_spacing if is_tr else 94 - (diatonic_val - 24) * half_spacing
-                stem_up = (y_center > (108 if is_tr else 94))
-
-            duration = getattr(note, "duration_quarter", 1.0)
+        for step_idx, step in enumerate(steps):
+            x = x_start + step_idx * x_step
+            duration = step.duration_quarter
             measure_idx = int(cumulative_beats // beats_per_measure)
             beat_in_measure = int(cumulative_beats % beats_per_measure)
 
-            note_data.append({
-                "idx": idx,
-                "note": note,
+            sd_info = {
+                "idx": step_idx,
+                "step": step,
                 "x": x,
-                "y_center": y_center,
                 "duration": duration,
                 "measure_idx": measure_idx,
                 "beat_in_measure": beat_in_measure,
-                "is_current": (idx == self._current_step),
-                "is_past": (idx < self._current_step),
-                "stem_up": stem_up,
-                "beamed": False
-            })
+                "is_current": (step_idx == self._current_step),
+                "is_past": (step_idx < self._current_step)
+            }
+            step_data.append(sd_info)
+
+            for note in step.notes:
+                diatonic_val = midi_to_diatonic_step(note.midi_note)
+                hand = getattr(note, "hand", None)
+                if is_grand_staff:
+                    if hand == "L" or (hand is None and note.midi_note < 60):
+                        y_center = 204 - (diatonic_val - 24) * half_spacing
+                        stem_up = (y_center > 218)
+                    else:
+                        y_center = 112 - (diatonic_val - 32) * half_spacing
+                        stem_up = (y_center > 98)
+                else:
+                    is_tr = (self._lesson.clef == "treble")
+                    y_center = 122 - (diatonic_val - 32) * half_spacing if is_tr else 94 - (diatonic_val - 24) * half_spacing
+                    stem_up = (y_center > (108 if is_tr else 94))
+
+                n_dur = getattr(note, "duration_quarter", duration)
+                nd_item = {
+                    "step_idx": step_idx,
+                    "note": note,
+                    "x": x,
+                    "y_center": y_center,
+                    "duration": n_dur,
+                    "measure_idx": measure_idx,
+                    "beat_in_measure": beat_in_measure,
+                    "is_current": (step_idx == self._current_step),
+                    "is_past": (step_idx < self._current_step),
+                    "stem_up": stem_up,
+                    "beamed": False
+                }
+                note_data_flat.append(nd_item)
             cumulative_beats += duration
 
-        # Identificar y agrupar corcheas/semicorcheas para Beaming por Tiempo y Medio Compás
+        # Identificar grupos de Beaming (corcheas y semicorcheas unidas por barras)
         beam_groups: List[List[Dict[str, Any]]] = []
         if self._beaming_enabled:
             current_group: List[Dict[str, Any]] = []
-            for nd in note_data:
+            for nd in note_data_flat:
                 if nd["duration"] <= 0.5:
                     if not current_group:
                         current_group.append(nd)
@@ -322,7 +353,7 @@ class SheetView(QGraphicsView):
                         prev = current_group[-1]
                         same_measure = (prev["measure_idx"] == nd["measure_idx"])
                         same_hand = (getattr(prev["note"], "hand", "R") == getattr(nd["note"], "hand", "R"))
-                        same_subdivision = (int(prev["beat_in_measure"] // 2) == int(nd["beat_in_measure"] // 2))
+                        same_subdivision = (int(prev["beat_in_measure"]) == int(nd["beat_in_measure"]))
 
                         if same_measure and same_hand and same_subdivision:
                             current_group.append(nd)
@@ -341,38 +372,32 @@ class SheetView(QGraphicsView):
                 for nd in bg:
                     nd["beamed"] = True
 
-        # Renderizar la Batuta de Dirección Pedagógica (Conductor's Baton) sobre la nota/compás activo
-        active_nd = note_data[self._current_step] if 0 <= self._current_step < len(note_data) else None
-        if active_nd:
-            baton_x = active_nd["x"]
+        # Renderizar Batuta de Dirección Pedagógica sobre el paso activo
+        if 0 <= self._current_step < len(step_data):
+            active_sd = step_data[self._current_step]
+            baton_x = active_sd["x"]
             baton_y = 38
-            # Dibujar la batuta con esfera luminosa indicando el pulso (1, 2, 3, 4)
             pen_baton = QPen(QColor("#00e676"), 2)
-            # Varilla de batuta en ángulo 35°
             self._scene.addLine(baton_x - 12, baton_y + 12, baton_x + 2, baton_y - 2, pen_baton)
-            # Esfera reflectante en la punta de la batuta
             self._scene.addEllipse(baton_x, baton_y - 5, 8, 8, QPen(QColor("#00e676"), 2), QBrush(QColor("#00e676")))
 
-            # Badge de Tiempo / Pulso Rebotante
             b_text = self._scene.addText(f"🪄 Pulso {self._current_beat}/{self._total_beats}", QFont("Segoe UI", 9, QFont.Weight.Bold))
             b_text.setDefaultTextColor(QColor("#00e676"))
             b_text.setPos(baton_x + 10, baton_y - 12)
 
-        # 4. Dibujar notas musicales SMuFL, plicas, digitación y barlines
+        # Renderizar cada TargetStep en la partitura
         cumulative_beats = 0.0
         pen_barline = QPen(QColor("#64748b"), 2)
 
-        for idx, nd in enumerate(note_data):
-            note = nd["note"]
-            x = nd["x"]
-            y_center = nd["y_center"]
-            is_current = nd["is_current"]
-            is_past = nd["is_past"]
-            duration = nd["duration"]
-            hand = getattr(note, "hand", None)
+        for step_idx, sd in enumerate(step_data):
+            step = sd["step"]
+            x = sd["x"]
+            is_current = sd["is_current"]
+            is_past = sd["is_past"]
+            duration = sd["duration"]
 
-            has_error = (idx in self._error_steps)
-            note_res = self._note_results.get(idx)
+            has_error = (step_idx in self._error_steps)
+            note_res = self._note_results.get(step_idx)
             status_key = getattr(note_res, "status", None) if note_res else None
 
             # Colores e indicadores de estado rítmico/tonal
@@ -392,147 +417,151 @@ class SheetView(QGraphicsView):
                 cross_item.setDefaultTextColor(QColor("#ef4444"))
                 cross_item.setPos(x, 28)
             elif is_current:
-                color_note = QColor("#38bdf8")  # Azul cian brillante sin círculo ambiguo
+                color_note = QColor("#38bdf8")
             elif is_past:
-                if has_error:
-                    color_note = QColor("#f59e0b")
-                    check_item = self._scene.addText("✓", QFont("Segoe UI", 9, QFont.Weight.Bold))
-                    check_item.setDefaultTextColor(QColor("#f59e0b"))
-                    check_item.setPos(x, 28)
-                else:
-                    color_note = QColor("#22c55e")
-                    check_item = self._scene.addText("✓", QFont("Segoe UI", 9, QFont.Weight.Bold))
-                    check_item.setDefaultTextColor(QColor("#22c55e"))
-                    check_item.setPos(x, 28)
+                color_note = QColor("#f59e0b") if has_error else QColor("#22c55e")
+                check_item = self._scene.addText("✓", QFont("Segoe UI", 9, QFont.Weight.Bold))
+                check_item.setDefaultTextColor(color_note)
+                check_item.setPos(x, 28)
             else:
                 color_note = QColor("#94a3b8")
 
-            # A. Líneas Adicionales (Ledger Lines)
-            if is_grand_staff:
-                if hand == "L" or (hand is None and note.midi_note < 60):
-                    # Pentagrama Inferior (Clave de Fa): líneas en 190 (A3), 204 (F3), 218 (D3), 232 (B2), 246 (G2)
-                    if y_center <= 176:  # C4 (176) o superior (entre pentagramas)
-                        y_ledger = 176
-                        while y_ledger >= y_center:
-                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
-                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                            y_ledger -= 14
-                    elif y_center >= 260:  # E2 (260) o inferior
-                        y_ledger = 260
+            # Renderizar todas las notas pertenecientes a este paso en la misma coordenada X
+            for note in step.notes:
+                diatonic_val = midi_to_diatonic_step(note.midi_note)
+                hand = getattr(note, "hand", None)
+
+                if is_grand_staff:
+                    if hand == "L" or (hand is None and note.midi_note < 60):
+                        y_center = 204 - (diatonic_val - 24) * half_spacing
+                        stem_up = (y_center > 218)
+                    else:
+                        y_center = 112 - (diatonic_val - 32) * half_spacing
+                        stem_up = (y_center > 98)
+                else:
+                    is_tr = (self._lesson.clef == "treble")
+                    y_center = 122 - (diatonic_val - 32) * half_spacing if is_tr else 94 - (diatonic_val - 24) * half_spacing
+                    stem_up = (y_center > (108 if is_tr else 94))
+
+                nd_match = next((item for item in note_data_flat if item["step_idx"] == step_idx and item["note"] == note), None)
+                is_beamed = nd_match["beamed"] if nd_match else False
+
+                # A. Líneas Adicionales (Ledger Lines)
+                if is_grand_staff:
+                    if hand == "L" or (hand is None and note.midi_note < 60):
+                        if y_center <= 176:
+                            y_ledger = 176
+                            while y_ledger >= y_center:
+                                pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                                self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                                y_ledger -= 14
+                        elif y_center >= 260:
+                            y_ledger = 260
+                            while y_ledger <= y_center:
+                                pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                                self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                                y_ledger += 14
+                    else:
+                        if y_center >= 140:
+                            y_ledger = 140
+                            while y_ledger <= y_center:
+                                pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                                self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                                y_ledger += 14
+                        elif y_center <= 56:
+                            y_ledger = 56
+                            while y_ledger >= y_center:
+                                pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
+                                self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
+                                y_ledger -= 14
+                else:
+                    if y_center >= 150:
+                        y_ledger = 150
                         while y_ledger <= y_center:
                             pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
                             self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
                             y_ledger += 14
-                else:
-                    # Pentagrama Superior (Clave de Sol): líneas en 70 (F5), 84 (D5), 98 (B4), 112 (G4), 126 (E4)
-                    if y_center >= 140:  # C4 (140) o inferior (entre pentagramas)
-                        y_ledger = 140
-                        while y_ledger <= y_center:
-                            pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
-                            self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                            y_ledger += 14
-                    elif y_center <= 56:  # A5 (56) o superior
-                        y_ledger = 56
+                    elif y_center <= 66:
+                        y_ledger = 66
                         while y_ledger >= y_center:
                             pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
                             self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
                             y_ledger -= 14
-            else:
-                # Pentagrama Único
-                if y_center >= 150:
-                    y_ledger = 150
-                    while y_ledger <= y_center:
-                        pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
-                        self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                        y_ledger += 14
-                elif y_center <= 66:
-                    y_ledger = 66
-                    while y_ledger >= y_center:
-                        pen_ledger = QPen(color_note if (is_current or is_past) else QColor("#64748b"), 2)
-                        self._scene.addLine(x - 10, y_ledger, x + 10, y_ledger, pen_ledger)
-                        y_ledger -= 14
 
-            # B. Renderizado de Cabeza de Nota SMuFL Vectorial
-            if duration >= 4.0:
-                head_glyph = NOTEHEAD_WHOLE
-            elif duration >= 2.0:
-                head_glyph = NOTEHEAD_HALF
-            else:
-                head_glyph = NOTEHEAD_BLACK
-
-            head_font = get_smufl_font(28)
-            fm_head = QFontMetrics(head_font)
-            head_item = self._scene.addText(head_glyph, head_font)
-            head_item.setDefaultTextColor(color_note)
-            head_item.setPos(x - 9, y_center - fm_head.ascent() - 4)
-
-            # C. Plica (Stem) y Corchete (Flag) individual si no pertenece a grupo de Beaming
-            if duration < 4.0 and not nd["beamed"]:
-                stem_up = nd["stem_up"]
-                pen_stem = QPen(color_note, 2)
-                if stem_up:
-                    stem_x = x + 5
-                    stem_y1 = y_center - 2
-                    stem_y2 = y_center - 32
-                    self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
-                    if duration <= 0.5:
-                        flag_font = get_smufl_font(28)
-                        flag_symbol = FLAG_8TH_UP if duration > 0.25 else FLAG_16TH_UP
-                        path = QPainterPath()
-                        path.addText(0, 0, flag_font, flag_symbol)
-                        rect = path.boundingRect()
-                        path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
-                        path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.top())
+                # B. Renderizado de Cabeza de Nota SMuFL
+                n_dur = getattr(note, "duration_quarter", duration)
+                if n_dur >= 4.0:
+                    head_glyph = NOTEHEAD_WHOLE
+                elif n_dur >= 2.0:
+                    head_glyph = NOTEHEAD_HALF
                 else:
-                    stem_x = x - 5
-                    stem_y1 = y_center + 2
-                    stem_y2 = y_center + 32
-                    self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
-                    if duration <= 0.5:
-                        flag_font = get_smufl_font(28)
-                        flag_symbol = FLAG_8TH_DOWN if duration > 0.25 else FLAG_16TH_DOWN
-                        path = QPainterPath()
-                        path.addText(0, 0, flag_font, flag_symbol)
-                        rect = path.boundingRect()
-                        path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
-                        path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.bottom())
+                    head_glyph = NOTEHEAD_BLACK
 
-            # D. Digitación (1 al 5)
-            if is_grand_staff:
-                if hand == "L" or (hand is None and note.midi_note < 60):
-                    finger_y = 168
+                head_font = get_smufl_font(28)
+                fm_head = QFontMetrics(head_font)
+                head_item = self._scene.addText(head_glyph, head_font)
+                head_item.setDefaultTextColor(color_note)
+                head_item.setPos(x - 9, y_center - fm_head.ascent() - 4)
+
+                # C. Plica (Stem) y Corchete (Flag)
+                if n_dur < 4.0:
+                    pen_stem = QPen(color_note, 2)
+                    if stem_up:
+                        stem_x = x + 5
+                        stem_y1 = y_center - 2
+                        stem_y2 = y_center - 32
+                        self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
+                        if n_dur <= 0.5 and not is_beamed:
+                            flag_font = get_smufl_font(28)
+                            flag_symbol = FLAG_8TH_UP if n_dur > 0.25 else FLAG_16TH_UP
+                            path = QPainterPath()
+                            path.addText(0, 0, flag_font, flag_symbol)
+                            rect = path.boundingRect()
+                            path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
+                            path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.top())
+                    else:
+                        stem_x = x - 5
+                        stem_y1 = y_center + 2
+                        stem_y2 = y_center + 32
+                        self._scene.addLine(stem_x, stem_y1, stem_x, stem_y2, pen_stem)
+                        if n_dur <= 0.5 and not is_beamed:
+                            flag_font = get_smufl_font(28)
+                            flag_symbol = FLAG_8TH_DOWN if n_dur > 0.25 else FLAG_16TH_DOWN
+                            path = QPainterPath()
+                            path.addText(0, 0, flag_font, flag_symbol)
+                            rect = path.boundingRect()
+                            path_item = self._scene.addPath(path, QPen(Qt.PenStyle.NoPen), QBrush(color_note))
+                            path_item.setPos(stem_x - rect.left() - 0.5, stem_y2 - rect.bottom())
+
+                # D. Digitación (1 al 5)
+                if is_grand_staff:
+                    finger_y = 168 if (hand == "L" or (hand is None and note.midi_note < 60)) else 48
+                    is_r_hand = (hand == "R" or (hand is None and note.midi_note >= 60))
                 else:
-                    finger_y = 48
-                is_r_hand = (hand == "R" or (hand is None and note.midi_note >= 60))
-            else:
-                is_r_hand = (self._lesson.clef == "treble")
-                finger_y = 48 if is_r_hand else 152
+                    is_r_hand = (self._lesson.clef == "treble")
+                    finger_y = 48 if is_r_hand else 152
 
-            finger_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else (QColor("#38bdf8") if is_r_hand else QColor("#22c55e")))
-            finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
-            finger_text.setDefaultTextColor(finger_color)
-            finger_text.setPos(x - 2, finger_y)
+                finger_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else (QColor("#38bdf8") if is_r_hand else QColor("#22c55e")))
+                finger_text = self._scene.addText(str(note.finger), QFont("Consolas", 11, QFont.Weight.Bold))
+                finger_text.setDefaultTextColor(finger_color)
+                finger_text.setPos(x - 2, finger_y)
 
-            # E. Nombre / Lírica debajo del pentagrama correspondiente
-            name_str = note.lyric or midi_to_note_name(note.midi_note)
-            lyric_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b"))
-            lyric_weight = QFont.Weight.Bold if (is_current or is_past) else QFont.Weight.Normal
-            lyric_text = self._scene.addText(name_str, QFont("Segoe UI", 9, lyric_weight))
-            lyric_text.setDefaultTextColor(lyric_color)
+                # E. Nombre / Lírica debajo del pentagrama
+                name_str = note.lyric or midi_to_note_name(note.midi_note)
+                lyric_color = QColor("#38bdf8") if is_current else (QColor("#22c55e") if is_past else QColor("#64748b"))
+                lyric_weight = QFont.Weight.Bold if (is_current or is_past) else QFont.Weight.Normal
+                lyric_text = self._scene.addText(name_str, QFont("Segoe UI", 9, lyric_weight))
+                lyric_text.setDefaultTextColor(lyric_color)
 
-            if is_grand_staff:
-                if hand == "L" or (hand is None and note.midi_note < 60):
-                    lyric_y = 262  # Debajo del pentagrama de Fa (y = 246)
+                if is_grand_staff:
+                    lyric_y = 262 if (hand == "L" or (hand is None and note.midi_note < 60)) else 142
                 else:
-                    lyric_y = 142  # Debajo del pentagrama de Sol (y = 126)
-            else:
-                lyric_y = 172
-
-            lyric_text.setPos(x - 4, lyric_y)
+                    lyric_y = 172
+                lyric_text.setPos(x - 4, lyric_y)
 
             # F. Línea Divisora de Compás
             cumulative_beats += duration
-            if cumulative_beats >= beats_per_measure and idx < len(self._lesson.notes) - 1:
+            if cumulative_beats >= beats_per_measure and step_idx < len(steps) - 1:
                 x_bar = x + (x_step / 2) + 6
                 y_bar_top = staff_y_treble
                 y_bar_bottom = (staff_y_bass + 4 * line_spacing) if is_grand_staff else (staff_y_treble + 4 * line_spacing)
@@ -570,7 +599,7 @@ class SheetView(QGraphicsView):
                 self._scene.addLine(stem_x_coords[0], secondary_y, stem_x_coords[-1], secondary_y, pen_beam_secondary)
 
         # Línea final de cierre del pentagrama (Doble barra de compás final)
-        x_final = x_start + len(self._lesson.notes) * x_step - 15
+        x_final = x_start + total_steps * x_step - 15
         y_bar_top = staff_y_treble
         y_bar_bottom = (staff_y_bass + 4 * line_spacing) if is_grand_staff else (staff_y_treble + 4 * line_spacing)
         self._scene.addLine(x_final - 4, y_bar_top, x_final - 4, y_bar_bottom, QPen(QColor("#64748b"), 1))

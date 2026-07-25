@@ -63,15 +63,19 @@ class RealtimeEvaluator:
     def load_lesson(self, lesson: Lesson):
         """Carga una lección pedagógica y reinicia el índice de progreso y repeticiones."""
         self.current_lesson = lesson
+        steps = lesson.get_steps() if lesson else []
         self.range_start = 0
-        self.range_end = max(0, len(lesson.notes) - 1) if lesson else 0
+        self.range_end = max(0, len(steps) - 1)
         self.reset()
 
     def set_range(self, start_step: int, end_step: int):
         """Define un rango de práctica específico (A-B) dentro de la lección."""
-        if not self.current_lesson or not self.current_lesson.notes:
+        if not self.current_lesson:
             return
-        total = len(self.current_lesson.notes)
+        steps = self.current_lesson.get_steps()
+        if not steps:
+            return
+        total = len(steps)
         start = max(0, min(start_step, total - 1))
         end = max(start, min(end_step, total - 1))
         self.range_start = start
@@ -92,11 +96,18 @@ class RealtimeEvaluator:
             return False  # El bucle infinito nunca termina por conteo
         return (self.current_rep > self.repeat_target) or (self.current_step > self.range_end and self.current_rep == self.repeat_target)
 
-    def get_current_target(self) -> Optional[TargetNote]:
+    def get_current_step(self) -> Optional['TargetStep']:
         if not self.current_lesson or self.is_finished:
             return None
-        if 0 <= self.current_step < len(self.current_lesson.notes):
-            return self.current_lesson.notes[self.current_step]
+        steps = self.current_lesson.get_steps()
+        if 0 <= self.current_step < len(steps):
+            return steps[self.current_step]
+        return None
+
+    def get_current_target(self) -> Optional[TargetNote]:
+        step = self.get_current_step()
+        if step and step.notes:
+            return step.notes[0]
         return None
 
     def evaluate_note_on(self, played_note: int, velocity: int, time_delta_ms: float = 0.0) -> EvaluationResult:

@@ -681,5 +681,1039 @@
       "hand": "R",
       "lyric": "Re5"
     }
+  ],
+  "steps": [
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 78,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa#5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 50,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Re3"
+        },
+        {
+          "midi_note": 74,
+          "duration_quarter": 1.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 76,
+          "duration_quarter": 0.5,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Mi5"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 0.5,
+      "notes": [
+        {
+          "midi_note": 74,
+          "duration_quarter": 0.5,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Re5"
+        }
+      ]
+    }
   ]
 }

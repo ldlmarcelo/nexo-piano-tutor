@@ -3,24 +3,24 @@
   "title": "Ejercicio N° 1 (Posición Fija de Do)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 1",
-  "description": "Estudio preparatorio bimanual íntegro en Posición Fija de Do (8 compases completos Urtext).",
+  "description": "Estudio preparatorio bimanual íntegro en Posición Fija de Do (8 compases completos Urtext). La mano derecha ejecuta el motivo diatónico (Do4-Sol4) en clave de Sol mientras la izquierda sostiene la tónica y dominante en clave de Fa.",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
   "instrument": 0,
   "notes": [
     {
-      "midi_note": 48,
-      "duration_quarter": 4.0,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Tónica"
-    },
-    {
       "midi_note": 60,
       "duration_quarter": 1.0,
       "finger": 1,
       "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
       "lyric": "Do"
     },
     {
@@ -45,17 +45,17 @@
       "lyric": "Fa"
     },
     {
-      "midi_note": 55,
-      "duration_quarter": 4.0,
-      "finger": 1,
-      "hand": "L",
-      "lyric": "Dominante"
-    },
-    {
       "midi_note": 67,
       "duration_quarter": 2.0,
       "finger": 5,
       "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
       "lyric": "Sol"
     },
     {
@@ -73,18 +73,18 @@
       "lyric": "Mi"
     },
     {
-      "midi_note": 48,
-      "duration_quarter": 4.0,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Tónica"
-    },
-    {
       "midi_note": 62,
       "duration_quarter": 1.0,
       "finger": 2,
       "hand": "R",
       "lyric": "Re"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
     },
     {
       "midi_note": 60,
@@ -108,13 +108,6 @@
       "lyric": "Mi"
     },
     {
-      "midi_note": 55,
-      "duration_quarter": 4.0,
-      "finger": 1,
-      "hand": "L",
-      "lyric": "Dominante"
-    },
-    {
       "midi_note": 62,
       "duration_quarter": 4.0,
       "finger": 2,
@@ -122,17 +115,24 @@
       "lyric": "Re"
     },
     {
-      "midi_note": 48,
+      "midi_note": 55,
       "duration_quarter": 4.0,
-      "finger": 5,
+      "finger": 1,
       "hand": "L",
-      "lyric": "Tónica"
+      "lyric": "Sol"
     },
     {
       "midi_note": 60,
       "duration_quarter": 1.0,
       "finger": 1,
       "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
       "lyric": "Do"
     },
     {
@@ -157,17 +157,17 @@
       "lyric": "Fa"
     },
     {
-      "midi_note": 55,
-      "duration_quarter": 4.0,
-      "finger": 1,
-      "hand": "L",
-      "lyric": "Dominante"
-    },
-    {
       "midi_note": 67,
       "duration_quarter": 2.0,
       "finger": 5,
       "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
       "lyric": "Sol"
     },
     {
@@ -185,18 +185,18 @@
       "lyric": "Mi"
     },
     {
-      "midi_note": 55,
-      "duration_quarter": 4.0,
-      "finger": 1,
-      "hand": "L",
-      "lyric": "Dominante"
-    },
-    {
       "midi_note": 62,
       "duration_quarter": 1.0,
       "finger": 2,
       "hand": "R",
       "lyric": "Re"
+    },
+    {
+      "midi_note": 55,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "L",
+      "lyric": "Sol"
     },
     {
       "midi_note": 64,
@@ -220,18 +220,364 @@
       "lyric": "Re"
     },
     {
-      "midi_note": 48,
-      "duration_quarter": 4.0,
-      "finger": 5,
-      "hand": "L",
-      "lyric": "Tónica"
-    },
-    {
       "midi_note": 60,
       "duration_quarter": 4.0,
       "finger": 1,
       "hand": "R",
       "lyric": "Do"
+    },
+    {
+      "midi_note": 48,
+      "duration_quarter": 4.0,
+      "finger": 5,
+      "hand": "L",
+      "lyric": "Do"
+    }
+  ],
+  "steps": [
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 60,
+          "duration_quarter": 1.0,
+          "finger": 1,
+          "hand": "R",
+          "lyric": "Do"
+        },
+        {
+          "midi_note": 48,
+          "duration_quarter": 4.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Do"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 65,
+          "duration_quarter": 1.0,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 2.0,
+      "notes": [
+        {
+          "midi_note": 67,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Sol"
+        },
+        {
+          "midi_note": 55,
+          "duration_quarter": 4.0,
+          "finger": 1,
+          "hand": "L",
+          "lyric": "Sol"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 65,
+          "duration_quarter": 1.0,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        },
+        {
+          "midi_note": 48,
+          "duration_quarter": 4.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Do"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 60,
+          "duration_quarter": 1.0,
+          "finger": 1,
+          "hand": "R",
+          "lyric": "Do"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 4.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 4.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        },
+        {
+          "midi_note": 55,
+          "duration_quarter": 4.0,
+          "finger": 1,
+          "hand": "L",
+          "lyric": "Sol"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 60,
+          "duration_quarter": 1.0,
+          "finger": 1,
+          "hand": "R",
+          "lyric": "Do"
+        },
+        {
+          "midi_note": 48,
+          "duration_quarter": 4.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Do"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 65,
+          "duration_quarter": 1.0,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 2.0,
+      "notes": [
+        {
+          "midi_note": 67,
+          "duration_quarter": 2.0,
+          "finger": 5,
+          "hand": "R",
+          "lyric": "Sol"
+        },
+        {
+          "midi_note": 55,
+          "duration_quarter": 4.0,
+          "finger": 1,
+          "hand": "L",
+          "lyric": "Sol"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 65,
+          "duration_quarter": 1.0,
+          "finger": 4,
+          "hand": "R",
+          "lyric": "Fa"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        },
+        {
+          "midi_note": 55,
+          "duration_quarter": 4.0,
+          "finger": 1,
+          "hand": "L",
+          "lyric": "Sol"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 64,
+          "duration_quarter": 1.0,
+          "finger": 3,
+          "hand": "R",
+          "lyric": "Mi"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 1.0,
+      "notes": [
+        {
+          "midi_note": 62,
+          "duration_quarter": 1.0,
+          "finger": 2,
+          "hand": "R",
+          "lyric": "Re"
+        }
+      ]
+    },
+    {
+      "duration_quarter": 4.0,
+      "notes": [
+        {
+          "midi_note": 60,
+          "duration_quarter": 4.0,
+          "finger": 1,
+          "hand": "R",
+          "lyric": "Do"
+        },
+        {
+          "midi_note": 48,
+          "duration_quarter": 4.0,
+          "finger": 5,
+          "hand": "L",
+          "lyric": "Do"
+        }
+      ]
     }
   ]
 }

@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QColor, QStandardItemModel, QStandardItem
 
-from core.lesson import Lesson, TargetNote
+from core.lesson import Lesson, TargetNote, TargetStep
 from core.evaluator import RealtimeEvaluator
 from core.midi_input import MidiInputHandler
 from core.sound_engine import SoundEngine
@@ -430,11 +430,19 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setCurrentIndex(1)
         
         active_id = user.active_lesson_id
-        for idx in range(self.lesson_combo.count()):
-            fpath = self.lesson_combo.itemData(idx)
-            if fpath and active_id in fpath:
-                self.lesson_combo.setCurrentIndex(idx)
-                break
+        found = False
+        if active_id:
+            for idx in range(self.lesson_combo.count()):
+                fpath = self.lesson_combo.itemData(idx)
+                if fpath and active_id in fpath:
+                    self.lesson_combo.setCurrentIndex(idx)
+                    self._on_lesson_changed(idx)
+                    found = True
+                    break
+
+        if not found and self.lesson_combo.count() > 0:
+            self.lesson_combo.setCurrentIndex(0)
+            self._on_lesson_changed(0)
 
         self.statusBar().showMessage(f"Sesión activa: {user.username} | Precisión: {user.stats.accuracy_pct}%")
 
@@ -608,28 +616,29 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(150, self._on_demo_tick)
 
     def _on_demo_tick(self):
-        """Procesa cada nota de la demostración en tiempo real."""
+        """Procesa cada paso (nota o acorde polifónico) de la demostración en tiempo real."""
         if not getattr(self, "_is_demo_playing", False) or not self.evaluator.current_lesson:
             return
 
-        notes = self.evaluator.current_lesson.notes
-        if self.evaluator.current_step > self.evaluator.range_end or self.evaluator.current_step >= len(notes):
+        steps = self.evaluator.current_lesson.get_steps()
+        if self.evaluator.current_step > self.evaluator.range_end or self.evaluator.current_step >= len(steps):
             self._stop_demo_playback()
             self.feedback_val.setText("🎧 Demostración finalizada. ¡Presioná ▶ Práctica para comenzar!")
             self.feedback_val.setStyleSheet("color: #00e676; font-size: 14px; font-weight: bold;")
             return
 
-        target = self.evaluator.get_current_target()
-        if target:
-            self.sound_engine.play_note(target.midi_note, velocity=95)
-            color = "#38bdf8" if getattr(target, "hand", "R") == "R" else "#22c55e"
-            self.piano_keyboard.set_key_active(target.midi_note, color)
-
+        target_step = self.evaluator.get_current_step()
+        if target_step and target_step.notes:
             bpm = max(30, min(240, self.bpm_spin.value()))
             beat_ms = (60.0 / bpm) * 1000.0
-            dur_ms = int(target.duration_quarter * beat_ms)
+            dur_ms = int(target_step.duration_quarter * beat_ms)
 
-            QTimer.singleShot(max(80, dur_ms - 20), lambda n=target.midi_note: self._on_demo_note_off(n))
+            # Reproducir e iluminar TODAS las notas del paso simultáneamente
+            for n in target_step.notes:
+                self.sound_engine.play_note(n.midi_note, velocity=95)
+                color = "#38bdf8" if getattr(n, "hand", "R") == "R" else "#22c55e"
+                self.piano_keyboard.set_key_active(n.midi_note, color)
+                QTimer.singleShot(max(80, dur_ms - 20), lambda note_num=n.midi_note: self._on_demo_note_off(note_num))
 
             self.sheet_view.set_step(self.evaluator.current_step)
             self._update_target_display()
@@ -838,6 +847,13 @@ class MainWindow(QMainWindow):
             with open(fpath, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 notes = [TargetNote(**n) for n in data.get("notes", [])]
+                steps_raw = data.get("steps", [])
+                steps = []
+                if steps_raw:
+                    for s in steps_raw:
+                        s_notes = [TargetNote(**n) for n in s.get("notes", [])]
+                        steps.append(TargetStep(duration_quarter=s.get("duration_quarter", 1.0), notes=s_notes))
+
                 lesson = Lesson(
                     id=data.get("id", ""),
                     title=data.get("title", ""),
@@ -847,21 +863,23 @@ class MainWindow(QMainWindow):
                     clef=data.get("clef", "treble"),
                     bpm_recommended=data.get("bpm_recommended", 60),
                     instrument=data.get("instrument", 0),
-                    notes=notes
+                    time_signature=data.get("time_signature", "4/4"),
+                    notes=notes,
+                    steps=steps
                 )
                 self.evaluator.load_lesson(lesson)
                 self.sound_engine.set_instrument(lesson.instrument)
                 
                 # Ajustar SpinBoxes de Rango
-                total_notes = max(1, len(notes))
-                self.range_start_spin.setRange(1, total_notes)
-                self.range_end_spin.setRange(1, total_notes)
+                total_steps = max(1, len(lesson.get_steps()))
+                self.range_start_spin.setRange(1, total_steps)
+                self.range_end_spin.setRange(1, total_steps)
                 self.range_start_spin.setValue(1)
-                self.range_end_spin.setValue(total_notes)
+                self.range_end_spin.setValue(total_steps)
                 
                 self.bpm_spin.setValue(lesson.bpm_recommended)
                 self.sheet_view.load_lesson(lesson, 0)
-                self.sheet_view.set_range(0, total_notes - 1)
+                self.sheet_view.set_range(0, total_steps - 1)
                 self._update_target_display()
 
                 user = self.user_manager.get_active_user()
@@ -874,6 +892,9 @@ class MainWindow(QMainWindow):
                 else:
                     self._stop_metronome()
         except Exception as e:
+            print(f"[ERROR _on_lesson_changed] {e}")
+            import traceback
+            traceback.print_exc()
             self.statusBar().showMessage(f"Error al cargar lección: {e}")
 
     # ── Eventos de Notas MIDI ──────────────────────────────────────
@@ -967,10 +988,13 @@ class MainWindow(QMainWindow):
 
     def _update_target_display(self):
         self.piano_keyboard.clear_all_active()
-        target = self.evaluator.get_current_target()
-        if target:
-            self.finger_val.setText(str(target.finger))
-            self.piano_keyboard.set_key_active(target.midi_note, "#38bdf8")
+        step = self.evaluator.get_current_step()
+        if step and step.notes:
+            fingers = [str(n.finger) for n in step.notes]
+            self.finger_val.setText("/".join(fingers))
+            for n in step.notes:
+                color = "#38bdf8" if getattr(n, "hand", "R") == "R" else "#22c55e"
+                self.piano_keyboard.set_key_active(n.midi_note, color)
         else:
             self.finger_val.setText("—")
 

@@ -309,9 +309,8 @@ class SheetView(QGraphicsView):
                 "beamed": False
             })
             cumulative_beats += duration
-            cumulative_beats += duration
 
-        # Identificar y agrupar corcheas/semicorcheas para Beaming por Tiempo
+        # Identificar y agrupar corcheas/semicorcheas para Beaming por Tiempo y Medio Compás
         beam_groups: List[List[Dict[str, Any]]] = []
         if self._beaming_enabled:
             current_group: List[Dict[str, Any]] = []
@@ -321,8 +320,11 @@ class SheetView(QGraphicsView):
                         current_group.append(nd)
                     else:
                         prev = current_group[-1]
-                        # Agrupar si pertenecen al mismo compás y mismo tiempo entero
-                        if prev["measure_idx"] == nd["measure_idx"] and prev["beat_in_measure"] == nd["beat_in_measure"]:
+                        same_measure = (prev["measure_idx"] == nd["measure_idx"])
+                        same_hand = (getattr(prev["note"], "hand", "R") == getattr(nd["note"], "hand", "R"))
+                        same_subdivision = (int(prev["beat_in_measure"] // 2) == int(nd["beat_in_measure"] // 2))
+
+                        if same_measure and same_hand and same_subdivision:
                             current_group.append(nd)
                         else:
                             if len(current_group) >= 2:

@@ -222,7 +222,9 @@ class RealtimeEvaluator:
             if is_same_pitch:
                 played_name = midi_to_note_name(played_note)
                 target_name = midi_to_note_name(target.midi_note)
-                feedback = f"¡Es un {target.lyric or ''}! Pero en octava distinta (Tocaste {played_name}, se busca {target_name})."
+                oct_diff = (played_note // 12) - (target.midi_note // 12)
+                oct_hint = "Presiona 'OCTAVE -'" if oct_diff > 0 else "Presiona 'OCTAVE +'"
+                feedback = f"¡Es un {target.lyric or ''}! Pero en octava distinta (Tocaste {played_name}, se busca {target_name}). 💡 {oct_hint} en tu teclado."
                 color = "#ffb300"
             else:
                 played_name = midi_to_note_name(played_note)

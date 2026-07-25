@@ -1,9 +1,9 @@
 {
   "id": "beyer_op101_02",
-  "title": "Ejercicio N° 2 (Mano Izquierda y Tónica Sol)",
+  "title": "Ejercicio N° 2 (Mano Izquierda - Clave de Fa)",
   "composer": "Ferdinand Beyer",
   "opus": "Opus 101 N° 2",
-  "description": "Desarrollo de la mano izquierda en Clave de Fa (Do3-Sol3) con respuesta melódica de la mano derecha en Clave de Sol.",
+  "description": "Estudio preparatorio exclusivo para Mano Izquierda en Clave de Fa. Posición fija de 5 notas (Do3 a Sol3) con digitación 5 al 1 (Do3 meñique, Sol3 pulgar). La mano derecha descansa.",
   "clef": "grand",
   "bpm_recommended": 60,
   "time_signature": "4/4",
@@ -14,13 +14,6 @@
       "duration_quarter": 1.0,
       "finger": 5,
       "hand": "L",
-      "lyric": "Do"
-    },
-    {
-      "midi_note": 60,
-      "duration_quarter": 1.0,
-      "finger": 1,
-      "hand": "R",
       "lyric": "Do"
     },
     {
@@ -52,10 +45,10 @@
       "lyric": "Sol"
     },
     {
-      "midi_note": 67,
+      "midi_note": 55,
       "duration_quarter": 2.0,
-      "finger": 5,
-      "hand": "R",
+      "finger": 1,
+      "hand": "L",
       "lyric": "Sol"
     },
     {
@@ -87,24 +80,10 @@
       "lyric": "Do"
     },
     {
-      "midi_note": 64,
-      "duration_quarter": 2.0,
-      "finger": 3,
-      "hand": "R",
-      "lyric": "Mi"
-    },
-    {
       "midi_note": 48,
       "duration_quarter": 4.0,
       "finger": 5,
       "hand": "L",
-      "lyric": "Do"
-    },
-    {
-      "midi_note": 60,
-      "duration_quarter": 4.0,
-      "finger": 1,
-      "hand": "R",
       "lyric": "Do"
     }
   ]

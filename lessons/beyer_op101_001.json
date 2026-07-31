@@ -1,223 +1,169 @@
 {
   "id": "beyer_op101_001",
-  "titulo": "Beyer Op. 101 N° 1 - Ejercicio Elemental a 4 Manos",
-  "compositor": "Ferdinand Beyer",
+  "title": "Ejercicio N° 1 (Posición Fija de Do - Duet 4 Manos)",
+  "composer": "Ferdinand Beyer",
   "opus": "Op. 101 N° 1",
-  "categoria": "Iniciación (Posición Fija de 5 Notas)",
+  "description": "Estudio preparatorio para Mano Derecha en Clave de Sol (Do4 a Sol4). Acompañamiento del tutor a 4 manos en 4/4. Mantener la mano relajada y curvar los dedos sin mover la muñeca.",
+  "clef": "treble",
+  "bpm_recommended": 70,
   "time_signature": "4/4",
-  "bpm_recomendado": 70,
-  "posicion_inicial": {
-    "mano_derecha": {
-      "dedo_1_nota": "C4",
-      "rango": "C4-G4"
+  "instrument": 0,
+  "notes": [
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
     },
-    "mano_izquierda": null
-  },
-  "orientacion_pedagogica": "Mantener la mano derecha curva y relajada sobre la posición de Do central (Do4 a Sol4). Articular cada dedo desde el nudillo sin mover la muñeca. El acompañamiento del tutor sostiene la estructura armónica en 4/4.",
-  "primo_estudiante": {
-    "mano": "R",
-    "clave": "treble",
-    "notas": [
-      {
-        "compas": 1,
-        "tiempo": 1.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 1.0,
-        "dedo": 1,
-        "figura": "negra"
-      },
-      {
-        "compas": 1,
-        "tiempo": 2.0,
-        "nota": "D4",
-        "midi": 62,
-        "duracion": 1.0,
-        "dedo": 2,
-        "figura": "negra"
-      },
-      {
-        "compas": 1,
-        "tiempo": 3.0,
-        "nota": "E4",
-        "midi": 64,
-        "duracion": 1.0,
-        "dedo": 3,
-        "figura": "negra"
-      },
-      {
-        "compas": 1,
-        "tiempo": 4.0,
-        "nota": "F4",
-        "midi": 65,
-        "duracion": 1.0,
-        "dedo": 4,
-        "figura": "negra"
-      },
-      {
-        "compas": 2,
-        "tiempo": 1.0,
-        "nota": "G4",
-        "midi": 67,
-        "duracion": 2.0,
-        "dedo": 5,
-        "figura": "blanca"
-      },
-      {
-        "compas": 2,
-        "tiempo": 3.0,
-        "nota": "G4",
-        "midi": 67,
-        "duracion": 2.0,
-        "dedo": 5,
-        "figura": "blanca"
-      },
-      {
-        "compas": 3,
-        "tiempo": 1.0,
-        "nota": "F4",
-        "midi": 65,
-        "duracion": 1.0,
-        "dedo": 4,
-        "figura": "negra"
-      },
-      {
-        "compas": 3,
-        "tiempo": 2.0,
-        "nota": "E4",
-        "midi": 64,
-        "duracion": 1.0,
-        "dedo": 3,
-        "figura": "negra"
-      },
-      {
-        "compas": 3,
-        "tiempo": 3.0,
-        "nota": "D4",
-        "midi": 62,
-        "duracion": 1.0,
-        "dedo": 2,
-        "figura": "negra"
-      },
-      {
-        "compas": 3,
-        "tiempo": 4.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 1.0,
-        "dedo": 1,
-        "figura": "negra"
-      },
-      {
-        "compas": 4,
-        "tiempo": 1.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 4.0,
-        "dedo": 1,
-        "figura": "redonda"
-      },
-      {
-        "compas": 5,
-        "tiempo": 1.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 1.0,
-        "dedo": 1,
-        "figura": "negra"
-      },
-      {
-        "compas": 5,
-        "tiempo": 2.0,
-        "nota": "D4",
-        "midi": 62,
-        "duracion": 1.0,
-        "dedo": 2,
-        "figura": "negra"
-      },
-      {
-        "compas": 5,
-        "tiempo": 3.0,
-        "nota": "E4",
-        "midi": 64,
-        "duracion": 1.0,
-        "dedo": 3,
-        "figura": "negra"
-      },
-      {
-        "compas": 5,
-        "tiempo": 4.0,
-        "nota": "F4",
-        "midi": 65,
-        "duracion": 1.0,
-        "dedo": 4,
-        "figura": "negra"
-      },
-      {
-        "compas": 6,
-        "tiempo": 1.0,
-        "nota": "G4",
-        "midi": 67,
-        "duracion": 2.0,
-        "dedo": 5,
-        "figura": "blanca"
-      },
-      {
-        "compas": 6,
-        "tiempo": 3.0,
-        "nota": "G4",
-        "midi": 67,
-        "duracion": 2.0,
-        "dedo": 5,
-        "figura": "blanca"
-      },
-      {
-        "compas": 7,
-        "tiempo": 1.0,
-        "nota": "F4",
-        "midi": 65,
-        "duracion": 1.0,
-        "dedo": 4,
-        "figura": "negra"
-      },
-      {
-        "compas": 7,
-        "tiempo": 2.0,
-        "nota": "E4",
-        "midi": 64,
-        "duracion": 1.0,
-        "dedo": 3,
-        "figura": "negra"
-      },
-      {
-        "compas": 7,
-        "tiempo": 3.0,
-        "nota": "D4",
-        "midi": 62,
-        "duracion": 1.0,
-        "dedo": 2,
-        "figura": "negra"
-      },
-      {
-        "compas": 7,
-        "tiempo": 4.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 1.0,
-        "dedo": 1,
-        "figura": "negra"
-      },
-      {
-        "compas": 8,
-        "tiempo": 1.0,
-        "nota": "C4",
-        "midi": 60,
-        "duracion": 4.0,
-        "dedo": 1,
-        "figura": "redonda"
-      }
-    ]
-  },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    }
+  ],
   "secondo_tutor": {
     "instrumento": "Acompañamiento Piano",
     "acordes": [

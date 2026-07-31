@@ -633,24 +633,28 @@ class MainWindow(QMainWindow):
             beat_ms = (60.0 / bpm) * 1000.0
             dur_ms = int(target_step.duration_quarter * beat_ms)
 
-            # Reproducir e iluminar TODAS las notas del paso simultáneamente
+            # Reproducir e iluminar TODAS las notas del paso del alumno (Canal 0)
             for n in target_step.notes:
-                self.sound_engine.play_note(n.midi_note, velocity=95)
+                self.sound_engine.play_note(n.midi_note, velocity=95, channel=0)
                 color = "#38bdf8" if getattr(n, "hand", "R") == "R" else "#22c55e"
                 self.piano_keyboard.set_key_active(n.midi_note, color)
                 QTimer.singleShot(max(80, dur_ms - 20), lambda note_num=n.midi_note: self._on_demo_note_off(note_num))
 
-            # Reproducir acompañamiento armónico del Tutor (Secondo) en modo Dueto
+            # Reproducir acompañamiento armónico del Tutor (Secondo) en Canal 1 (Velocidad 90)
             lesson = self.evaluator.current_lesson
             if lesson and getattr(lesson, "secondo_tutor", None):
                 acordes = lesson.secondo_tutor.get("acordes", [])
-                step_idx = self.evaluator.current_step
-                compas_num = (step_idx // 4) + 1
+                steps = lesson.get_steps()
+                start_quarter = sum(s.duration_quarter for s in steps[:self.evaluator.current_step])
+                compas_num = int(start_quarter // 4.0) + 1
+                beat_in_compas = (start_quarter % 4.0) + 1.0
+
                 for ac in acordes:
-                    if ac.get("compas") == compas_num and (step_idx % 4 == 0 or ac.get("duracion", 4.0) >= 4.0):
+                    if ac.get("compas") == compas_num and abs(ac.get("tiempo", 1.0) - beat_in_compas) < 0.1:
                         for pitch in ac.get("acorde", []):
-                            self.sound_engine.play_note(pitch, velocity=60)
-                            QTimer.singleShot(max(300, dur_ms * 3), lambda p=pitch: self.sound_engine.stop_note(p))
+                            self.sound_engine.play_note(pitch, velocity=90, channel=1)
+                            dur_chord_ms = int(ac.get("duracion", 4.0) * beat_ms)
+                            QTimer.singleShot(max(300, dur_chord_ms - 50), lambda p=pitch: self.sound_engine.stop_note(p, channel=1))
 
             self.sheet_view.set_step(self.evaluator.current_step)
             self._update_target_display()

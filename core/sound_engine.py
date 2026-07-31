@@ -207,37 +207,48 @@ class SoundEngine:
         elif self._midiout and self._midiout.is_port_open():
             self._midiout.send_message([0x99, click_note, velocity])
 
-    def play_note(self, note: int, velocity: int = 100):
-
-        """Reproduce una nota (NOTE_ON)."""
+    def play_note(self, note: int, velocity: int = 100, channel: int = 0):
+        """Reproduce una nota (NOTE_ON) en el canal MIDI especificado (0-15)."""
         velocity = max(1, min(127, velocity))
         note = max(0, min(127, note))
+        channel = max(0, min(15, channel))
 
         if self._fluidsynth:
-            self._fluidsynth.noteon(0, note, velocity)
+            try:
+                self._fluidsynth.noteon(channel, note, velocity)
+            except Exception as e:
+                print(f"[AUDIO ERROR] FluidSynth noteon: {e}")
 
         elif self._hwinmm:
-            # Mensaje MIDI de 32 bits: Status 0x90 | (Note << 8) | (Velocity << 16)
-            msg = 0x90 | (note << 8) | (velocity << 16)
+            # Mensaje MIDI 32-bit: Status 0x90 | channel | (Note << 8) | (Velocity << 16)
+            status = 0x90 | (channel & 0x0F)
+            msg = status | (note << 8) | (velocity << 16)
             ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
 
         elif self._midiout and self._midiout.is_port_open():
-            self._midiout.send_message([0x90, note, velocity])
+            status = 0x90 | (channel & 0x0F)
+            self._midiout.send_message([status, note, velocity])
 
-    def stop_note(self, note: int):
-        """Detiene una nota (NOTE_OFF)."""
+    def stop_note(self, note: int, channel: int = 0):
+        """Detiene una nota (NOTE_OFF) en el canal MIDI especificado (0-15)."""
         note = max(0, min(127, note))
+        channel = max(0, min(15, channel))
 
         if self._fluidsynth:
-            self._fluidsynth.noteoff(0, note)
+            try:
+                self._fluidsynth.noteoff(channel, note)
+            except Exception as e:
+                print(f"[AUDIO ERROR] FluidSynth noteoff: {e}")
 
         elif self._hwinmm:
-            # NOTE_OFF: Status 0x80 | (Note << 8)
-            msg = 0x80 | (note << 8) | (0 << 16)
+            # NOTE_OFF: Status 0x80 | channel | (Note << 8)
+            status = 0x80 | (channel & 0x0F)
+            msg = status | (note << 8) | (0 << 16)
             ctypes.windll.winmm.midiOutShortMsg(self._hwinmm, msg)
 
         elif self._midiout and self._midiout.is_port_open():
-            self._midiout.send_message([0x80, note, 0])
+            status = 0x80 | (channel & 0x0F)
+            self._midiout.send_message([status, note, 0])
 
     @property
     def active_driver(self) -> str:

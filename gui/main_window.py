@@ -880,6 +880,8 @@ class MainWindow(QMainWindow):
                     bpm_recommended=data.get("bpm_recommended", 60),
                     instrument=data.get("instrument", 0),
                     time_signature=data.get("time_signature", "4/4"),
+                    duet_mode=data.get("duet_mode", False),
+                    secondo_tutor=data.get("secondo_tutor", None),
                     notes=notes,
                     steps=steps
                 )

@@ -1,13 +1,14 @@
 {
   "id": "beyer_op101_001",
-  "title": "Ejercicio N° 1 (Posición Fija de Do - Duet 4 Manos)",
+  "title": "Ejercicio N° 1 (Mano Derecha - Posición Fija de Do)",
   "composer": "Ferdinand Beyer",
   "opus": "Op. 101 N° 1",
-  "description": "Estudio preparatorio para Mano Derecha en Clave de Sol (Do4 a Sol4). Acompañamiento del tutor a 4 manos en 4/4. Mantener la mano relajada y curvar los dedos sin mover la muñeca.",
+  "description": "Estudio preparatorio exclusivo para Mano Derecha en Clave de Sol (Do4 a Sol4). Posición fija de 5 notas. Mantener la mano relajada y curvar los dedos sin mover la muñeca.",
   "clef": "treble",
   "bpm_recommended": 70,
   "time_signature": "4/4",
   "instrument": 0,
+  "duet_mode": false,
   "notes": [
     {
       "midi_note": 60,
@@ -163,100 +164,5 @@
       "hand": "R",
       "lyric": "Do"
     }
-  ],
-  "secondo_tutor": {
-    "instrumento": "Acompañamiento Piano",
-    "acordes": [
-      {
-        "compas": 1,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      },
-      {
-        "compas": 2,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      },
-      {
-        "compas": 3,
-        "tiempo": 1.0,
-        "acorde": [
-          43,
-          50,
-          53,
-          55
-        ],
-        "nombre": "G7",
-        "duracion": 4.0
-      },
-      {
-        "compas": 4,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      },
-      {
-        "compas": 5,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      },
-      {
-        "compas": 6,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      },
-      {
-        "compas": 7,
-        "tiempo": 1.0,
-        "acorde": [
-          43,
-          50,
-          53,
-          55
-        ],
-        "nombre": "G7",
-        "duracion": 4.0
-      },
-      {
-        "compas": 8,
-        "tiempo": 1.0,
-        "acorde": [
-          48,
-          52,
-          55
-        ],
-        "nombre": "C",
-        "duracion": 4.0
-      }
-    ]
-  }
+  ]
 }

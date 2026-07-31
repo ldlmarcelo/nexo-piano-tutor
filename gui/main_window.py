@@ -640,6 +640,18 @@ class MainWindow(QMainWindow):
                 self.piano_keyboard.set_key_active(n.midi_note, color)
                 QTimer.singleShot(max(80, dur_ms - 20), lambda note_num=n.midi_note: self._on_demo_note_off(note_num))
 
+            # Reproducir acompañamiento armónico del Tutor (Secondo) en modo Dueto
+            lesson = self.evaluator.current_lesson
+            if lesson and getattr(lesson, "secondo_tutor", None):
+                acordes = lesson.secondo_tutor.get("acordes", [])
+                step_idx = self.evaluator.current_step
+                compas_num = (step_idx // 4) + 1
+                for ac in acordes:
+                    if ac.get("compas") == compas_num and (step_idx % 4 == 0 or ac.get("duracion", 4.0) >= 4.0):
+                        for pitch in ac.get("acorde", []):
+                            self.sound_engine.play_note(pitch, velocity=60)
+                            QTimer.singleShot(max(300, dur_ms * 3), lambda p=pitch: self.sound_engine.stop_note(p))
+
             self.sheet_view.set_step(self.evaluator.current_step)
             self._update_target_display()
 

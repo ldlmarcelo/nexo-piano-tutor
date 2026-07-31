@@ -1,0 +1,263 @@
+{
+  "id": "beyer_op101_002",
+  "title": "Ejercicio N° 2 (Duet a 4 Manos - Acompañamiento del Tutor)",
+  "composer": "Ferdinand Beyer",
+  "opus": "Op. 101 N° 2",
+  "description": "Primer estudio a 4 manos. El estudiante interpreta la melodía fija de Mano Derecha (Primo) sobre el colchón armónico del tutor en piano (Secondo).",
+  "clef": "treble",
+  "bpm_recommended": 70,
+  "time_signature": "4/4",
+  "instrument": 0,
+  "duet_mode": true,
+  "notes": [
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 2.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 65,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa"
+    },
+    {
+      "midi_note": 64,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 62,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 60,
+      "duration_quarter": 4.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Do"
+    }
+  ],
+  "secondo_tutor": {
+    "instrumento": "Acompañamiento Piano",
+    "acordes": [
+      {
+        "compas": 1,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      },
+      {
+        "compas": 2,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      },
+      {
+        "compas": 3,
+        "tiempo": 1.0,
+        "acorde": [
+          43,
+          50,
+          53,
+          55
+        ],
+        "nombre": "G7",
+        "duracion": 4.0
+      },
+      {
+        "compas": 4,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      },
+      {
+        "compas": 5,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      },
+      {
+        "compas": 6,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      },
+      {
+        "compas": 7,
+        "tiempo": 1.0,
+        "acorde": [
+          43,
+          50,
+          53,
+          55
+        ],
+        "nombre": "G7",
+        "duracion": 4.0
+      },
+      {
+        "compas": 8,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 4.0
+      }
+    ]
+  }
+}

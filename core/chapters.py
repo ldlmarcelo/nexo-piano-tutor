@@ -27,9 +27,10 @@ CHAPTERS: List[ChapterInfo] = [
         short_title="Capítulo I: Fundamentos Diatónicos",
         icon="📘",
         level="Principiante (Grado 1)",
-        description="Estudios preparatorios de Beyer Op. 101. Posición fija de 5 notas en Do Mayor con acompañamiento a 4 manos del tutor.",
+        description="Estudios preparatorios de Beyer Op. 101. Posición fija de 5 notas en Do Mayor y dueto a 4 manos con acompañamiento del tutor.",
         lesson_ids=[
             "beyer_op101_001",
+            "beyer_op101_002",
         ]
     )
 ]

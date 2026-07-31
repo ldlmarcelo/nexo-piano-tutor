@@ -90,7 +90,13 @@ class SoundEngine:
                             pass
 
                     self._sfid = self._fluidsynth.sfload(sf_path)
-                    self._fluidsynth.program_select(0, self._sfid, 0, self._current_program)
+                    # Mapear el instrumento en todos los canales musicales (0-8, 10-15)
+                    for ch in range(16):
+                        if ch != 9:
+                            try:
+                                self._fluidsynth.program_select(ch, self._sfid, 0, self._current_program)
+                            except Exception:
+                                pass
                     try:
                         # Mapear Banco 128 (Drum Kit / Percusión GM) en el Canal 9 de FluidSynth
                         self._fluidsynth.program_select(9, self._sfid, 128, 0)

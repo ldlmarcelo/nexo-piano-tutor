@@ -799,6 +799,24 @@ class MainWindow(QMainWindow):
             is_downbeat = (self._metronome_beat == 0)
             self.sound_engine.play_metronome_click(is_downbeat)
             self._highlight_beat_box(self._metronome_beat % len(self.beat_boxes), is_downbeat)
+
+            # Reproducir acompañamiento armónico del Tutor (Secondo) en Modo Práctica (Canal 1)
+            lesson = self.evaluator.current_lesson
+            if lesson and getattr(lesson, "secondo_tutor", None) and self._is_playing:
+                acordes = lesson.secondo_tutor.get("acordes", [])
+                steps = lesson.get_steps()
+                start_quarter = sum(s.duration_quarter for s in steps[:self.evaluator.current_step])
+                compas_num = int(start_quarter // 4.0) + 1
+                beat_in_compas = self._metronome_beat + 1
+
+                for ac in acordes:
+                    if ac.get("compas") == compas_num and ac.get("tiempo", 1.0) == beat_in_compas:
+                        bpm = max(30, min(240, self.bpm_spin.value()))
+                        dur_ms = int(ac.get("duracion", 4.0) * (60.0 / bpm) * 1000.0)
+                        for pitch in ac.get("acorde", []):
+                            self.sound_engine.play_note(pitch, velocity=85, channel=1)
+                            QTimer.singleShot(max(300, dur_ms - 50), lambda p=pitch: self.sound_engine.stop_note(p, channel=1))
+
             self._metronome_beat = (self._metronome_beat + 1) % beats_per_measure
 
     def _highlight_beat_box(self, index: int, is_downbeat: bool):

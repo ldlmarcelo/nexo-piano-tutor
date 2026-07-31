@@ -1,0 +1,310 @@
+{
+  "id": "bach_bwv_anh114",
+  "title": "Minuet en Sol Mayor (BWV Anh. 114)",
+  "composer": "J. S. Bach / C. Petzold",
+  "opus": "Cuaderno de Anna Magdalena Bach",
+  "description": "Obra cumbre del repertorio barroco inicial en 3/4 (Minuet). Melodía expresiva de Mano Derecha en Sol Mayor con bajos armónicos en polifonía de 3 tiempos.",
+  "clef": "treble",
+  "bpm_recommended": 85,
+  "time_signature": "3/4",
+  "instrument": 6,
+  "duet_mode": true,
+  "notes": [
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 76,
+      "duration_quarter": 0.5,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Mi"
+    },
+    {
+      "midi_note": 78,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Fa#"
+    },
+    {
+      "midi_note": 79,
+      "duration_quarter": 1.0,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 74,
+      "duration_quarter": 0.5,
+      "finger": 5,
+      "hand": "R",
+      "lyric": "Re"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 72,
+      "duration_quarter": 0.5,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "Do"
+    },
+    {
+      "midi_note": 71,
+      "duration_quarter": 0.5,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Si"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 0.5,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 0.5,
+      "finger": 1,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 66,
+      "duration_quarter": 1.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Fa#"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 1.0,
+      "finger": 3,
+      "hand": "R",
+      "lyric": "Sol"
+    },
+    {
+      "midi_note": 69,
+      "duration_quarter": 1.0,
+      "finger": 4,
+      "hand": "R",
+      "lyric": "La"
+    },
+    {
+      "midi_note": 67,
+      "duration_quarter": 3.0,
+      "finger": 2,
+      "hand": "R",
+      "lyric": "Sol"
+    }
+  ],
+  "secondo_tutor": {
+    "instrumento": "Bajo Clavecín",
+    "acordes": [
+      {
+        "compas": 1,
+        "tiempo": 1.0,
+        "acorde": [
+          47,
+          55
+        ],
+        "nombre": "G",
+        "duracion": 3.0
+      },
+      {
+        "compas": 2,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          52
+        ],
+        "nombre": "C",
+        "duracion": 3.0
+      },
+      {
+        "compas": 3,
+        "tiempo": 1.0,
+        "acorde": [
+          48,
+          55
+        ],
+        "nombre": "C",
+        "duracion": 3.0
+      },
+      {
+        "compas": 4,
+        "tiempo": 1.0,
+        "acorde": [
+          47,
+          55
+        ],
+        "nombre": "G",
+        "duracion": 3.0
+      },
+      {
+        "compas": 5,
+        "tiempo": 1.0,
+        "acorde": [
+          45,
+          52
+        ],
+        "nombre": "Am",
+        "duracion": 3.0
+      },
+      {
+        "compas": 6,
+        "tiempo": 1.0,
+        "acorde": [
+          43,
+          50
+        ],
+        "nombre": "Em",
+        "duracion": 3.0
+      },
+      {
+        "compas": 7,
+        "tiempo": 1.0,
+        "acorde": [
+          42,
+          50,
+          54
+        ],
+        "nombre": "D7",
+        "duracion": 3.0
+      },
+      {
+        "compas": 8,
+        "tiempo": 1.0,
+        "acorde": [
+          43,
+          55
+        ],
+        "nombre": "G",
+        "duracion": 3.0
+      }
+    ]
+  }
+}

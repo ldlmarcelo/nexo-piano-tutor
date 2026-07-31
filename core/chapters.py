@@ -32,6 +32,18 @@ CHAPTERS: List[ChapterInfo] = [
             "beyer_op101_001",
             "beyer_op101_002",
         ]
+    ),
+    ChapterInfo(
+        id="capitulo_2",
+        number=2,
+        title="Capítulo II: Obras Clásicas y Polifónicas del Barroco",
+        short_title="Capítulo II: Obras Barrocas",
+        icon="🎼",
+        level="Intermedio (Grado 2)",
+        description="Piezas del Cuaderno de Anna Magdalena Bach. Métrica en 3/4 (Minuet) y contrapunto clásico en clavecín y piano.",
+        lesson_ids=[
+            "bach_bwv_anh114",
+        ]
     )
 ]
 
